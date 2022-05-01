@@ -1,0 +1,4 @@
+.routify/
+node_modules/
+build/
+dist/
