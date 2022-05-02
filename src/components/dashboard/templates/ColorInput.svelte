@@ -7,9 +7,11 @@
     export let name;
     export let title;
     export let placeholder;
-    export let colour = "#000000";
+    export let color = "#000000";
     export let error = undefined;
     export let required = false;
+    
+    export let hasError;
 
     const dispatch = createEventDispatcher();
 
@@ -19,10 +21,10 @@
         const isValidColor = /^#[0-9a-fA-F]{6}?$/i.test(value);
 
         if (!isValidColor) {
-            error = "Invalid colour";
+            error = "Invalid color";
         } else {
             error = "";
-            colour = value;
+            color = value;
             dispatch("change", {
                 name,
                 value,
@@ -43,9 +45,10 @@
             {name}
             {error}
             {placeholder}
-            defaultValue={colour}
+            defaultValue={color}
             reactive
             on:input={change}
+            bind:hasError={hasError}
         />
         <div class="flex flex-col">
             {#if error}
@@ -54,7 +57,7 @@
             <input
                 class="w-11 h-11 ml-4 text-transparent border-none"
                 type="color"
-                value={colour}
+                value={color}
                 name={name}
                 on:change={change}
             />

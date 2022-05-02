@@ -5,8 +5,9 @@
     const templates = [];
     $: template = {
         name: $params.template,
-    }
+    };
 </script>
+
 <div class="flex flex-col items-center fade-in h-full">
     {#if template && template.name}
         <TemplateForm 

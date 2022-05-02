@@ -24,13 +24,13 @@
         </a>
         <a
             class="tab {endpoint === "send-alert" && "active"}"
-            href="/dashboard/send-alert"
+            href="/dashboard/templates/send-alert"
         >
             Send Alert
         </a>
         <a
             class="tab {endpoint === "servers" && "active"}"
-            href="/dashboard/servers"
+            href="/dashboard/templates/servers"
         >
             Servers
         </a>

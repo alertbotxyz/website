@@ -7,7 +7,7 @@
     <div class="flex flex-row px-8">
         <a
             class="nav-link"
-            href="/dashboard/alert"
+            href="/dashboard/templates/view"
         >
             Dashboard
         </a>
@@ -25,14 +25,14 @@
         </a>
         <a
             class="nav-link"
-            href="/premium"
+            href="/support-server"
         >
             Support Server
         </a>
     </div>
     <div class="flex flex-row">
         <a
-            href="/dashboard"
+            href="/dashboard/templates/view"
             class="primary-button px-6 "
         >
             Dashboard

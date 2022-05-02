@@ -1,4 +1,5 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import ColorInput from "../../../components/dashboard/templates/ColorInput.svelte";
     import DoubleInput from "../../../components/dashboard/templates/DoubleInput.svelte";
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
@@ -13,14 +14,16 @@
         templateName: "",
         title: "",
         description: "",
-        colour: "#63ffd0",
+        color: "#63ffd0",
         footer: {
             text: "",
             iconUrl: "",
         },
-        thumbnail: "",
+        thumbnail: {
+            url: "",
+        },
         author: {
-            text: "",
+            name: "",
             iconUrl: "",
         },
     };
@@ -50,15 +53,19 @@
         };
     };
 
+    let hasError;
+
+    const dispatch = createEventDispatcher();
+
     const handleSubmit = () => {
-        console.log(template);
+        dispatch("submit", template);
     };
 </script>
 
 <div class="flex flex-col w-full items-center fade-in">
     <h1>{title}</h1>
     <div class="flex flex-row w-full justify-center">
-        <div class="containers">
+        <div class="dashboard-form-container">
             <form
                 class="flex flex-col w-full mt-8"
                 on:submit|preventDefault={handleSubmit}
@@ -70,6 +77,7 @@
                     defaultValue={template.templateName}
                     required
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <SingleInput
                     name="title"
@@ -77,6 +85,7 @@
                     placeholder="Some title for the embed"
                     defaultValue={template.title}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <SingleInput
                     name="description"
@@ -84,13 +93,15 @@
                     placeholder="Some description for the embed"
                     defaultValue={template.description}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <ColorInput 
-                    name="colour"
-                    title="Colour"
-                    placeholder="Hex colour for the embed e.g #ff0000"
-                    colour={template.colour ?? "#009dff"}
+                    name="color"
+                    title="Color"
+                    placeholder="Hex color for the embed e.g #ff0000"
+                    color={template.color ?? "#009dff"}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <DoubleInput 
                     title="Footer"
@@ -98,87 +109,81 @@
                         name: "footer.text",
                         placeholder: "Some footer text",
                         defaultValue: template.footer?.text,
+                        error: template.footer?.text === "" && template.footer?.iconUrl !== "" ? "Footer text is required" : "",
                     }}
                     right={{
                         name: "footer.iconUrl",
                         placeholder: "Icon URL for the footer",
                         defaultValue: template.footer?.iconUrl,
+                        url: true,
                     }}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <SingleInput
-                    name="thumbnail"
+                    name="thumbnail.url"
                     title="Thumbnail" 
                     placeholder="URL for the thumbnail" 
-                    defaultValue={template.thumbnail}
+                    defaultValue={template.thumbnail.url}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <DoubleInput 
                     title="Author"
                     left={{
-                        name: "author.text",
+                        name: "author.name",
                         placeholder: "Some author name",
-                        defaultValue: template.author?.text,
+                        defaultValue: template.author?.name,
+                        error: template.author?.text === "" && template.author?.iconUrl !== "" ? "Author text is required" : "",
                     }}
                     right={{
                         name: "author.iconUrl",
                         placeholder: "Icon URL for the author",
                         defaultValue: template.author?.iconUrl,
+                        url: true,
                     }}
                     on:change={handleChange}
+                    bind:hasError={hasError}
                 />
                 <button
                     type="submit"
-                    class="primary-button mt-4"
+                    class="primary-button mt-4 disabled:opacity-30"
+                    disabled={hasError}
                 >
                     {type}
                 </button>
             </form>
         </div>
-        <div class="containers">
+        <div class="dashboard-form-container">
             <h1 class="text-transparent mb-12">Embed</h1>
             <DiscordChat 
                 messages={[
                     {
                         type: "text",
-                        author: {
-                            name: "Jane Doe",
-                            iconUrl: "https://i.imgur.com/wSTFkRM.png",
-                        },
-                        text: "Some discord text"
-                    },
-                    {
-                        type: "embed",
-                        author: {
-                            name: "John Doe",
-                            iconUrl: "https://i.imgur.com/wSTFkRM.png",
-                        },
                         data: {
-                            title: template.title,
-                            description: template.description,
-                            colour: template.colour,
-                            footer: template.footer,
-                            thumbnail: template.thumbnail,
-                            author: template.author
+                            content: "I can't wait for the next alert!"
                         }
                     },
                     {
-                        type: "text",
-                        author: {
-                            name: "Jane Doe",
-                            iconUrl: "https://i.imgur.com/wSTFkRM.png",
+                        type: "embed",
+                        data: {
+                            title: template.title,
+                            description: template.description,
+                            color: template.color,
+                            footer: template.footer,
+                            thumbnail: template.thumbnail,
+                            author: template.author
                         },
-                        text: "Some discord text"
+                        alert: true,
+                    },
+                    {
+                        type: "text",
+                        data: {
+                            content: "What a great alert!"
+                        }
                     }
                 ]}
             />
         </div>
     </div>
 </div>
-
-<style lang="postcss">
-    .containers {
-        width: 35%;
-        @apply flex flex-col items-center;
-    }
-</style>

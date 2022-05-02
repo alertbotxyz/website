@@ -43,7 +43,15 @@ a {
 .primary-button {
 	@apply bg-accent rounded-md py-2 text-xl border-none;
 }
-
+button {
+	@apply border-none;
+}
+button:hover {
+	cursor: pointer;
+}
+button:disabled {
+	cursor: not-allowed;
+}
 input {
 	@apply border-solid focus:outline-none;
 }
@@ -56,6 +64,12 @@ input {
 		opacity: 1;
 	}
 }
+
 .fade-in {
-	animation: 0.5s ease-out 0s 1 fadeIn;
+	animation: 0.3s ease-out 0s 1 fadeIn;
+}
+
+.dashboard-form-container {
+	width: 550px;
+	@apply flex flex-col items-center;
 }

@@ -1,3 +1,10 @@
+<script context="module">
+    import { getUser } from "../../api/auth";
+
+    getUser().then(user => {
+        console.log(user);
+    });
+</script>
 <script>
     import Sidebar from "../../components/navigation/Sidebar.svelte";
 </script>

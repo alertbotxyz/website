@@ -23,7 +23,7 @@
         </a>
         <a
             class="nav-link"
-            href="/dashboard/templates"
+            href="/dashboard/templates/view"
         >
             <img
                 src="/icons/template.svg" 
@@ -33,7 +33,7 @@
         </a>
         <a
             class="nav-link"
-            href="/dashboard/alert"
+            href="/dashboard/templates/send-alert"
         >
             <img
                 src="/icons/bell.svg" 
@@ -72,7 +72,10 @@
             <span class="text">Invite</span>
         </a>
     </div>
-    <div class="account-container flex flex-row items-center pl-6 h-20">
+    <a
+        class="account-container flex flex-row items-center pl-6 h-20"
+        href="/dashboard/account"
+    >
         <!-- <button class="bg-indigo-500 px-8 py-2 rounded-md border-none font-bold">Sign In to your account</button> -->
         <img
             src="/profile.png"
@@ -80,12 +83,12 @@
             class="w-10 rounded-md"
         />
         <span class="ml-2 font-bold">Atom#6969</span>
-    </div>
+    </a>
 </div>
 
 <style lang="postcss">
     .sidebar-container {
-        width: 280px;
+        min-width: 260px;
     }
     .logo-container {
         @apply bg-light-primary;

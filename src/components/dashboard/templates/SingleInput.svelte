@@ -1,5 +1,5 @@
 <script>
-import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher } from "svelte";
 
     import Input from "../../Input.svelte";
     import InputLabel from "../../InputLabel.svelte";
@@ -9,7 +9,10 @@ import { createEventDispatcher } from "svelte";
     export let placeholder;
     export let error = undefined;
     export let defaultValue = undefined;
-    export let required = false; 
+    export let required = false;
+    export let url = false;
+    
+    export let hasError;
 
     const dispatch = createEventDispatcher();
 
@@ -36,5 +39,8 @@ import { createEventDispatcher } from "svelte";
         {name}
         {error}
         {placeholder}
+        {url}
+        {required}
+        bind:hasError={hasError}
     />
 </div>
