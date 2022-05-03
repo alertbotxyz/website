@@ -1,27 +1,37 @@
+<script context="module">
+    import { getAllTemplates } from "../../../api/templates";
+
+    export const load = async () => {
+        const res = await getAllTemplates();
+
+        if (res.ok) {
+            return {
+                props: { templates: res.data },
+            };
+        } else {
+            // TODO: Error toast
+            console.log(res.message);
+        };
+    };
+</script>
+
 <script>
     import { params } from "@roxi/routify";
     import TemplateForm from "../../../components/dashboard/templates/TemplateForm.svelte";
+    
+    export let templates = [];
 
-    const templates = [];
-    $: template = {
-        name: $params.template,
-    };
+    $: template = templates?.find(t => t.name === $params.template);
 </script>
 
 <div class="flex flex-col items-center fade-in h-full">
     {#if template && template.name}
         <TemplateForm 
             title="Edit Template: {template.name}"
-            defaultTemplate={{
-                templateName: template.name,
-                author: {
-                    text: "Atom",
-                    iconUrl: "https://cdn.discordapp.com/attachments/967845567612989462/970022421606322186/alertbot.png",
-                }
-            }}
+            defaultTemplate={template}
             type="Edit"
         />
-    {:else if !template || !templates[0]}
+    {:else if !template && !templates[0]}
         <div class="w-full h-full flex items-center justify-center">
             <div class="border-2 border-gray-400 border-dashed rounded-md py-32 px-64 mb-24 flex flex-col items-center justify-center">
                 <span class="font-bold">No Templates found</span>

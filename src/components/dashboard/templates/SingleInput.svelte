@@ -12,7 +12,7 @@
     export let required = false;
     export let url = false;
     
-    export let hasError;
+    export let hasError = false;
 
     const dispatch = createEventDispatcher();
 

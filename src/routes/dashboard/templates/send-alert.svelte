@@ -1,43 +1,79 @@
+<script context="module">
+    import { getAllTemplates } from "../../../api/templates";
+
+    export const load = async () => {
+        const res = await getAllTemplates();
+
+        if (res.ok) {
+            return {
+                props: { templates: res.data },
+            };
+        } else {
+            // TODO: Error toast
+            console.log(res.message);
+        };
+    };
+</script>
+
 <script>
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
-    import { redirect } from "../../../utils/core";
+    import { sendAlert } from "../../../api/alert";
+    
+    export let templates = [];
 
     $: discordImage = "";
     $: template = {};
+    $: inputs = {}; 
     $: templateName = "";
-
-    // if (!template) redirect("/dashboard/templates/view");
 
     const handleInput = e => {
         const { name, value } = e.detail || e.target;
-        if(!template.inputs || !template.inputs[name]) return;
-        template.inputs[name].value = value;
+        inputs[name] = value;
     };
     const handleImageChange = e => {
         const { value } = e.detail;
         discordImage = value;
     };
-    const handleTemplateSelect = e => templateName = e.target.value;
+    const handleTemplateSelect = e => {
+        templateName = e.target.value;
+        template = templates.find(t => t.name === templateName);
 
-    const discordChatData = template && template.inputs ? {
+        if (template?.parameters) {
+            inputs = Object.fromEntries(
+                Object.values(template.parameters).map(t => [t.name, ""])
+            );
+        };
+    };
+    const sendAlertHandle = e => {
+        // TODO: error modals
+        sendAlert({
+            name: template.name,
+            inputs,
+        }).then(data => {
+            console.log(data);
+        });
+    };
+
+    $: discordChatData = template && template.parameters ? {
         type: "embed",
         data: {
             title: template.title,
-            description: template.inputs ? Object.values(template.inputs).map(templateInput => {
-                if(templateInput.withTitle) {
-                    let parameter;
+            description: Object.values(template.parameters).map(parameter => {
+                const parameterInput = inputs[parameter.name] || "";
+                if(parameter.withTitle) {
+                    let parameterText = "";
 
-                    parameter = templateInput.name + ":";
-                    if (templateInput.boldTitle) {
-                        parameter = `**${templateInput.name}:**`;
+                    parameterText = parameter.name + ":";
+                    if (parameter.boldTitle) {
+                        parameterText = `**${parameter.name}:**`;
                     };
 
-                    return `${parameter} ${templateInput.value}`;
+                    return `${parameterText} ${parameterInput}`;
                 } else {
-                    return templateInput.value;
+                    return parameterInput;
                 };
-            }).join("\\n") : "",
+            }).join("\\n"),
             color: template.color,
             image: discordImage,
         }
@@ -47,7 +83,6 @@
             content: "No template parameters."
         },
     };
-
 </script>
 
 <div class="flex flex-col w-full items-center fade-in">
@@ -58,13 +93,17 @@
         on:change={handleTemplateSelect}
     >
         <option value="" selected disabled hidden>Choose a template to alert with</option>
-        <option value="Entry">Entry</option>
-        <option value="Exit">Exit</option>
+        {#each templates as template}
+            <option value={template.name}>{template.name}</option>
+        {/each}
     </select>
     {#if templateName && template}
         <div class="flex flex-row w-full justify-center">
             <div class="dashboard-form-container">
-                <form class="flex flex-col w-full mt-8">
+                <form
+                    class="flex flex-col w-full mt-8"
+                    on:submit|preventDefault={sendAlertHandle}
+                >
                     <SingleInput 
                         name="imageUrl"
                         title="Image"
@@ -73,15 +112,21 @@
                         url={true}
                     />
                     <br class="mt-8"/>
-                    {#if template?.inputs}
-                        {#each Object.values(template?.inputs) as input}
+                    {#if template?.parameters}
+                        {#each Object.values(template?.parameters) as parameter}
                             <SingleInput 
-                                name={input.name}
-                                title={input.name}
-                                placeholder={"Enter " + input.name}
+                                name={parameter.name}
+                                title={parameter.name}
+                                placeholder={"Enter " + parameter.name}
                                 on:change={handleInput}
                             />
                         {/each}
+                        <button
+                            type="submit"
+                            class="primary-button mt-4 disabled:opacity-30"
+                        >
+                            Send Alert
+                        </button>
                     {:else}
                         <p class="text-center">
                             No parameters found.

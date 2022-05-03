@@ -11,7 +11,7 @@
     export let type = "Create"
 
     $: template = defaultTemplate ? defaultTemplate : {
-        templateName: "",
+        name: "",
         title: "",
         description: "",
         color: "#63ffd0",
@@ -71,10 +71,10 @@
                 on:submit|preventDefault={handleSubmit}
             >
                 <SingleInput
-                    name="templateName"
+                    name="name"
                     title="Name" 
                     placeholder="Enter the template name"
-                    defaultValue={template.templateName}
+                    defaultValue={template.name}
                     required
                     on:change={handleChange}
                     bind:hasError={hasError}
@@ -124,7 +124,7 @@
                     name="thumbnail.url"
                     title="Thumbnail" 
                     placeholder="URL for the thumbnail" 
-                    defaultValue={template.thumbnail.url}
+                    defaultValue={template.thumbnail?.url}
                     on:change={handleChange}
                     bind:hasError={hasError}
                 />

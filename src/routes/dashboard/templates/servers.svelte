@@ -1,8 +1,25 @@
-<script>
-import InputLabel from "../../../components/InputLabel.svelte";
-import Modal from "../../../components/Modal.svelte";
+<script context="module">
+    import { getAllServers } from "../../../api/servers";
 
-    const guilds = [];
+    export const load = async () => {
+        const res = await getAllServers();
+
+        if (res.ok) {
+            return {
+                props: { servers: res.data },
+            };
+        } else {
+            // TODO: Error toast
+            console.log(res.message);
+        };
+    };
+</script>
+
+<script>
+    import InputLabel from "../../../components/InputLabel.svelte";
+    import Modal from "../../../components/Modal.svelte";
+
+    export let servers = [];
 
     $: active = false;
 
@@ -15,7 +32,7 @@ import Modal from "../../../components/Modal.svelte";
     const handleModal = () => active = !active;
 
     const handleSubmit = e => {
-        console.log(selectedGuildId);
+        console.log(data);
     };
 
     const handleChange = e => {
@@ -39,8 +56,9 @@ import Modal from "../../../components/Modal.svelte";
                     on:change={handleChange}
                 >
                     <option value="" selected disabled hidden>Choose a guild</option>
-                    <option value="787410312499953685">787410312499953685</option>
-                    <option value="967845566505705543">967845566505705543</option>
+                    {#each servers as guild}
+                        <option value="{guild.id}">{guild.name}</option>
+                    {/each}
                 </select>
             </div>
             <div class="flex flex-col {!data.guildId && "hidden"}">
@@ -87,8 +105,8 @@ import Modal from "../../../components/Modal.svelte";
 </Modal>
 
 <div class="flex flex-col items-center">
-    {#if guilds && guilds.length > 0}
-        <h1>Alerting to {guilds.length} guilds</h1>
+    {#if servers && servers.length > 0}
+        <h1>Alerting to {servers.length} servers</h1>
         <div class="my-4">
             <button 
                 class="bg-accent rounded-md py-2 px-8 border-none"
@@ -97,11 +115,11 @@ import Modal from "../../../components/Modal.svelte";
                 Add Guild
             </button>
         </div>
-        {#each guilds as guild}
+        {#each servers as guild}
             <div class="w-1/2 h-20 rounded-md bg-light-primary my-2 flex items-center justify-between px-3">
                 <div class="flex items-center justify-between   ">
                     <img class="w-12 rounded-full" src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} alt="guildicon">
-                    <p class="pl-4 text-gray-300 font-bold text-xl truncate">{guild.name}</p>
+                    <p class="pl-4 text-gray-300 font-bold text-xl truncate">{guild.name || "Guild name"}</p>
                 </div>
                 <a class="bg-gray-500 px-8 py-2 rounded-md flex items-center justify-center" href="/dashboard/{guild.id}/guild">Delete</a>
             </div>
@@ -109,13 +127,13 @@ import Modal from "../../../components/Modal.svelte";
     {:else}
         <div class="w-full h-full flex items-center justify-center">
             <div class="border-2 border-gray-400 border-dashed rounded-md py-32 px-64 mb-24 flex flex-col items-center justify-center">
-                <span class="font-bold">No Guilds found</span>
+                <span class="font-bold">No servers found</span>
                 <span class="text-gray-400 mt-2">Get started with alerting by adding an alert server</span>
                 <button
                     class="py-2 px-4 rounded-md bg-accent mt-8 font-bold"
                     on:click={handleModal}
                 >
-                    + Add Guild
+                    + Add Server
                 </button>
             </div>
         </div>

@@ -11,7 +11,7 @@
     export let error = undefined;
     export let required = false;
     
-    export let hasError;
+    export let hasError = false;
 
     const dispatch = createEventDispatcher();
 

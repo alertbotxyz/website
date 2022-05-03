@@ -2,7 +2,7 @@ import constants from "../utils/constants"
 import { makeRequest } from "./utils";
 
 export const createTemplate = async (templateData: {
-    templateName: string;
+    name: string;
     title?: string;
     description?: string;
     color?: string;
@@ -15,35 +15,13 @@ export const createTemplate = async (templateData: {
         text: string;
         iconUrl?: string;
     };
-}): Promise<{
-    status: number;
-    error?: {
-        message: string;
-    };
-    data?: any;
-}> => {
+}) => {
+    return makeRequest("/templates", {
+        method: "POST",
+        body: templateData,
+    });
+};
 
-    
-    try {
-        const res = await makeRequest("/templates", {
-            method: "POST",
-            body: {
-                ...templateData,
-                name: templateData.templateName,
-                templateName: undefined,
-            },
-        });
-
-        return {
-            status: res.status,
-            data: await res.json(),
-        };
-    } catch (error) {
-        return {
-            status: 400,
-            error: {
-                message: error.message,
-            },
-        }
-    };
+export const getAllTemplates = async () => {
+    return makeRequest("/templates/all");
 };

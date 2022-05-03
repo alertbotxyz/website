@@ -9,7 +9,7 @@
     export let left;
     export let right;
     
-    export let hasError;
+    export let hasError = false;
 
     const dispatch = createEventDispatcher();
 
