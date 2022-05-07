@@ -25,3 +25,10 @@ export const createTemplate = async (templateData: {
 export const getAllTemplates = async () => {
     return makeRequest("/templates/all");
 };
+
+export const deleteTemplate = async (templateName: string) => {
+    return makeRequest(`/templates`, {
+        method: "DELETE",
+        query: { name: templateName },
+    });
+};

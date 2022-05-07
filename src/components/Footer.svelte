@@ -18,19 +18,19 @@
         <span class="link-title">Alertbot</span>
         <a
             class="link"
-            href="/links/invite"
+            href="/redirect?link=bot-invite"
         >
             Invite alertbot
         </a>
         <a
             class="link"
-            href="/links/docs"
+            href="/redirect?link=docs"
         >
             Documentation
         </a>
         <a
             class="link"
-            href="/links/source"
+            href="/redirect?link=social-github"
         >
             Source code
         </a>
@@ -72,7 +72,7 @@
         </a>
         <a
             class="link"
-            href="/links/server"
+            href="/redirect?link=support-server"
         >
             Discord server
         </a>

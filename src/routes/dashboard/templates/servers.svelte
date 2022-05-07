@@ -2,32 +2,68 @@
     import InputLabel from "../../../components/InputLabel.svelte";
     import Modal from "../../../components/Modal.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import { addServer, getAllServers } from "../../../api/servers";
+    import { addServer, deleteServer, getAllServers } from "../../../api/servers";
+    import { addToast } from "../../../stores/toasts";
 
     export let servers = [];
 
     $: active = false;
     $: loading = true;
+    $: submitting = false;
     $: data = {
         guildId: "",
         channelId: "",
         mentionId: "",
     };
 
-    getAllServers().then(res => {
-        if (res.ok) {
-            servers = res.data;
-        } else {
-            // TODO: Error toast
-        };
-        loading = false;
-    });
+    const getServers = () => {
+        getAllServers().then(res => {
+            if (res.ok) {
+                servers = res.data;
+            } else {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error fetching the templates"
+                });
+                servers = [];
+            };
+            loading = false;
+        });
+    };
+    getServers();
 
     const handleModal = () => active = !active;
 
-    const handleSubmit = e => {
+    const handleSubmit = () => {
+        submitting = true;
         addServer("967845566505705543", "967896860335411240").then(res => {
-            console.log(res);
+            if (res.ok) {
+                getServers();
+            } else {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error adding the server"
+                });
+            };
+            handleModal();
+            submitting = false;
+        });
+    };
+
+    const handleDeleteServer = channelId => {
+        submitting = true;
+        deleteServer(channelId).then(res => {
+            if (!res.ok) {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error deleting the server"
+                });
+            };
+            getServers();
+            submitting = false;
         });
     };
 
@@ -93,7 +129,8 @@
                 </button>
                 <button
                     class="bg-accent"
-                    on:click={handleSubmit}    
+                    on:click={handleSubmit}
+                    disabled={submitting || !data.guildId}
                 >
                     Create
                 </button>
@@ -122,12 +159,13 @@
                         />
                         <p class="pl-4 text-gray-300 font-bold text-xl truncate">{server.guild.name || "Guild name"}</p>
                     </div>
-                    <a
+                    <button
                         class="bg-gray-500 px-8 py-2 rounded-md flex items-center justify-center" 
-                        href="/dashboard/{server.guild.id}/guild"
+                        on:click={handleDeleteServer(server.channel.id)}
+                        disabled={submitting}
                     >
                         Delete
-                    </a>
+                    </button>
                 </div>
             {/each}
         {:else}

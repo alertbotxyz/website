@@ -3,12 +3,17 @@
     import ColorInput from "../../../components/dashboard/templates/ColorInput.svelte";
     import DoubleInput from "../../../components/dashboard/templates/DoubleInput.svelte";
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
-
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
+    import SuccessModal from "../../SuccessModal.svelte";
+    import { deleteTemplate } from "../../../api/templates";
+    import { addToast } from "../../../stores/toasts";
     
     export let defaultTemplate = undefined;
     export let title;
     export let type = "Create"
+    export let submitting = false;
+
+    $: success = false;
 
     $: template = defaultTemplate ? defaultTemplate : {
         name: "",
@@ -53,6 +58,24 @@
         };
     };
 
+    const handleDeleteTemplate = () => {
+        submitting = true;
+        if (confirm("Are you sure you want to delete this template?")) {
+            deleteTemplate(template.name).then(res => {
+                if (res.ok) {
+                    success = true;
+                } else {
+                    addToast({
+                        type: "error",
+                        message: res.error.message,
+                        title: "There was an error deleting the template",
+                    });
+                };
+                submitting = false;
+            });
+        };
+    };
+
     let hasError;
 
     const dispatch = createEventDispatcher();
@@ -61,6 +84,26 @@
         dispatch("submit", template);
     };
 </script>
+
+<SuccessModal
+    active={success}
+    title="Template deleted"
+    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    options={[
+        {
+            type: "link",
+            text: "View templates",
+            color: "bg-dark-primary",
+            url: "/dashboard/templates/view",
+        },
+        {
+            type: "link",
+            text: "Create a new template",
+            color: "bg-accent",
+            url: "/dashboard/templates/create",
+        },
+    ]}
+/>
 
 <div class="flex flex-col w-full items-center fade-in">
     <h1>{title}</h1>
@@ -147,11 +190,29 @@
                 />
                 <button
                     type="submit"
-                    class="primary-button mt-4 disabled:opacity-30"
-                    disabled={hasError}
+                    class="primary-button bg-accent mt-4"
+                    disabled={hasError || submitting}
                 >
                     {type}
                 </button>
+                {#if defaultTemplate && defaultTemplate.name}
+                    <div class="flex flex-row w-full justify-between">
+                        <button
+                            type="submit"
+                            class="primary-button w-full mr-4 bg-red-400 mt-4"
+                            disabled={hasError || submitting}
+                            on:click={handleDeleteTemplate}
+                        >
+                            Delete
+                        </button>
+                        <button
+                            type="submit"
+                            class="primary-button w-full ml-4 bg-gray-500 mt-4"
+                        >
+                            Share
+                        </button>
+                    </div>
+                {/if}
             </form>
         </div>
         <div class="dashboard-form-container">

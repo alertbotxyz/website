@@ -2,8 +2,10 @@
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import { sendAlert } from "../../../api/alert";
+    import SuccessModal from "../../../components/SuccessModal.svelte";
     import { getAllTemplates } from "../../../api/templates";
+    import { sendAlert } from "../../../api/alert";
+    import { addToast } from "../../../stores/toasts";
     
     export let templates = [];
 
@@ -12,12 +14,19 @@
     $: inputs = {}; 
     $: templateName = "";
     $: loading = true;
-    
+    $: submitting = false;
+    $: hasError = false;
+    $: success = false;
+
     getAllTemplates().then(res => {
         if (res.ok) {
             templates = res.data;
         } else {
-            // TODO: Error toast
+            addToast({
+                type: "error",
+                message: res.error.message,
+                title: "There was an error fetching the templates"
+            });
         };
         loading = false;
     });
@@ -40,13 +49,22 @@
             );
         };
     };
-    const sendAlertHandle = e => {
-        // TODO: error modals
+    const sendAlertHandle = () => {
+        submitting = true;
         sendAlert({
             name: template.name,
             inputs,
         }).then(data => {
-            console.log(data);
+            if (res.ok) {
+                success = true;
+            } else {
+                addToast({
+                    type: "error",
+                    message: data.message,
+                    title: "There was an error sending the alert",
+                });
+            };
+            submitting = false;
         });
     };
 
@@ -80,6 +98,18 @@
     };
 </script>
 
+<SuccessModal
+    active={success}
+    title="Alert sent"
+    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    options={[
+        {
+            type: "button",
+            text: "Send another alert",
+            color: "bg-accent",
+        },
+    ]}
+/>
 <Loading {loading}>
     <div class="flex flex-col w-full items-center fade-in">
         <h1>Send Alert</h1>
@@ -106,6 +136,7 @@
                             placeholder="Enter URL for image"
                             on:change={handleImageChange}
                             url={true}
+                            bind:hasError={hasError}
                         />
                         <br class="mt-8"/>
                         {#if template?.parameters}
@@ -119,7 +150,8 @@
                             {/each}
                             <button
                                 type="submit"
-                                class="primary-button mt-4 disabled:opacity-30"
+                                class="primary-button bg-accent mt-4"
+                                disabled={hasError || submitting}
                             >
                                 Send Alert
                             </button>

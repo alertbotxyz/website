@@ -3,6 +3,7 @@ import constants from "../utils/constants";
 export const makeRequest = async (endpoint: string, options?: {
     body?: any;
     headers?: any;
+    query?: any;
     method: "POST" | "GET" | "PUT" | "DELETE";
 }): Promise<{
     status: number;
@@ -13,9 +14,12 @@ export const makeRequest = async (endpoint: string, options?: {
     data?: any;
 }> => {
     const method = options?.method || "GET";
+    let url = `${constants.api.url}${endpoint}`;
+
+    if (options?.query) url += "?" + new URLSearchParams(options.query);
 
     try {
-        const res = await fetch(`${constants.api.url}${endpoint}`, {
+        const res = await fetch(url, {
             method,
             headers: {
                 "Content-Type": "application/json",
@@ -27,14 +31,20 @@ export const makeRequest = async (endpoint: string, options?: {
     
         if (res.status === 401) window.location.href = `${constants.api.url}/discord/login`;
 
-        const json = await res.json();
+        let json;
+
+        try {   
+            json = await res.json();
+        } catch (err) {
+            console.log(err);
+        };
     
         return {
             status: res.status,
             ok: res.ok,
             data: json,
             error: {
-                message: json.message,
+                message: json?.message,
             },
         };
     } catch (err) {

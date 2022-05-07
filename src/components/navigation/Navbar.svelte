@@ -7,7 +7,7 @@
     <div class="flex flex-row px-8">
         <a
             class="nav-link"
-            href="/dashboard/templates/view"
+            href="/dashboard"
         >
             Dashboard
         </a>
@@ -19,13 +19,13 @@
         </a>
         <a
             class="nav-link"
-            href="/docs"
+            href="/redirect?link=docs"
         >
             Documentation
         </a>
         <a
             class="nav-link"
-            href="/support-server"
+            href="/redirect?link=support-server"
         >
             Support Server
         </a>

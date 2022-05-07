@@ -3,7 +3,7 @@
     import { makeRequest } from "../../api/utils";
     import Sidebar from "../../components/navigation/Sidebar.svelte";
     import Navbar from "../../components/navigation/Navbar.svelte";
-import Loading from "../../components/Loading.svelte";
+    import Loading from "../../components/Loading.svelte";
 
     export let error;
     $: loading = true;
@@ -18,25 +18,25 @@ import Loading from "../../components/Loading.svelte";
     getUser();
 </script>
 
-<Loading {loading}>
-    {#if error}
-        <div class="flex flex-col h-screen">
-            <Navbar />
-            <div class="h-full w-full flex flex-col items-center justify-center slow-fade-in">
-                <h1 class="error-code font-bold animate-bounce">500</h1>
-                <span class="text-3xl font-bold">Service Unavailable</span>
-                <span class="text-xl text-gray-400">We are sorry but out service is currently unavailable...</span>
-            </div>
+{#if error}
+    <div class="flex flex-col h-screen">
+        <Navbar />
+        <div class="h-full w-full flex flex-col items-center justify-center slow-fade-in">
+            <h1 class="error-code font-bold animate-bounce">500</h1>
+            <span class="text-3xl font-bold">Service Unavailable</span>
+            <span class="text-xl text-gray-400">We are sorry but out service is currently unavailable...</span>
         </div>
-    {:else}
-        <div class="flex flex-row max-h-screen">
-            <Sidebar />
-            <div class="w-full overscroll-y-scroll slow-fade-in">
+    </div>
+{:else}
+    <div class="flex flex-row max-h-screen">
+        <Sidebar />
+        <div class="w-full overscroll-y-scroll slow-fade-in">
+            <Loading {loading}>
                 <slot />
-            </div>
+            </Loading>
         </div>
-    {/if}
-</Loading>
+    </div>
+{/if}
 
 <style lang="postcss">
     .error-code {

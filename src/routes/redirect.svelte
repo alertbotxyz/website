@@ -1,0 +1,20 @@
+<script>
+    import { params } from "@roxi/routify";
+    $: params, console.log($params);
+    const redirects = {
+        "docs": "docs.alertbot.net",
+        "support-server": "discord.com/alertbot",
+        "bot-invite": "discord.com/invite/alertbot",
+        "social-twitter": "",
+        "social-facebook": "",
+        "social-youtube": "",
+        "social-github": "",
+    };
+
+    if (redirects[$params.link]) {
+        window.location.href = redirects[$params.link];
+    } else {
+        // 404 page
+        window.location.href = "/";
+    };
+</script>

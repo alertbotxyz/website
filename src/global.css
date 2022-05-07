@@ -41,7 +41,7 @@ a {
 	background-color: #2C3142;
 }
 .primary-button {
-	@apply bg-accent rounded-md py-2 text-xl border-none;
+	@apply rounded-md py-2 text-xl border-none;
 }
 button {
 	@apply border-none;
@@ -51,6 +51,7 @@ button:hover {
 }
 button:disabled {
 	cursor: not-allowed;
+	opacity: 0.3;
 }
 input {
 	@apply border-solid focus:outline-none;

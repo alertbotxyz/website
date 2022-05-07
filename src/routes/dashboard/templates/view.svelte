@@ -3,6 +3,7 @@
     import TemplateForm from "../../../components/dashboard/templates/TemplateForm.svelte";
     import Loading from "../../../components/Loading.svelte";
     import { getAllTemplates } from "../../../api/templates";
+    import { addToast } from "../../../stores/toasts";
 
     export let templates = [];
     $: loading = true;
@@ -11,13 +12,18 @@
         if (res.ok) {
             templates = res.data;
         } else {
-            // TODO: Error toast
+            addToast({
+                type: "error",
+                message: res.error.message,
+                title: "There was an error fetching the templates"
+            });
         };
         loading = false;
     });
 
     $: template = templates?.find(t => t.name === $params.template);
 </script>
+
 <Loading {loading}>
     <div class="flex flex-col items-center fade-in h-full">
         {#if template && template.name}

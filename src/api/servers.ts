@@ -12,3 +12,9 @@ export const addServer = async (guildId: string, channelId: string) => {
         },
     });
 };
+export const deleteServer = async (channelId: string) => {
+    return makeRequest("/servers", {
+        method: "DELETE",
+        query: { channelId },
+    });
+};
