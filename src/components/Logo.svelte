@@ -1,5 +1,5 @@
 <a
-    class="flex flex-row items-center h-20"
+    class="flex flex-row items-center"
     href="/"
 >
     <img

@@ -1,12 +1,60 @@
 <script>
     import { getUser } from "../../api/auth";
-    getUser();
+    import { makeRequest } from "../../api/utils";
     import Sidebar from "../../components/navigation/Sidebar.svelte";
+    import Navbar from "../../components/navigation/Navbar.svelte";
+import Loading from "../../components/Loading.svelte";
+
+    export let error;
+    $: loading = true;
+
+    makeRequest("/").then(res => {
+        if(!res.ok) {
+            error = res.error.message;
+        };
+        loading = false;
+    });
+
+    getUser();
 </script>
 
-<div class="flex flex-row max-h-screen">
-    <Sidebar />
-    <div class="w-full overscroll-y-scroll">
-        <slot />
-    </div>
-</div>
+<Loading {loading}>
+    {#if error}
+        <div class="flex flex-col h-screen">
+            <Navbar />
+            <div class="h-full w-full flex flex-col items-center justify-center slow-fade-in">
+                <h1 class="error-code font-bold animate-bounce">500</h1>
+                <span class="text-3xl font-bold">Service Unavailable</span>
+                <span class="text-xl text-gray-400">We are sorry but out service is currently unavailable...</span>
+            </div>
+        </div>
+    {:else}
+        <div class="flex flex-row max-h-screen">
+            <Sidebar />
+            <div class="w-full overscroll-y-scroll slow-fade-in">
+                <slot />
+            </div>
+        </div>
+    {/if}
+</Loading>
+
+<style lang="postcss">
+    .error-code {
+        font-size: 12rem;
+        background: -webkit-linear-gradient(left, rgb(214, 127, 255), rgb(126, 28, 255));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .slow-fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+</style>

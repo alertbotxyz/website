@@ -14,8 +14,6 @@ export const makeRequest = async (endpoint: string, options?: {
 }> => {
     const method = options?.method || "GET";
 
-    
-
     try {
         const res = await fetch(`${constants.api.url}${endpoint}`, {
             method,
@@ -28,7 +26,7 @@ export const makeRequest = async (endpoint: string, options?: {
         });
     
         if (res.status === 401) window.location.href = `${constants.api.url}/discord/login`;
-    
+
         const json = await res.json();
     
         return {
