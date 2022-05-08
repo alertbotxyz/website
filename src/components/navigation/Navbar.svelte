@@ -1,47 +1,109 @@
 <script>
+    import { fade, fly } from "svelte/transition";
     import Logo from "../Logo.svelte";
+    
+    $: menu = false;
+
+    const handleMenu = () => {
+        menu = !menu;
+        document.querySelector("body").classList.toggle("overflow-hidden");
+        document.querySelector("html").classList.toggle("overflow-hidden");
+    };
 </script>
 
-<div class="navbar bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8">
-    <Logo />
-    <div class="flex flex-row px-8">
-        <a
-            class="nav-link"
-            href="/dashboard"
-        >
-            Dashboard
-        </a>
-        <a
-            class="nav-link"
-            href="/premium"
-        >
-            Premium
-        </a>
-        <a
-            class="nav-link"
-            href="/redirect?link=docs"
-        >
-            Documentation
-        </a>
-        <a
-            class="nav-link"
-            href="/redirect?link=support-server"
-        >
-            Support Server
-        </a>
+<div class="flex flex-col min-h-screen w-full items-center">
+    <div class="navbar bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8">
+        <Logo />
+        <div class="flex flex-row px-8 lg:px-2 md:hidden">
+            <a
+                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                href="/dashboard"
+            >
+                Dashboard
+            </a>
+            <a
+                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                href="/premium"
+            >
+                Premium
+            </a>
+            <a
+                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                href="/redirect?link=docs"
+            >
+                Documentation
+            </a>
+            <a
+                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                href="/redirect?link=support-server"
+            >
+                Support
+            </a>
+        </div>
+        <div class="flex flex-row md:hidden">
+            <a
+                href="/dashboard/templates/view"
+                class="primary-button bg-accent px-6 "
+            >
+                Dashboard
+            </a>
+        </div>
+        <div class="hidden md:flex">
+            <button
+                class="bg-none bg-transparent outline-none focus:outline-none"
+                on:click={handleMenu}
+            >
+                <i class='bx bx-menu-alt-right text-3xl'></i>
+            </button>
+        </div>
     </div>
-    <div class="flex flex-row">
-        <a
-            href="/dashboard/templates/view"
-            class="primary-button px-6 "
+    {#if menu}
+        <div 
+            class="hidden md:flex flex-col {menu ? "absolute" : "hidden"} h-screen top-20 items-center bg-black bg-opacity-70 w-full justify-between"
+            in:fade={{ duration: 300 }}
+            out:fade={{ duration: 300 }}
         >
-            Dashboard
-        </a>
-    </div>
+            <div
+                class="bg-light-primary w-full flex flex-col items-center pb-12"
+                in:fly={{ x: 200, duration: 300 }}
+                out:fly={{ x: 200, duration: 300 }}
+            >
+                <div class="flex flex-col px-8 w-full mb-16">
+                    <a
+                        class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
+                        href="/dashboard"
+                    >
+                        Dashboard
+                    </a>
+                    <a
+                        class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
+                        href="/premium"
+                    >
+                        Premium
+                    </a>
+                    <a
+                        class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
+                        href="/redirect?link=docs"
+                    >
+                        Documentation
+                    </a>
+                    <a
+                        class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
+                        href="/redirect?link=support-server"
+                    >
+                        Support
+                    </a>
+                </div>
+                <div>
+                    <a
+                        href="/dashboard/templates/view"
+                        class="primary-button bg-accent md:px-20 md:py-4 md:text-xl"
+                    >
+                        Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    {/if}
+    <slot />
 </div>
-
-<style lang="postcss">
-    .nav-link {
-        @apply text-xl mx-4 text-gray-300;
-    }
-</style>

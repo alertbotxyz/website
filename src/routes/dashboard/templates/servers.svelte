@@ -1,22 +1,61 @@
 <script>
     import InputLabel from "../../../components/InputLabel.svelte";
-    import Modal from "../../../components/Modal.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import { addServer, deleteServer, getAllServers } from "../../../api/servers";
+    import { addServer, deleteServer, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
     import { addToast } from "../../../stores/toasts";
+import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
+import SelectInput from "../../../components/dashboard/templates/SelectInput.svelte";
+import SuccessModal from "../../../components/SuccessModal.svelte";
 
     export let servers = [];
 
     $: active = false;
     $: loading = true;
     $: submitting = false;
+    $: fetchingGuild = false;
+    $: deleteSuccess = false;
+    $: addSuccess = false;
+    $: hasError = false;
+
+    $: userGuilds = [];
+    $: guildInfo = undefined;
     $: data = {
         guildId: "",
         channelId: "",
         mentionId: "",
     };
 
+    const fetchGuild = () => {
+        fetchingGuild = true;
+        getGuildInfo(data.guildId).then(res => {
+            if (!res.ok || res.data.error) {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error fetching guild info"
+                });
+            } else {
+                guildInfo = res.data;
+            };
+            console.log(guildInfo);
+            fetchingGuild = false;
+        });
+    };
+
+    getAllGuilds().then(res => {
+        if (!res.ok || res.data.error) {
+            addToast({
+                type: "error",
+                message: res.error.message,
+                title: "There was an error fetching guilds"
+            });
+        } else {
+            userGuilds = res.data;
+        };
+    });
+
     const getServers = () => {
+        loading = true;
         getAllServers().then(res => {
             if (res.ok) {
                 servers = res.data;
@@ -37,9 +76,17 @@
 
     const handleSubmit = () => {
         submitting = true;
-        addServer("967845566505705543", "967896860335411240").then(res => {
+
+        const {
+            guildId,
+            channelId,
+            mentionId,
+        } = data;
+
+        addServer(guildId, channelId, mentionId).then(res => {
             if (res.ok) {
-                getServers();
+                addSuccess = true;
+                // get servers when modal is closed
             } else {
                 addToast({
                     type: "error",
@@ -55,7 +102,9 @@
     const handleDeleteServer = channelId => {
         submitting = true;
         deleteServer(channelId).then(res => {
-            if (!res.ok) {
+            if (res.ok) {
+                deleteSuccess = true;
+            } else {
                 addToast({
                     type: "error",
                     message: res.error.message,
@@ -68,87 +117,86 @@
     };
 
     const handleChange = e => {
-        const { name, value } = e.target;
+        const { name, value } = e.target || e.detail;
         data[name] = value;
+        if (name === "guildId") {
+            fetchGuild();
+        };
     };
 </script>
+<SuccessModal
+    active={addSuccess || deleteSuccess}
+    title={addSuccess ? "Server added" : "Server deleted"}
+    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    options={[
+        {
+            type: "button",
+            text: `${addSuccess ? "Add " : "Delete "}another server`,
+            color: "bg-accent",
+        },
+    ]}
+    on:close={() => {
+        addSuccess = false;
+        deleteSuccess = false;
 
+        getServers();
+    }}
+/>
 <Loading {loading}>
-    <Modal {active}>
-        <div class="modal-content flex-col flex justify-between rounded-md bg-primary ">
-            <h1 class="ml-8 mt-4">Add A Guild</h1>
-            <div class="form w-full flex flex-row items-center justify-evenly">
-                <div class="flex flex-col">
-                    <InputLabel 
-                        labelFor="guildId"
-                        labelText="Guild Id"
-                        required
-                    />
-                    <select
-                        name="guildId"
-                        on:change={handleChange}
-                    >
-                        <option value="" selected disabled hidden>Choose a guild</option>
-                        {#each servers as server}
-                            <option value="{server.guild.id}">{server.guild.name}</option>
-                        {/each}
-                    </select>
-                </div>
-                <div class="flex flex-col {!data.guildId && "hidden"}">
-                    <InputLabel 
-                        labelFor="channelId"
-                        labelText="Channel Id"
-                        required
-                    />
-                    <select
-                        name="channelId"
-                        on:change={handleChange}
-                    >
-                        <option value="" selected disabled hidden>Choose channel</option>
-                    </select>
-                </div>
-                <div class="flex flex-col {!data.guildId && "hidden"}">
-                    <InputLabel 
-                        labelFor="mentionId"
-                        labelText="Mention Id"
-                    />
-                    <select
-                        name="mentionId"
-                        on:change={handleChange}
-                    >
-                        <option value="" selected disabled hidden>Choose mention role</option>
-                    </select>
-                </div>
-            </div>
-            <div class="action bg-light-primary rounded-b-md flex flex-row justify-end items-center pr-8 py-4">
-                <button 
-                    class="bg-gray-500"
-                    on:click={handleModal}
-                >
-                    Cancel
-                </button>
-                <button
-                    class="bg-accent"
-                    on:click={handleSubmit}
-                    disabled={submitting || !data.guildId}
-                >
-                    Create
-                </button>
-            </div>
-        </div>
-    </Modal>
-    
     <div class="flex flex-col items-center">
+        <h1>Alerting to {servers.length} servers</h1>
+        <div class="flex flex-row my-8 items-end">
+            <SelectInput
+                name="guildId"
+                title="Guild"
+                placeholder="Choose a guild"
+                required
+                options={userGuilds.map(guild => ({
+                        value: guild.id,
+                        text: guild.name
+                    })
+                )}
+                on:change={handleChange}
+                bind:hasError={hasError}
+            />
+            {#if data.guildId}
+                <Loading loading={fetchingGuild}>
+                    <SelectInput
+                        name="channelId"
+                        title="Channel"
+                        placeholder="Choose a channel"
+                        required
+                        options={guildInfo.channels.map(channel => ({
+                                value: channel.id,
+                                text: channel.name
+                            })
+                        )}
+                        on:change={handleChange}
+                        bind:hasError={hasError}
+                    />
+                    <SelectInput
+                        name="mentionId"
+                        title="Mention Role"
+                        placeholder="Choose a role"
+                        options={guildInfo.roles.map(role => ({
+                                value: role.id,
+                                text: role.name
+                            })
+                        )}
+                        on:change={handleChange}
+                        bind:hasError={hasError}
+                    />
+                    <button
+                        class="bg-accent py-3 px-8 rounded-md"
+                        on:click={handleSubmit}
+                        disabled={hasError || submitting}
+                    >
+                        Add Server
+                    </button>
+                </Loading>
+            {/if}
+        </div>
         {#if servers && servers.length > 0}
-            <h1>Alerting to {servers.length} servers</h1>
-            <div class="my-4">
-                <button 
-                    class="bg-accent rounded-md py-2 px-8 border-none"
-                    on:click={handleModal}
-                >
-                    Add Guild
-                </button>
-            </div>
             {#each servers as server}
                 <div class="w-1/2 h-20 rounded-md bg-light-primary my-2 flex items-center justify-between px-3">
                     <div class="flex items-center justify-between   ">
@@ -168,57 +216,6 @@
                     </button>
                 </div>
             {/each}
-        {:else}
-            <div class="w-full h-full flex items-center justify-center">
-                <div class="border-2 border-gray-400 border-dashed rounded-md py-32 px-64 mb-24 flex flex-col items-center justify-center">
-                    <span class="font-bold">No servers found</span>
-                    <span class="text-gray-400 mt-2">Get started with alerting by adding an alert server</span>
-                    <button
-                        class="py-2 px-4 rounded-md bg-accent mt-8 font-bold"
-                        on:click={handleModal}
-                    >
-                        + Add Server
-                    </button>
-                </div>
-            </div>
         {/if}
     </div>
 </Loading>
-
-<style lang="postcss">
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    @keyframes fadeOut {
-        0% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
-    .modal.active {
-        @apply flex items-center justify-center;
-        animation: 0.1s ease-in-out fadeIn;
-    }
-    .modal.inactive {
-        animation: 0.1s ease-in-out fadeOut;
-    }
-
-    .modal-content {
-        width: 800px;
-        height: 300px;
-    }
-    .modal .action button {
-        @apply rounded-md h-10 px-10 border-none mx-2;
-    }
-
-    .form select {
-        @apply rounded-md bg-light-primary py-2 pl-2 pr-8 border border-solid border-gray-600;
-    }
-</style>

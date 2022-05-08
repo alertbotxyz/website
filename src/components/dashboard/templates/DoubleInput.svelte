@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import "./inputs.css";
 
     import Input from "../../Input.svelte";
     import InputLabel from "../../InputLabel.svelte";
@@ -30,7 +31,7 @@
     />
     <div class="flex flex-row w-full">
         <Input 
-            className="rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 mb-2 font-bold focus:border-accent"
+            className="input focus:border-accent"
             name={left.name}
             error={right.error ? "_empty" : left.error}
             placeholder={left.placeholder}
@@ -42,7 +43,7 @@
             bind:hasError={hasError}
         />
         <Input 
-            className="rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 mb-2 font-bold focus:border-accent"
+            className="input focus:border-accent"
             name={right.name}
             error={left.error ? "_empty" : right.error}
             placeholder={right.placeholder}

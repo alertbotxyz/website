@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import "./inputs.css";
 
     import Input from "../../Input.svelte";
     import InputLabel from "../../InputLabel.svelte";
@@ -41,7 +42,7 @@
     />
     <div class="flex flex-row">
         <Input 
-            className="rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 mb-2 w-full font-bold"
+            className="input"
             {name}
             {error}
             {placeholder}

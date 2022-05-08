@@ -1,0 +1,15 @@
+.footer .footer-container {
+    @apply flex flex-col;
+}
+.footer .footer-container.link-container {
+    @apply xs:w-32;
+}
+.footer .footer-container .link-title {
+    @apply text-xl font-bold mb-4;
+}
+.footer .footer-container .link {
+    @apply text-gray-400 my-2;
+}
+.footer .footer-container .social {
+    @apply flex items-center justify-center h-8 w-8 mr-2 rounded-full border border-solid border-gray-600 md:h-10 md:w-10 md:text-xl;
+}

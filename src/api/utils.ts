@@ -44,7 +44,7 @@ export const makeRequest = async (endpoint: string, options?: {
             ok: res.ok,
             data: json,
             error: {
-                message: json?.message,
+                message: json?.message || json?.error?.message,
             },
         };
     } catch (err) {

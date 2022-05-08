@@ -18,7 +18,7 @@
     
     const dispatch = createEventDispatcher();
 
-    if(required && !defaultValue) {
+    if (required && !defaultValue) {
         error = "This field is required";
         hasError = true;
     };

@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import "./inputs.css";
 
     import Input from "../../Input.svelte";
     import InputLabel from "../../InputLabel.svelte";
@@ -32,7 +33,7 @@
         {required}
     />
     <Input 
-        className="rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 mb-2 w-full font-bold focus:border-accent"
+        className="input focus:border-accent"
         reactive
         {defaultValue}
         on:input={change}
