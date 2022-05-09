@@ -19,6 +19,7 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
 
     $: userGuilds = [];
     $: guildInfo = undefined;
+    $: guildInfoCache = [];
     $: data = {
         guildId: "",
         channelId: "",
@@ -27,19 +28,25 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
 
     const fetchGuild = () => {
         fetchingGuild = true;
-        getGuildInfo(data.guildId).then(res => {
-            if (!res.ok || res.data.error) {
-                addToast({
-                    type: "error",
-                    message: res.error.message,
-                    title: "There was an error fetching guild info"
-                });
-            } else {
-                guildInfo = res.data;
-            };
-            console.log(guildInfo);
+
+        if (guildInfoCache.find(g => g.id === data.guildId)) {
             fetchingGuild = false;
-        });
+            guildInfo = guildInfoCache.find(g => g.id === data.guildId);
+        } else {
+            getGuildInfo(data.guildId).then(res => {
+                if (!res.ok || res.data.error) {
+                    addToast({
+                        type: "error",
+                        message: res.error.message,
+                        title: "There was an error fetching guild info"
+                    });
+                } else {
+                    guildInfo = res.data;
+                    guildInfoCache.push(guildInfo);
+                };
+                fetchingGuild = false;
+            });
+        };
     };
 
     getAllGuilds().then(res => {
