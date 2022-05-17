@@ -5,7 +5,7 @@
 
     const defaultUser = {
         name: "Alertbot",
-        iconUrl: "https://cdn.discordapp.com/attachments/967845567612989462/970022421606322186/alertbot.png",
+        iconUrl: "https://storage.googleapis.com/alertbot-images/logo.png",
     }
 </script>
 

@@ -5,6 +5,7 @@
         "docs": "docs.alertbot.net",
         "support-server": "discord.com/alertbot",
         "bot-invite": "discord.com/invite/alertbot",
+        "login": "http://localhost:50451/api/v1/discord/login",
         "social-twitter": "",
         "social-facebook": "",
         "social-youtube": "",

@@ -1,3 +1,7 @@
+<script>
+    export let user;
+</script>
+
 <div class="sidebar-container bg-dark-primary h-screen flex flex-col justify-between">
     <a
         class="logo-container flex flex-row items-center pl-6 h-20"
@@ -73,16 +77,27 @@
         </a>
     </div>
     <a
-        class="account-container flex flex-row items-center pl-6 h-20"
+        class="account-container flex flex-row items-center h-20"
         href="/dashboard/account"
     >
-        <!-- <button class="bg-indigo-500 px-8 py-2 rounded-md border-none font-bold">Sign In to your account</button> -->
-        <img
-            src="/profile.png"
-            alt="avatar"
-            class="w-10 rounded-md"
-        />
-        <span class="ml-2 font-bold">Atom#6969</span>
+        {#if user}
+            <img
+                src={
+                    user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : 
+                    "https://storage.googleapis.com/alertbot-images/discord_default_avatar.png"
+                } 
+                alt="avatar"
+                class="w-10 rounded-md ml-6"
+            />
+            <span class="ml-2 font-bold">{user.name}#{user.discriminator}</span>
+        {:else}
+            <a
+                href="/redirect?link=login"
+                class="bg-indigo-500 text-sm px-8 py-2 ml-2 rounded-md border-none font-bold"
+            >
+                Sign In to your account
+            </a>
+        {/if}
     </a>
 </div>
 

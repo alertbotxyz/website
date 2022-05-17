@@ -3,7 +3,7 @@
     href="/"
 >
     <img
-        src="/favicon.png"
+        src="https://storage.googleapis.com/alertbot-images/logo.png"
         alt="alertbot"
         class="w-8 rounded-md"
     />

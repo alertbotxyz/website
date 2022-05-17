@@ -7,7 +7,8 @@
 
     export let error;
     $: loading = true;
-
+    $: user = undefined;
+    
     makeRequest("/").then(res => {
         if(!res.ok) {
             error = res.error.message;
@@ -15,7 +16,11 @@
         loading = false;
     });
 
-    getUser();
+    getUser().then(res => {
+        if (res.ok) {
+            user = res.data;
+        };
+    });
 </script>
 
 {#if error}
@@ -29,7 +34,7 @@
     </div>
 {:else}
     <div class="flex flex-row max-h-screen">
-        <Sidebar />
+        <Sidebar {user}/>
         <div class="w-full overscroll-y-scroll slow-fade-in">
             <Loading {loading}>
                 <slot />

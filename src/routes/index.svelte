@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <img
-                    src="https://cdn.discordapp.com/attachments/972228240636772412/972236997320142908/dashboard-create-template.png"
+                    src="https://storage.googleapis.com/alertbot-images/dashboard-create-template.png"
                     alt="alertbot-dashboard"
                     class="w-6xx lg:w-8xx md:w-6xx sm:w-4xx xs:w-3xx rounded-md mx-20 lg:my-20 md:my-16 border border-solid border-dark-primary"
                 />
