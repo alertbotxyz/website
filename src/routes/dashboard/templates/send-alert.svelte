@@ -54,7 +54,7 @@
         sendAlert({
             name: template.name,
             inputs,
-        }).then(data => {
+        }).then(res => {
             if (res.ok) {
                 success = true;
             } else {

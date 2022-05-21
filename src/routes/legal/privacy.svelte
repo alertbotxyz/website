@@ -1,22 +1,41 @@
 <div class="w-full flex flex-col items-center pt-16">
-    <div class="container">
-        <h1 class="font-bold mb-4">Privacy Policy</h1>
-        <p class="text-gray-400 my-4 font-bold">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+  <div class="container">
+    <h1 class="font-bold mb-4">Privacy Policy</h1>
+    <!-- TODO: Updated date -->
+    <p class="paragraph">Last updated at: TODO DATE</p>
+    <p class="paragraph">
+        This privacy notice for AlertBot ('<span>Company</span>', '<span>we</span>', '<span>us</span>', '<span>our</span>'), describes how and why we might collect, store, use, and/or share ('<span>process</span>') your information when you use our services ('<span>Services</span>'), such as when you:
+    </p>
+    <ul class="list">
+        <li>
+            Visit our website at
             <a
                 class="text-accent"
-                href="/"
+                href="https://alertbot.net"
             >
-                link
+                https://www.alertbot.net
             </a>
-            officia ipsam velit repellendus alias mollitia sapiente consequatur sunt! At eum dolorum nam voluptatibus modi, illo veniam! Incidunt laudantium obcaecati quae?
-        </p>
-        <p class="text-xl font-bold my-4">Lorem ipsum</p>
-    </div>
+            , or any website of ours that links to this privacy notice
+        </li>
+        <li>
+            Engage with us in other related ways, including any sales, marketing, or events
+        </li>
+    </ul>
+    <div class="paragraph"><span>Questions or concerns?</span> Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at contact@alertbot.net.</div>
+  </div>
 </div>
 
-<style>
-    .container {
-        width: 700px;
-    }
+<style lang="postcss">
+  .container {
+    width: 1200px;
+  }
+  .paragraph {
+    @apply text-gray-400 my-8 font-bold;
+  }
+  .list {
+    @apply ml-12;
+  }
+  .list li {
+    @apply my-4;
+  }
 </style>

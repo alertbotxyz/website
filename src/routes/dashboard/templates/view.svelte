@@ -30,7 +30,7 @@
             <TemplateForm 
                 title="Edit Template: {template.name}"
                 defaultTemplate={template}
-                type="Edit"
+                type="update"
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">

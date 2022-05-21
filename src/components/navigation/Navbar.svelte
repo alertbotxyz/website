@@ -17,7 +17,7 @@
         <div class="flex flex-row px-8 lg:px-2 md:hidden">
             <a
                 class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
-                href="/dashboard"
+                href="/dashboard/templates/view"
             >
                 Dashboard
             </a>
@@ -71,7 +71,7 @@
                 <div class="flex flex-col px-8 w-full mb-16">
                     <a
                         class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
-                        href="/dashboard"
+                        href="/dashboard/templates/view"
                     >
                         Dashboard
                     </a>

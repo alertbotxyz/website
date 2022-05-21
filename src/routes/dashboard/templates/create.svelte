@@ -19,7 +19,6 @@
                 });
                 success = false;
             } else {
-                error = "";
                 success = true;
             };
             submitting = false;
@@ -72,4 +71,5 @@
             },
         } : undefined
     }
+    type="create"
 />

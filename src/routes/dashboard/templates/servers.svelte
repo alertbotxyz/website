@@ -206,13 +206,44 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
         {#if servers && servers.length > 0}
             {#each servers as server}
                 <div class="w-1/2 h-20 rounded-md bg-light-primary my-2 flex items-center justify-between px-3">
-                    <div class="flex items-center justify-between   ">
-                        <img 
-                            class="w-12 rounded-full"
-                            src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
-                            alt="guildicon"
-                        />
-                        <p class="pl-4 text-gray-300 font-bold text-xl truncate">{server.guild.name || "Guild name"}</p>
+                    <div class="flex flex-row items-center">
+                        <div class="flex items-center justify-between   ">
+                            <img 
+                                class="w-12 rounded-full"
+                                src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
+                                alt="guildicon"
+                            />
+                            <span
+                                class="pl-2 text-gray-300 font-bold text-xl hover:cursor-default"
+                                data-tooltip="Guild id: {server.guild.id}" 
+                            >
+                                {server.guild.name || "Guild name"}
+                            </span>
+                        </div>
+                        <div class="flex flex-col ml-4">
+                            <span class="text-xs text-gray-400 mb-1 flex flex-row">
+                                In channel 
+                                <span
+                                    class="font-bold text-accent ml-1 hover:cursor-default"
+                                    data-tooltip="Channel id: {server.channel.id}"
+                                >
+                                    #{server.channel.name}
+                                </span>
+                            </span>
+                            {#if server.role?.name}
+                                <span class="text-xs text-gray-400 flex flex-row">
+                                    With role 
+                                    <span 
+                                        class="font-bold text-accent ml-1 hover:cursor-default"
+                                        data-tooltip="Role id: {server.role?.id}"
+                                    >
+                                        @{server.role?.name}
+                                    </span>
+                                </span>
+                            {:else}
+                                <span class="text-xs text-gray-400">With no mention role</span>
+                            {/if}
+                        </div>
                     </div>
                     <button
                         class="bg-gray-500 px-8 py-2 rounded-md flex items-center justify-center" 

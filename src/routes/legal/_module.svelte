@@ -3,6 +3,7 @@
 </script>
 
 <div class="flex flex-col h-full">
-    <Navbar />
-    <slot />
+    <Navbar>
+        <slot />
+    </Navbar>
 </div>

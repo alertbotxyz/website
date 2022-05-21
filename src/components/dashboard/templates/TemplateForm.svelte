@@ -7,6 +7,7 @@
     import SuccessModal from "../../SuccessModal.svelte";
     import { deleteTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
+    import { fly } from "svelte/transition";
     
     export let defaultTemplate = undefined;
     export let title;
@@ -14,6 +15,7 @@
     export let submitting = false;
 
     $: success = false;
+    $: updated = false;
 
     $: template = defaultTemplate ? defaultTemplate : {
         name: "",
@@ -105,7 +107,29 @@
     ]}
 />
 
-<div class="flex flex-col w-full items-center fade-in">
+{#if updated}
+    <div 
+        class="absolute w-full bottom-4 flex flex-row justify-center items-center"
+        in:fly={{ y: 200, duration: 300 }}
+        out:fly={{ y: -200, duration: 300 }}
+    >
+        <div class="flex flex-row justify-between items-center bg-very-dark-primary p-4 rounded-md w-8xx">
+            <span>You have unsaved changes</span>
+            <div class="flex flex-row">
+                <button class="w-28 rounded-md bg-light-primary mx-2">Reset</button>
+                <button
+                    class="w-28 rounded-md bg-accent mx-2 py-2"
+                    type="submit"
+                    disabled={hasError || submitting || !updated}
+                >
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+{/if}
+
+<div class="flex flex-col w-full items-center fade-in pb-8">
     <h1>{title}</h1>
     <div class="flex flex-row w-full justify-center">
         <div class="dashboard-form-container">
@@ -188,14 +212,34 @@
                     on:change={handleChange}
                     bind:hasError={hasError}
                 />
-                <button
-                    type="submit"
-                    class="primary-button bg-accent mt-4"
-                    disabled={hasError || submitting}
-                >
-                    {type}
-                </button>
-                {#if defaultTemplate && defaultTemplate.name}
+                {#if type === "update"}
+                    <div class="pt-4">
+                        <h2>Parameters</h2>
+                        {#if template.parameters && Object.values(template.parameters).length > 0}
+                            {#each Object.values(template.parameters) as parameter}
+                                <div class="parameter">
+                                    <div class="flex flex-row items-center">
+                                        <i class='bx bx-grid-vertical text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
+                                        <span class="ml-2">{parameter.name}</span>
+                                    </div>
+                                    <i class='bx bx-x text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
+                                </div>
+                            {/each}
+                        {:else}
+                            <span class="text-gray-400">No parameters found</span>
+                        {/if}
+                    </div>
+                {/if}
+                {#if type === "create"}
+                    <button
+                        type="submit"
+                        class="primary-button bg-accent mt-4"
+                        disabled={hasError || submitting || !updated}
+                    >
+                        Create
+                    </button>
+                {/if}
+                {#if type === "update"}
                     <div class="flex flex-row w-full justify-between">
                         <button
                             type="submit"
@@ -248,3 +292,9 @@
         </div>
     </div>
 </div>
+
+<style lang="postcss">
+    .parameter {
+        @apply flex flex-row justify-between items-center bg-dark-primary w-4xx p-2 rounded-sm border border-solid border-light-primary my-2;
+    }
+</style>

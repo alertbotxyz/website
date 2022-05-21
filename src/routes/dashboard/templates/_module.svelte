@@ -8,32 +8,34 @@
     $afterUrlChange(({ route }) => endpoint = getEndpoint(route));
 </script>
 
-<div class="flex flex-col pt-16 h-full max-h-screen">
-    <div class="flex flex-row w-full px-64 mb-16 border-x-0 ">
-        <a
-            class="tab {endpoint === "create" && "active"}"
-            href="/dashboard/templates/create"
-        >
-            Create Template
-        </a>
-        <a
-            class="tab {endpoint === "view" && "active"}"
-            href="/dashboard/templates/view"
-        >
-            View Templates
-        </a>
-        <a
-            class="tab {endpoint === "send-alert" && "active"}"
-            href="/dashboard/templates/send-alert"
-        >
-            Send Alert
-        </a>
-        <a
-            class="tab {endpoint === "servers" && "active"}"
-            href="/dashboard/templates/servers"
-        >
-            Servers
-        </a>
+<div class="flex flex-col pt-16 h-full">
+    <div class="flex flex-col items-center w-full mb-16 border-x-0">
+        <div class="flex flex-row justify-center w-10xx">
+            <a
+                class="tab {endpoint === "create" && "active"}"
+                href="/dashboard/templates/create"
+            >
+                Create Template
+            </a>
+            <a
+                class="tab {endpoint === "view" && "active"}"
+                href="/dashboard/templates/view"
+            >
+                View Templates
+            </a>
+            <a
+                class="tab {endpoint === "send-alert" && "active"}"
+                href="/dashboard/templates/send-alert"
+            >
+                Send Alert
+            </a>
+            <a
+                class="tab {endpoint === "servers" && "active"}"
+                href="/dashboard/templates/servers"
+            >
+                Servers
+            </a>
+        </div>
     </div>
     <slot />
 </div>

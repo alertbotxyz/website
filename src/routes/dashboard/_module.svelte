@@ -22,20 +22,18 @@
         };
     });
 </script>
-
 {#if error}
-    <div class="flex flex-col h-screen">
-        <Navbar />
+    <Navbar>
         <div class="h-full w-full flex flex-col items-center justify-center slow-fade-in">
             <h1 class="error-code font-bold animate-bounce">500</h1>
             <span class="text-3xl font-bold">Service Unavailable</span>
             <span class="text-xl text-gray-400">We are sorry but out service is currently unavailable...</span>
         </div>
-    </div>
+    </Navbar>
 {:else}
-    <div class="flex flex-row max-h-screen">
-        <Sidebar {user}/>
-        <div class="w-full overscroll-y-scroll slow-fade-in">
+    <div class="flex flex-row max-h-screen overflow-hidden">
+        <Sidebar {user} loggedIn={user && !error}/>
+        <div class="w-full slow-fade-in overflow-y-scroll">
             <Loading {loading}>
                 <slot />
             </Loading>

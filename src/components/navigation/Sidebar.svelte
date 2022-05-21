@@ -1,5 +1,6 @@
 <script>
     export let user;
+    export let loggedIn = false;
 </script>
 
 <div class="sidebar-container bg-dark-primary h-screen flex flex-col justify-between">
@@ -80,23 +81,25 @@
         class="account-container flex flex-row items-center h-20"
         href="/dashboard/account"
     >
-        {#if user}
-            <img
-                src={
-                    user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : 
-                    "https://storage.googleapis.com/alertbot-images/discord_default_avatar.png"
-                } 
-                alt="avatar"
-                class="w-10 rounded-md ml-6"
-            />
-            <span class="ml-2 font-bold">{user.name}#{user.discriminator}</span>
-        {:else}
-            <a
-                href="/redirect?link=login"
-                class="bg-indigo-500 text-sm px-8 py-2 ml-2 rounded-md border-none font-bold"
-            >
-                Sign In to your account
-            </a>
+        {#if loggedIn}
+            {#if user}
+                <img
+                    src={
+                        user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : 
+                        "https://storage.googleapis.com/alertbot-images/discord_default_avatar.png"
+                    } 
+                    alt="avatar"
+                    class="w-10 rounded-md ml-6"
+                />
+                <span class="ml-2 font-bold">{user.name}#{user.discriminator}</span>
+            {:else}
+                <a
+                    href="/redirect?link=login"
+                    class="bg-indigo-500 text-sm px-8 py-2 ml-2 rounded-md border-none font-bold"
+                >
+                    Sign In to your account
+                </a>
+            {/if}
         {/if}
     </a>
 </div>
