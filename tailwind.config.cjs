@@ -24,7 +24,6 @@ module.exports = {
         84: "22rem",
         108: "28rem",
         120: "32rem",
-        120: "32rem",
         "1xx": "100px",
         "2xx": "200px",
         "3xx": "300px",
@@ -36,6 +35,10 @@ module.exports = {
         "9xx": "900px",
         "10xx": "1000px",
       },
+      fontSize: {
+        "10xl": "10rem",
+        "11xl": "12rem",
+      }
     },
     screens: {
       xl: { max: "1450px" },

@@ -105,5 +105,5 @@
             </div>
         </div>
     {/if}
-    <slot />
+    <slot/>
 </div>

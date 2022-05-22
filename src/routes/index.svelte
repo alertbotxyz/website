@@ -1,6 +1,7 @@
 <script>
     import Navbar from "../components/navigation/Navbar.svelte";
     import Footer from "../components/footer/Footer.svelte";
+    import "../styles/index.css";
 </script>
 
 <div class="flex flex-col items-center">
@@ -13,13 +14,13 @@
                     <div class="flex flex-row sm:flex sm:flex-col">
                         <a
                             href="/"
-                            class="button-links bg-gray-500 mr-4 sm:mr-0 sm:mb-2"
+                            class="button-links bg-gray-500 mr-4"
                         >
                             Invite
                         </a>
                         <a
                             href="/"
-                            class="button-links bg-indigo-500 ml-4 sm:ml-0 sm:mt-2"
+                            class="button-links bg-indigo-500 ml-4"
                         >
                             Features
                         </a>
@@ -154,30 +155,3 @@
         <Footer />
     </Navbar>
 </div>
-
-<style lang="postcss">
-    .button-links {
-        @apply rounded-md flex items-center justify-center text-white text-xl py-3 w-48;
-    }
-    .features {
-        max-width: 1400px;
-    }
-    .features .feature {
-        @apply flex flex-row mt-16 mx-4;
-    }
-    .features .feature .icon {
-        @apply bg-accent rounded-md h-12 px-3 flex items-center justify-center mr-4 text-2xl;
-    }
-    .features .feature .title {
-        @apply mb-2 text-2xl font-bold;
-    }
-    .features .feature .description {
-        @apply text-gray-400 text-lg;
-    }
-    .showcase .example {
-        @apply flex items-center justify-evenly mb-24;
-    }
-    .showcase .example-image {
-        @apply mx-24 w-5xx;
-    }
-</style>

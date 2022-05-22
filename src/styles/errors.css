@@ -1,0 +1,39 @@
+.error-code {
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(90deg, #331cff, #1cddff);
+    background-clip: text;
+    color: transparent;
+    */
+    @apply text-11xl sm:text-9xl;
+    animation: flow 10s ease-in-out infinite;
+    background: linear-gradient(-45deg, #00ffc3, #294cff, #5521ff, #8c21ff, #ff21e9);
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    /* color: transparent; */
+}
+@keyframes flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.slow-fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
