@@ -4,6 +4,7 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
+  darkMode: "class",
   content: ["./src/**/*.svelte"],
   theme: {
     extend: {
@@ -34,8 +35,11 @@ module.exports = {
         "8xx": "800px",
         "9xx": "900px",
         "10xx": "1000px",
+        "11xx": "1100px",
+        "12xx": "1200px",
       },
       fontSize: {
+        "tiny": "0.6rem",
         "10xl": "10rem",
         "11xl": "12rem",
       }
@@ -45,7 +49,9 @@ module.exports = {
       lg: { max: "1280px" },
       md: { max: "768px" },
       sm: { max: "640px" },
+      "2xs": { max: "500px" },
       xs: { max: "380px" },
+      tiny: { max: "300px" },
     },
   },
   variants: {},

@@ -1,11 +1,13 @@
 <script>
-    import InputLabel from "../../../components/InputLabel.svelte";
-    import Loading from "../../../components/Loading.svelte";
     import { addServer, deleteServer, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
     import { addToast } from "../../../stores/toasts";
-import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
-import SelectInput from "../../../components/dashboard/templates/SelectInput.svelte";
-import SuccessModal from "../../../components/SuccessModal.svelte";
+    import InputLabel from "../../../components/InputLabel.svelte";
+    import Loading from "../../../components/Loading.svelte";
+    import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
+    import SelectInput from "../../../components/dashboard/templates/SelectInput.svelte";
+    import SuccessModal from "../../../components/modals/SuccessModal.svelte";
+    import "../../../styles/templates.css";
+
 
     export let servers = [];
 
@@ -66,6 +68,7 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
         getAllServers().then(res => {
             if (res.ok) {
                 servers = res.data;
+                data.guildId = "";
             } else {
                 addToast({
                     type: "error",
@@ -150,14 +153,15 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
     }}
 />
 <Loading {loading}>
-    <div class="flex flex-col items-center">
-        <h1>Alerting to {servers.length} servers</h1>
-        <div class="flex flex-row my-8 items-end">
+    <div class="flex flex-col items-center pb-8">
+        <h1 class="text-center xs:text-2xl">Alerting to {servers.length} servers</h1>
+        <div class="flex flex-row lg:flex-col my-8 items-end pl-8 justify-center lg:w-5/6">
             <SelectInput
                 name="guildId"
                 title="Guild"
                 placeholder="Choose a guild"
                 required
+                fullWidth
                 options={userGuilds.map(guild => ({
                         value: guild.id,
                         text: guild.name
@@ -165,6 +169,7 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
                 )}
                 on:change={handleChange}
                 bind:hasError={hasError}
+                extraClass={"lg:mb-4"}
             />
             {#if data.guildId}
                 <Loading loading={fetchingGuild}>
@@ -173,6 +178,7 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
                         title="Channel"
                         placeholder="Choose a channel"
                         required
+                        fullWidth
                         options={guildInfo.channels.map(channel => ({
                                 value: channel.id,
                                 text: channel.name
@@ -180,11 +186,13 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
                         )}
                         on:change={handleChange}
                         bind:hasError={hasError}
+                        extraClass={"lg:mb-4"}
                     />
                     <SelectInput
                         name="mentionId"
                         title="Mention Role"
                         placeholder="Choose a role"
+                        fullWidth
                         options={guildInfo.roles.map(role => ({
                                 value: role.id,
                                 text: role.name
@@ -192,9 +200,10 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
                         )}
                         on:change={handleChange}
                         bind:hasError={hasError}
+                        extraClass={"lg:mb-4"}
                     />
                     <button
-                        class="bg-accent py-3 px-8 rounded-md"
+                        class="bg-accent py-3 px-8 rounded-md lg:mt-8 lg:w-full lg:mr-4"
                         on:click={handleSubmit}
                         disabled={hasError || submitting}
                     >
@@ -204,56 +213,61 @@ import SuccessModal from "../../../components/SuccessModal.svelte";
             {/if}
         </div>
         {#if servers && servers.length > 0}
-            {#each servers as server}
-                <div class="w-1/2 h-20 rounded-md bg-light-primary my-2 flex items-center justify-between px-3">
-                    <div class="flex flex-row items-center">
-                        <div class="flex items-center justify-between   ">
-                            <img 
-                                class="w-12 rounded-full"
-                                src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
-                                alt="guildicon"
-                            />
-                            <span
-                                class="pl-2 text-gray-300 font-bold text-xl hover:cursor-default"
-                                data-tooltip="Guild id: {server.guild.id}" 
-                            >
-                                {server.guild.name || "Guild name"}
-                            </span>
-                        </div>
-                        <div class="flex flex-col ml-4">
-                            <span class="text-xs text-gray-400 mb-1 flex flex-row">
-                                In channel 
+            <div class="grid grid-cols-1 w-full place-items-center sm:grid-cols-2 xs:grid-cols-1">
+                {#each servers as server}
+                    <div class="w-1/2 lg:w-5/6 h-20 md:h-auto md:py-4 rounded-md bg-light-primary my-2 flex md:flex-col items-center justify-between px-3 sm:px-0">
+                        <div class="flex flex-row items-center md:justify-between md:w-full md:px-8 sm:px-2 sm:flex-col">
+                            <div class="flex flex-row sm:flex-col items-center sm:mb-4 xs:flex-row">
+                                <img 
+                                    class="w-12 rounded-full"
+                                    src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
+                                    alt="guildicon"
+                                />
                                 <span
-                                    class="font-bold text-accent ml-1 hover:cursor-default"
-                                    data-tooltip="Channel id: {server.channel.id}"
+                                    class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default"
+                                    data-tooltip="Guild id: {server.guild.id}" 
                                 >
-                                    #{server.channel.name}
+                                    {server.guild.name || "Guild name"}
                                 </span>
-                            </span>
-                            {#if server.role?.name}
-                                <span class="text-xs text-gray-400 flex flex-row">
-                                    With role 
-                                    <span 
-                                        class="font-bold text-accent ml-1 hover:cursor-default"
-                                        data-tooltip="Role id: {server.role?.id}"
+                            </div>
+                            <div class="flex flex-col ml-4 2xs:ml-0 2xs:w-full 2xs:items-center">
+                                <span class="server-guild-info mb-1">
+                                    In channel 
+                                    <span
+                                        class="text"
+                                        data-tooltip="Channel id: {server.channel.id}"
                                     >
-                                        @{server.role?.name}
+                                        #{server.channel.name}
                                     </span>
                                 </span>
-                            {:else}
-                                <span class="text-xs text-gray-400">With no mention role</span>
-                            {/if}
+                                {#if server.role?.name}
+                                    <span class="server-guild-info">
+                                        With role 
+                                        <span 
+                                            class="text"
+                                            data-tooltip="Role id: {server.role?.id}"
+                                        >
+                                            @{server.role?.name}
+                                        </span>
+                                    </span>
+                                {:else}
+                                    <span class="server-guild-info">
+                                        With no 
+                                        <span class="text-inherit font-bold ml-1 2xs:ml-0 hover:cursor-default xs:ml-1">mention role</span>
+                                    </span>
+                                {/if}
+                            </div>
                         </div>
+                        <button
+                            class="bg-gray-500 px-8 py-2 md:mt-4 rounded-md flex items-center justify-center" 
+                            on:click={handleDeleteServer(server.channel.id)}
+                            disabled={submitting}
+                        >
+                            Delete
+                        </button>
                     </div>
-                    <button
-                        class="bg-gray-500 px-8 py-2 rounded-md flex items-center justify-center" 
-                        on:click={handleDeleteServer(server.channel.id)}
-                        disabled={submitting}
-                    >
-                        Delete
-                    </button>
-                </div>
-            {/each}
+                {/each}
+            </div>
         {/if}
     </div>
 </Loading>

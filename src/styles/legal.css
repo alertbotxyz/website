@@ -1,0 +1,18 @@
+.legal-container {
+    @apply mt-16 w-12xx lg:w-11/12;
+}
+.paragraph {
+    @apply text-gray-400 my-8 font-bold;
+}
+.list {
+    @apply ml-12;
+}
+.list li {
+    @apply my-4;
+}
+.link {
+    @apply text-accent;
+}
+.title {
+    @apply font-bold mb-4;
+}

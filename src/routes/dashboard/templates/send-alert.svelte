@@ -2,7 +2,7 @@
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import SuccessModal from "../../../components/SuccessModal.svelte";
+    import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import { getAllTemplates } from "../../../api/templates";
     import { sendAlert } from "../../../api/alert";
     import { addToast } from "../../../stores/toasts";
@@ -115,7 +115,7 @@
         <h1>Send Alert</h1>
         <select
             name="template"
-            class="w-96 rounded-md p-3 border border-solid border-gray-600 mt-4 bg-transparent"
+            class="w-96 sm:w-5/6 lg:w-120 rounded-md p-3 border border-solid border-gray-600 mt-4 bg-transparent"
             on:change={handleTemplateSelect}
         >
             <option value="" selected disabled hidden>Choose a template to alert with</option>
@@ -124,7 +124,7 @@
             {/each}
         </select>
         {#if templateName && template}
-            <div class="flex flex-row w-full justify-center">
+            <div class="flex flex-row lg:flex-col lg:items-center w-full justify-center pb-8">
                 <div class="dashboard-form-container">
                     <form
                         class="flex flex-col w-full mt-8"
@@ -176,7 +176,7 @@
                 </div>
             </div>
         {:else}
-            <p class="text-center mt-4">No template selected.</p>
+            <p class="text-center my-4">No template selected.</p>
         {/if}
     </div>
 </Loading>

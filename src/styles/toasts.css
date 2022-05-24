@@ -1,0 +1,21 @@
+.toast.error .icons.left {
+    @apply text-error;
+}
+.toast.success .icons.left {
+    @apply text-green-400;
+}
+.toast.info .icons.left {
+    @apply text-blue-400;
+}
+.toast.error .title {
+    @apply text-error;
+}
+.toast.success .title {
+    @apply text-green-400;
+}
+.toast.info .title {
+    @apply text-blue-400;
+}
+.icons {
+    @apply flex justify-center text-2xl p-3 xs:p-1 xs:pt-2 xs:text-lg;
+}

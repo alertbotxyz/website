@@ -1,5 +1,5 @@
 <a
-    class="flex flex-row items-center"
+    class="flex flex-row items-center z-100"
     href="/"
 >
     <img
@@ -7,5 +7,5 @@
         alt="alertbot"
         class="w-8 rounded-md"
     />
-    <div class="pl-2 font-bold text-2xl">Alertbot</div>
+    <div class="pl-2 font-bold text-2xl text-gray-600 dark:text-white">Alertbot</div>
 </a>

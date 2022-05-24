@@ -11,7 +11,7 @@
 </div>
 
 <div class="footer mt-32 flex-col bg-dark-primary py-16 justify-evenly w-screen hidden lg:flex lg:items-center">
-    <div class="flex flex-row w-full justify-between items-center px-24 mb-8 xs:flex xs:flex-col">
+    <div class="flex flex-row w-full justify-between items-center px-24 mb-8 md:px-10 sm:px-4 2xs:flex 2xs:flex-col">
         <About />
         <Socials />
     </div>

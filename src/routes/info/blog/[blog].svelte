@@ -1,9 +1,9 @@
-<div class="flex flex-col px-96 pt-16">
-    <!-- <img
-        src=""
+<div class="flex flex-col pt-16 w-12xx lg:w-11/12">
+    <img
+        src="https://cdn.discordapp.com/attachments/972228240636772412/972229070018449458/blog-thumb2.png" 
         alt="blog-thumbnail"
-        class="w-full h-64 roudned-md mb-4"
-    /> -->
+        class="h-84 md:h-auto w-7xx md:w-full rounded-md mb-4"
+    />
     <span class="text-accent my-4">Category</span>
     <span class="text-4xl font-bold">This is the title of the blog post</span>
     <div class="flex flex-row my-4">
@@ -13,7 +13,7 @@
     </div>
     <div class="flex flex-row mb-4">
         <img
-            src="https://cdn.discordapp.com/attachments/967845567612989462/970022421606322186/alertbot.png"
+            src="https://storage.googleapis.com/alertbot-images/logo.png"
             alt="author-avatar"
             class="w-10 h-10 mr-2 rounded-full"
         />

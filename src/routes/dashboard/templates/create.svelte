@@ -1,6 +1,6 @@
 <script>
     import TemplateForm from "../../../components/dashboard/templates/TemplateForm.svelte";
-    import SuccessModal from "../../../components/SuccessModal.svelte";
+    import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import { createTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
 

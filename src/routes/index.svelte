@@ -9,8 +9,8 @@
         <div class="flex flex-col mb-16">
             <div class="flex flex-row lg:flex-col items-center w-full mt-48 lg:mt-24 justify-evenly px-96">
                 <div class="mx-20 flex flex-col sm:mx-0 lg:items-center lg:text-center">
-                    <h1 class="text-8xl sm:text-6xl">Alertbot</h1>
-                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-300">Create presets and templates for seemless alerting.</p>
+                    <h1 class="text-8xl sm:text-6xl text-gray-600 dark:text-white">Alertbot</h1>
+                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300">Create presets and templates for seemless alerting.</p>
                     <div class="flex flex-row sm:flex sm:flex-col">
                         <a
                             href="/"

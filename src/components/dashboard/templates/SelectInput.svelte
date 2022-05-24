@@ -11,6 +11,8 @@
     export let defaultValue = undefined;
     export let required = false;
     export let options = [];
+    export let extraClass = "";
+    export let fullWidth = false;
 
     export let hasError = false;
 
@@ -39,7 +41,7 @@
     };
 </script>
 
-<div class="flex flex-col mx-4">
+<div class="flex flex-col mx-4 {fullWidth && "lg:w-full"}">
     <InputLabel
         labelFor={name}
         labelText={title}
@@ -51,7 +53,7 @@
     <select
         name={name}
         on:change={change}
-        class="{error && "error"} select focus:border-accent"
+        class="{error && "error"} {extraClass} select {fullWidth && "full-width"} focus:border-accent"
     >
         {#if placeholder}
             <option value="" selected={!defaultValue} disabled hidden>{placeholder}</option>

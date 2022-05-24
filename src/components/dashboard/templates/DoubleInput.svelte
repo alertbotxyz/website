@@ -29,7 +29,7 @@
         labelText={title}
         {required}
     />
-    <div class="flex flex-row w-full">
+    <div class="flex flex-row w-full xs:flex-col">
         <Input 
             className="input focus:border-accent"
             name={left.name}
@@ -37,7 +37,7 @@
             placeholder={left.placeholder}
             defaultValue={left.defaultValue}
             url={left.url}
-            divClass="mr-2"
+            divClass="mr-2 xs:mr-0"
             reactive
             on:input={change}
             bind:hasError={hasError}
@@ -49,7 +49,7 @@
             placeholder={right.placeholder}
             defaultValue={right.defaultValue}
             url={right.url}
-            divClass="ml-2"
+            divClass="ml-2 xs:ml-0"
             reactive
             on:input={change}
             bind:hasError={hasError}

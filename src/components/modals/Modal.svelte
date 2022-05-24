@@ -2,7 +2,7 @@
     export let active = false;
 </script>
 
-<div class="modal bg-black bg-opacity-70 hidden w-screen h-screen fixed top-0 left-0 {active ? "active" : "inactive"}">
+<div class="modal bg-black bg-opacity-70 hidden w-screen h-screen fixed top-0 left-0 {active ? "active" : "inactive"} z-50">
     <div class="content">
         <slot />
     </div>

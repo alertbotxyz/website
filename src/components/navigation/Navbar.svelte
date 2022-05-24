@@ -12,29 +12,29 @@
 </script>
 
 <div class="flex flex-col min-h-screen w-full items-center">
-    <div class="navbar bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8">
+    <div class="navbar bg-gray-300 dark:bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8 z-20">
         <Logo />
         <div class="flex flex-row px-8 lg:px-2 md:hidden">
             <a
-                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                class="text-xl mx-4 text-gray-600 dark:text-gray-300 lg:mx-2 lg:text-lg"
                 href="/dashboard/templates/view"
             >
                 Dashboard
             </a>
             <a
-                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                class="text-xl mx-4 text-gray-600 dark:text-gray-300 lg:mx-2 lg:text-lg"
                 href="/premium"
             >
                 Premium
             </a>
             <a
-                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                class="text-xl mx-4 text-gray-600 dark:text-gray-300 lg:mx-2 lg:text-lg"
                 href="/redirect?link=docs"
             >
                 Documentation
             </a>
             <a
-                class="text-xl mx-4 text-gray-300 lg:mx-2 lg:text-lg"
+                class="text-xl mx-4 text-gray-600 dark:text-gray-300 lg:mx-2 lg:text-lg"
                 href="/redirect?link=support-server"
             >
                 Support
@@ -59,7 +59,7 @@
     </div>
     {#if menu}
         <div 
-            class="hidden md:flex flex-col {menu ? "absolute" : "hidden"} h-screen top-20 items-center bg-black bg-opacity-70 w-full justify-between"
+            class="hidden md:flex flex-col {menu ? "absolute" : "hidden"} h-screen top-20 items-center bg-black bg-opacity-70 w-full justify-between z-20"
             in:fade={{ duration: 300 }}
             out:fade={{ duration: 300 }}
         >

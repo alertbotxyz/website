@@ -71,11 +71,6 @@ input {
 	animation: 0.3s ease-out 0s 1 fadeIn;
 }
 
-.dashboard-form-container {
-	width: 550px;
-	@apply flex flex-col items-center;
-}
-
 [data-tooltip] {
 	position: relative;
 	z-index: 2;

@@ -10,7 +10,7 @@
 
 <div class="flex flex-col pt-16 h-full">
     <div class="flex flex-col items-center w-full mb-16 border-x-0">
-        <div class="flex flex-row justify-center w-10xx">
+        <div class="flex flex-row justify-center w-10xx lg:w-11/12 md:flex-col">
             <a
                 class="tab {endpoint === "create" && "active"}"
                 href="/dashboard/templates/create"

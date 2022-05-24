@@ -46,13 +46,12 @@
                 </div>
             </div>
         {:else}
-            <div class="rounded-md w-full flex flex-col items-center px-72">
-                <h1>Select Template</h1>
-                <span class="mt-4">Select a template</span>
+            <div class="rounded-md w-full flex flex-col items-center px-72 lg:px-0 lg:w-10/12">
+                <h1 class="xs:text-2xl">Select Template</h1>
                 <div class="template-container w-full">
                     {#each templates as templ}
                         <a
-                            class="template flex flex-row items-center bg-light-primary py-6 px-4 w-full justify-between rounded-md my-4 hover:text-red-500"
+                            class="template flex flex-row items-center bg-light-primary py-6 px-4 w-full justify-between rounded-md my-4"
                             href="?template={templ.name}"
                         >
                             <span class="text-xl font-bold">{templ.name}</span>
@@ -72,8 +71,5 @@
     .template:hover span{
         @apply text-accent;
         transition: all 0.3s ease-in-out;
-    }
-    .template-container .template:first-of-type{
-        color: red;
     }
 </style>

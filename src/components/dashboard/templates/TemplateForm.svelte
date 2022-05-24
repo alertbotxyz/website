@@ -4,7 +4,7 @@
     import DoubleInput from "../../../components/dashboard/templates/DoubleInput.svelte";
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
-    import SuccessModal from "../../SuccessModal.svelte";
+    import SuccessModal from "../../modals/SuccessModal.svelte";
     import { deleteTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
     import { fly } from "svelte/transition";
@@ -130,8 +130,8 @@
 {/if}
 
 <div class="flex flex-col w-full items-center fade-in pb-8">
-    <h1>{title}</h1>
-    <div class="flex flex-row w-full justify-center">
+    <h1 class="text-center xs:text-2xl">{title}</h1>
+    <div class="flex flex-row lg:flex-col lg:items-center w-full justify-center">
         <div class="dashboard-form-container">
             <form
                 class="flex flex-col w-full mt-8"
@@ -217,7 +217,7 @@
                         <h2>Parameters</h2>
                         {#if template.parameters && Object.values(template.parameters).length > 0}
                             {#each Object.values(template.parameters) as parameter}
-                                <div class="parameter">
+                                <div class="flex flex-row justify-between items-center bg-dark-primary w-4xx sm:w-full p-2 rounded-sm border border-solid border-light-primary my-2">
                                     <div class="flex flex-row items-center">
                                         <i class='bx bx-grid-vertical text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
                                         <span class="ml-2">{parameter.name}</span>
@@ -240,10 +240,10 @@
                     </button>
                 {/if}
                 {#if type === "update"}
-                    <div class="flex flex-row w-full justify-between">
+                    <div class="flex flex-row w-full justify-between 2xs:flex-col">
                         <button
                             type="submit"
-                            class="primary-button w-full mr-4 bg-red-400 mt-4"
+                            class="primary-button w-full mr-4 bg-red-400 mt-4 2xs:mr-0"
                             disabled={hasError || submitting}
                             on:click={handleDeleteTemplate}
                         >
@@ -251,7 +251,7 @@
                         </button>
                         <button
                             type="submit"
-                            class="primary-button w-full ml-4 bg-gray-500 mt-4"
+                            class="primary-button w-full ml-4 bg-gray-500 mt-4 2xs:ml-0"
                         >
                             Share
                         </button>
@@ -292,9 +292,3 @@
         </div>
     </div>
 </div>
-
-<style lang="postcss">
-    .parameter {
-        @apply flex flex-row justify-between items-center bg-dark-primary w-4xx p-2 rounded-sm border border-solid border-light-primary my-2;
-    }
-</style>

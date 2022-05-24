@@ -4,3 +4,10 @@
 .select {
     @apply rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent py-3 pl-2 w-72;
 }
+.select.full-width {
+    @apply lg:w-full;
+}
+.dashboard-form-container {
+	width: 550px;
+	@apply flex flex-col items-center lg:w-2/3 xs:w-4/5;
+}

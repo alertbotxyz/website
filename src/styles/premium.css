@@ -1,0 +1,43 @@
+.pricing .header {
+    @apply flex flex-row justify-between bg-light-primary p-4 md:py-3 md:text-sm;
+}
+.pricing .header .text {
+    @apply md:text-sm;
+}
+.pricing .columns {
+    @apply flex flex-row justify-between;
+    width: 70%;
+}
+.pricing .section {
+    @apply flex flex-row justify-between p-4;
+}
+.pricing .section .columns .pricing-column {
+    @apply flex flex-col items-center;
+}
+.pricing .section .columns .pricing-column .price {
+    @apply flex flex-row;
+}
+.pricing .section .columns .pricing-column .price .text {
+    @apply text-xl font-bold md:text-base;
+}
+.pricing .section .columns .pricing-column .price .frequency {
+    @apply text-gray-400 ml-1 mt-1 md:text-xs;
+}
+.pricing .section .columns .pricing-column .subscribe {
+    @apply py-2 rounded-md mt-2 w-36 text-center md:text-xs sm:text-tiny md:w-24 sm:w-16;
+}
+.pricing .section .columns .pricing-column .description {
+    @apply text-gray-400 md:text-sm;
+}
+.pricing .feature {
+    @apply flex flex-row justify-between p-4 border border-solid border-x-0 border-t-0 border-gray-700;
+}
+.pricing .feature .text {
+    @apply md:text-sm;
+}
+.pricing .feature .columns span {
+    @apply text-gray-400 w-16 text-center;
+}
+.pricing .feature .columns i {
+    @apply text-green-400 text-xl;
+}

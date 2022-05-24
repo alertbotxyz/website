@@ -2,8 +2,8 @@
     import "./footer.css";
 </script>
 
-<div class="flex flex-row w-full justify-around items-start xs:grid grid-cols-2 grid-rows-2 place-items-center">
-    <div class="footer-container link-container">
+<div class="flex flex-row w-full justify-around items-start 2xs:grid grid-cols-2 tiny:grid-cols-1 grid-rows-2 place-items-center">
+    <div class="footer-container link-container tiny:items-center">
         <span class="link-title">Alertbot</span>
         <a
             class="link"
@@ -24,7 +24,7 @@
             Source code
         </a>
     </div>
-    <div class="footer-container link-container">
+    <div class="footer-container link-container tiny:items-center">
         <span class="link-title">Company</span>
         <a
             class="link"
@@ -45,7 +45,7 @@
             Changelog
         </a>
     </div>
-    <div class="footer-container link-container">
+    <div class="footer-container link-container tiny:items-center">
         <span class="link-title">Support</span>
         <a
             class="link"
@@ -61,7 +61,7 @@
         </a>
         <a
             class="link"
-            href="/redirect?link=support-server"
+            href="/redirect?link=support-server tiny:items-center"
         >
             Discord server
         </a>
@@ -72,7 +72,7 @@
             Reviews
         </a>
     </div>
-    <div class="footer-container link-container">
+    <div class="footer-container link-container tiny:items-center">
         <span class="link-title">Legal</span>
         <a
             class="link"

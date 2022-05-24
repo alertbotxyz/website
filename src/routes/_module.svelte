@@ -1,5 +1,5 @@
 <script>
-    import Toasts from "../components/Toasts.svelte";
+    import Toasts from "../components/modals/Toasts.svelte";
 </script>
 
 <Toasts />

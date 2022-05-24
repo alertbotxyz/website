@@ -1,0 +1,6 @@
+.server-guild-info {
+    @apply text-xs text-gray-400 flex flex-row 2xs:flex-col 2xs:items-center xs:flex-row;
+}
+.server-guild-info .text {
+    @apply font-bold text-accent ml-1 2xs:ml-0 hover:cursor-default xs:ml-1;
+}

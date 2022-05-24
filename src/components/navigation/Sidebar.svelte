@@ -1,20 +1,26 @@
 <script>
+    import User from "../User.svelte";
+
     export let user;
     export let loggedIn = false;
+    export let active = false;
+    export let linksOnly = false;
 </script>
 
-<div class="sidebar-container bg-dark-primary h-screen flex flex-col justify-between">
-    <a
-        class="logo-container flex flex-row items-center pl-6 h-20"
-        href="/"
-    >
-        <img
-            src="/favicon.png"
-            alt="alertbot"
-            class="w-8 rounded-md"
-        />
-        <div class="pl-2 font-bold text-2xl">Alertbot</div>
-    </a>
+<div class="sidebar-container bg-dark-primary h-screen flex flex-col justify-between {!active && "xl:hidden"}">
+    {#if !linksOnly}
+        <a
+            class="logo-container flex flex-row items-center pl-6 h-20"
+            href="/"
+        >
+            <img
+                src="/favicon.png"
+                alt="alertbot"
+                class="w-8 rounded-md"
+            />
+            <div class="pl-2 font-bold text-2xl">Alertbot</div>
+        </a>
+    {/if}
     <div class="nav-links-container h-full flex flex-col px-4 pt-4">
         <a
             class="nav-link"
@@ -77,31 +83,17 @@
             <span class="text">Invite</span>
         </a>
     </div>
-    <a
-        class="account-container flex flex-row items-center h-20"
-        href="/dashboard/account"
-    >
-        {#if loggedIn}
-            {#if user}
-                <img
-                    src={
-                        user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : 
-                        "https://storage.googleapis.com/alertbot-images/discord_default_avatar.png"
-                    } 
-                    alt="avatar"
-                    class="w-10 rounded-md ml-6"
-                />
-                <span class="ml-2 font-bold">{user.name}#{user.discriminator}</span>
-            {:else}
-                <a
-                    href="/redirect?link=login"
-                    class="bg-indigo-500 text-sm px-8 py-2 ml-2 rounded-md border-none font-bold"
-                >
-                    Sign In to your account
-                </a>
-            {/if}
-        {/if}
-    </a>
+    {#if !linksOnly}
+        <a
+            class="account-container flex flex-row items-center h-20"
+            href="/dashboard/account"
+        >
+            <User
+                {user}
+                {loggedIn}
+            />
+        </a>
+    {/if}
 </div>
 
 <style lang="postcss">

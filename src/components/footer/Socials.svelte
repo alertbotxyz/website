@@ -2,7 +2,7 @@
     import "./footer.css";
 </script>
 
-<div class="footer-container xs:mt-12 xs:items-center">
+<div class="footer-container 2xs:mt-12 2xs:items-center">
     <span class="link-title">Socials</span>
     <div class="flex flex-row">
         <a
