@@ -32,7 +32,7 @@
     ];
 </script>
 
-<div class="h-screen w-screen flex flex-col items-center pt-16">
+<div class="w-screen flex flex-col items-center pt-16">
     {#each changelogs as changelog}
         <div class="w-7xx md:w-11/12 bg-dark-primary flex flex-col rounded-md mb-8">
             <div class="flex flex-row items-center justify-between p-4 bg-light-primary rounded-t-md tiny:flex-col tiny:p-3">

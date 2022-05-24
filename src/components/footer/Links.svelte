@@ -61,7 +61,7 @@
         </a>
         <a
             class="link"
-            href="/redirect?link=support-server tiny:items-center"
+            href="/redirect?link=support-server"
         >
             Discord server
         </a>

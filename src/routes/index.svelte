@@ -152,6 +152,5 @@
         <!-- 
             CTA
         -->
-        <Footer />
     </Navbar>
 </div>

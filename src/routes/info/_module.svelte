@@ -6,6 +6,5 @@
 <div class="flex flex-col h-full">
     <Navbar>
         <slot />
-        <Footer />
     </Navbar>
 </div>
