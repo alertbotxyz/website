@@ -17,6 +17,7 @@
     $: submitting = false;
     $: hasError = false;
     $: success = false;
+    $: successMessage = "";
 
     getAllTemplates().then(res => {
         if (res.ok) {
@@ -51,16 +52,18 @@
     };
     const sendAlertHandle = () => {
         submitting = true;
+        success = false;
         sendAlert({
             name: template.name,
             inputs,
         }).then(res => {
-            if (res.ok) {
+            if (res.ok && !res.data.errors) {
                 success = true;
+                successMessage = res.data.message;
             } else {
                 addToast({
                     type: "error",
-                    message: data.message,
+                    message: `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}`,
                     title: "There was an error sending the alert",
                 });
             };
@@ -101,7 +104,7 @@
 <SuccessModal
     active={success}
     title="Alert sent"
-    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    message="Alert was sent successfully. {successMessage}."
     options={[
         {
             type: "button",

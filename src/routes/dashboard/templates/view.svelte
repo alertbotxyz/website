@@ -21,6 +21,11 @@
         loading = false;
     });
 
+    const updateTemplatesArray = templateName => {
+        console.log(templateName);
+        templates = templates.filter(template => template.name !== templateName);
+    };
+
     $: template = templates?.find(t => t.name === $params.template);
 </script>
 
@@ -31,6 +36,7 @@
                 title="Edit Template: {template.name}"
                 defaultTemplate={template}
                 type="update"
+                on:templateDeleted={e => updateTemplatesArray(e.detail.name)}
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">

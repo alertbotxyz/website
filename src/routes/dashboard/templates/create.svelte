@@ -33,7 +33,7 @@
 <SuccessModal
     active={success}
     title="Template created"
-    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    message="Your template has been successfully created. You can now alert with it in the send alert tab."
     options={[
         {
             type: "button",

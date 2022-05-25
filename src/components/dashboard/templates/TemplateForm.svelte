@@ -8,6 +8,8 @@
     import { deleteTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
     import { fly } from "svelte/transition";
+
+    const dispatch = createEventDispatcher();
     
     export let defaultTemplate = undefined;
     export let title;
@@ -66,6 +68,7 @@
             deleteTemplate(template.name).then(res => {
                 if (res.ok) {
                     success = true;
+                    dispatch("templateDeleted", template);
                 } else {
                     addToast({
                         type: "error",
@@ -78,9 +81,8 @@
         };
     };
 
-    let hasError;
+    $: hasError = false;
 
-    const dispatch = createEventDispatcher();
 
     const handleSubmit = () => {
         dispatch("submit", template);
@@ -90,7 +92,7 @@
 <SuccessModal
     active={success}
     title="Template deleted"
-    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    message="The template was successfully deleted."
     options={[
         {
             type: "link",
@@ -162,7 +164,7 @@
                     on:change={handleChange}
                     bind:hasError={hasError}
                 />
-                <ColorInput 
+                <ColorInput
                     name="color"
                     title="Color"
                     placeholder="Hex color for the embed e.g #ff0000"
@@ -234,7 +236,7 @@
                     <button
                         type="submit"
                         class="primary-button bg-accent mt-4"
-                        disabled={hasError || submitting || !updated}
+                        disabled={hasError || submitting}
                     >
                         Create
                     </button>

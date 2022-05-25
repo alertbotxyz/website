@@ -5,7 +5,7 @@
 
 <div class="footer-container xl:max-w-xs 2xs:items-center 2xs:text-center 2xs:w-max 2xs:pr-0 pr-4">
     <Logo />
-    <p class="text-gray-400 my-4 2xs:text-sm xs:px-16">Alertbot helps you simplify alerts. Some more extra very long text</p>
+    <p class="text-gray-400 my-4 2xs:text-sm xs:px-16">Create presets and templates for seemless alerting.</p>
     <a
         class="flex flex-row items-center"
         href="mailto:oscarfal2006@gmail.com"

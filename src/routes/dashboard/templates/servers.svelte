@@ -18,6 +18,7 @@
     $: deleteSuccess = false;
     $: addSuccess = false;
     $: hasError = false;
+    $: successMessage = "";
 
     $: userGuilds = [];
     $: guildInfo = undefined;
@@ -25,7 +26,9 @@
     $: data = {
         guildId: "",
         channelId: "",
+        channelName: "",
         mentionId: "",
+        roleName: "",
     };
 
     const fetchGuild = () => {
@@ -95,8 +98,9 @@
 
         addServer(guildId, channelId, mentionId).then(res => {
             if (res.ok) {
+                successMessage = `Server was successfully added to alert list with channel #${data.channelName} with role ${data.roleName && data.roleName !== "" ? data.roleName : "no mention role"}`;
                 addSuccess = true;
-                // get servers when modal is closed
+                getServers();
             } else {
                 addToast({
                     type: "error",
@@ -113,7 +117,9 @@
         submitting = true;
         deleteServer(channelId).then(res => {
             if (res.ok) {
+                successMessage = `Server was successfully removed from alert list`;
                 deleteSuccess = true;
+                updateServersArray(channelId);
             } else {
                 addToast({
                     type: "error",
@@ -121,7 +127,6 @@
                     title: "There was an error deleting the server"
                 });
             };
-            getServers();
             submitting = false;
         });
     };
@@ -129,15 +134,28 @@
     const handleChange = e => {
         const { name, value } = e.target || e.detail;
         data[name] = value;
+        if (name === "channelId") data.channelName = guildInfo.channels.find(c => c.id === value).name;
+        if (name === "mentionId") data.roleName = value === "everyone" ? "@everyone" : guildInfo.roles?.find(r => r.id === value).name;
         if (name === "guildId") {
             fetchGuild();
+        };
+    };
+
+    const updateServersArray = channelId => {
+        servers = servers.filter(s => s.channel.id !== channelId);
+        data = {
+            guildId: "",
+            channelId: "",
+            channelName: "",
+            mentionId: "",
+            roleName: "",
         };
     };
 </script>
 <SuccessModal
     active={addSuccess || deleteSuccess}
     title={addSuccess ? "Server added" : "Server deleted"}
-    message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui totam animi voluptatem"
+    message={successMessage}
     options={[
         {
             type: "button",
@@ -148,8 +166,6 @@
     on:close={() => {
         addSuccess = false;
         deleteSuccess = false;
-
-        getServers();
     }}
 />
 <Loading {loading}>
@@ -193,11 +209,17 @@
                         title="Mention Role"
                         placeholder="Choose a role"
                         fullWidth
-                        options={guildInfo.roles.map(role => ({
-                                value: role.id,
-                                text: role.name
-                            })
-                        )}
+                        options={[
+                            ...guildInfo.roles.map(role => ({
+                                    value: role.id,
+                                    text: role.name
+                                })
+                            ),
+                            {
+                                value: "everyone",
+                                text: "@everyone"
+                            }
+                        ]}
                         on:change={handleChange}
                         bind:hasError={hasError}
                         extraClass={"lg:mb-4"}
@@ -247,7 +269,7 @@
                                             class="text"
                                             data-tooltip="Role id: {server.role?.id}"
                                         >
-                                            @{server.role?.name}
+                                            @{server.role?.name.replace("@everyone", "everyone")}
                                         </span>
                                     </span>
                                 {:else}
