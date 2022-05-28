@@ -22,3 +22,10 @@
 .showcase .example-image {
     @apply mx-24 w-5xx;
 }
+.modal {
+    min-width: 600px;
+    @apply md:min-w-0 md:w-11/12;
+}
+.modal .button {
+    @apply font-bold w-64 text-center mx-4 py-2 rounded-md text-base;
+}

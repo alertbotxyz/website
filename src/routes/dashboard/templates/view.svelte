@@ -22,7 +22,6 @@
     });
 
     const updateTemplatesArray = templateName => {
-        console.log(templateName);
         templates = templates.filter(template => template.name !== templateName);
     };
 

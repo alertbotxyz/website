@@ -23,9 +23,11 @@
 
         if (!isValidColor) {
             error = "Invalid color";
+            hasError = true;
         } else {
             error = "";
             color = value;
+            hasError = false;
             dispatch("change", {
                 name,
                 value,
@@ -50,6 +52,7 @@
             reactive
             on:input={change}
             bind:hasError={hasError}
+            isColorInput
         />
         <div class="flex flex-col">
             {#if error}

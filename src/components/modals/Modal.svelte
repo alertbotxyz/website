@@ -2,8 +2,8 @@
     export let active = false;
 </script>
 
-<div class="modal bg-black bg-opacity-70 hidden w-screen h-screen fixed top-0 left-0 {active ? "active" : "inactive"} z-50">
-    <div class="content">
+<div class="modal-container bg-black bg-opacity-70 hidden w-screen h-screen fixed top-0 left-0 {active ? "active" : "inactive"} z-40">
+    <div class="content w-full flex flex-col items-center">
         <slot />
     </div>
 </div>
@@ -25,14 +25,14 @@
             opacity: 0;
         }
     }
-    .modal.active {
+    .modal-container.active {
         @apply flex items-center justify-center;
         animation: 0.1s ease-in-out fadeIn;
     }
-    .modal.active .content{
+    .modal-container.active .content{
         animation: 0.1s ease-in-out fadeIn;
     }
-    .modal.inactive .content{
+    .modal-container.inactive .content{
         animation: 0.1s ease-in-out fadeOut;
     }
 </style>

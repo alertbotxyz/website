@@ -14,5 +14,12 @@
     @apply text-accent;
 }
 .title {
-    @apply font-bold mb-4;
+    @apply font-bold text-xl;
+}
+.bold {
+    @apply font-bold text-white;
+}
+.italic {
+    font-style: italic;
+    @apply text-white;
 }

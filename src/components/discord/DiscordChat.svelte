@@ -1,4 +1,5 @@
 <script>
+    import { formatDate } from "../../utils/core";
     import DiscordEmbed from "./DiscordEmbed.svelte";
 
     export let messages;
@@ -6,7 +7,9 @@
     const defaultUser = {
         name: "Alertbot",
         iconUrl: "https://storage.googleapis.com/alertbot-images/logo.png",
-    }
+    };
+
+    const currentDate = formatDate(new Date(Date.now()), "hh:mmapm");
 </script>
 
 <div class="messages-container flex flex-col w-11/12 2xs:w-full p-4 xs:p-1 rounded-md ml-12 lg:ml-0">
@@ -20,7 +23,7 @@
             <div class="flex flex-col ml-4 xs:ml-2">
                 <span class="flex flex-row 2xs:flex-col">
                     <span class="font-bold xs:text-xs">{discordMessage.author?.name ?? defaultUser.name}</span>
-                    <span class="ml-2 2xs:m-0 mt-1 text-gray-500 text-xs xs:text-tiny">Today at 10:38am</span>
+                    <span class="ml-2 2xs:m-0 mt-1 text-gray-500 text-xs xs:text-tiny">Today at {currentDate}</span>
                 </span>
                 {#if discordMessage.type === "text"}
                     <span class="text-sm xs:text-xs 2xs:mt-1">{discordMessage.data.content}</span>

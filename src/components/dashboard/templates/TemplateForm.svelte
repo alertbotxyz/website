@@ -36,7 +36,9 @@
             iconUrl: "",
         },
     };
-    
+
+    let originalTemplate = JSON.parse(JSON.stringify(defaultTemplate ?? {}));
+
     const handleChange = e => {
         const { name, value } = e.detail || e.target;
 
@@ -60,6 +62,10 @@
             if (template[name] === undefined) throw new Error ("No such property");
             template[name] = value;
         };
+
+        updated = JSON.stringify(originalTemplate) !== JSON.stringify(template);
+        console.log(originalTemplate);
+        console.log(template);
     };
 
     const handleDeleteTemplate = () => {
@@ -81,8 +87,12 @@
         };
     };
 
-    $: hasError = false;
+    const resetTemplate = () => {
+        template = JSON.parse(JSON.stringify(originalTemplate ?? {}));
+        updated = false
+    };
 
+    $: hasError = false;
 
     const handleSubmit = () => {
         dispatch("submit", template);
@@ -113,12 +123,17 @@
     <div 
         class="absolute w-full bottom-4 flex flex-row justify-center items-center"
         in:fly={{ y: 200, duration: 300 }}
-        out:fly={{ y: -200, duration: 300 }}
+        out:fly={{ y: 50, duration: 300 }}
     >
         <div class="flex flex-row justify-between items-center bg-very-dark-primary p-4 rounded-md w-8xx">
             <span>You have unsaved changes</span>
             <div class="flex flex-row">
-                <button class="w-28 rounded-md bg-light-primary mx-2">Reset</button>
+                <button
+                    class="w-28 rounded-md bg-light-primary mx-2"
+                    on:click={resetTemplate}
+                >
+                    Reset
+                </button>
                 <button
                     class="w-28 rounded-md bg-accent mx-2 py-2"
                     type="submit"

@@ -70,6 +70,10 @@
             submitting = false;
         });
     };
+    const resetInputs = () => {
+        inputs = {};
+        discordImage = "";
+    };
 
     $: discordChatData = template && template.parameters ? {
         type: "embed",
@@ -112,6 +116,7 @@
             color: "bg-accent",
         },
     ]}
+    on:close={resetInputs}
 />
 <Loading {loading}>
     <div class="flex flex-col w-full items-center fade-in">
@@ -149,6 +154,7 @@
                                     title={parameter.name}
                                     placeholder={"Enter " + parameter.name}
                                     on:change={handleInput}
+                                    defaultValue={inputs[parameter.name] || ""}
                                 />
                             {/each}
                             <button

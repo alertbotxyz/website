@@ -10,6 +10,7 @@
     export let divClass = undefined;
     export let error = undefined;
     export let type = undefined;
+    export let isColorInput = false;
 
     export let hasError = false;
 
@@ -23,22 +24,30 @@
         hasError = true;
     };
 
-    const change = e => {
-        if (required && e.target.value === "" || !e.target.value) {
-            error = "This field is required";
-            hasError = true;
-        } else {
-            error = undefined;
-            hasError = false;
+    const checkValue = value => {
+        if (!isColorInput) {
+            if (required && value === "" || !value) {
+                error = "This field is required";
+                hasError = true;
+            } else {
+                error = undefined;
+                hasError = false;
+            };
         };
 
-        if (url && e.target.value !== "" && !isValidUrl(e.target.value)) {
+        if (url && value !== "" && !isValidUrl(value)) {
             error = "Invalid URL";
             hasError = true;
-        } else if (!required) {
+        } else if (!required && !isColorInput) {
             error = undefined;
             hasError = false;
         };
+    }
+
+    $: checkValue(defaultValue);
+
+    const change = e => {
+        checkValue(e.target.value);
 
         dispatch("input", {
             name: e.target.name,

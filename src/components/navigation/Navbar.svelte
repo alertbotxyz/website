@@ -1,8 +1,9 @@
 <script>
     import { fade, fly } from "svelte/transition";
-import Footer from "../footer/Footer.svelte";
+    import Footer from "../footer/Footer.svelte";
     import Logo from "../Logo.svelte";
-    
+
+    export let scroll = false;
     $: menu = false;
 
     const handleMenu = () => {
@@ -60,7 +61,7 @@ import Footer from "../footer/Footer.svelte";
     </div>
     {#if menu}
         <div 
-            class="hidden md:flex flex-col {menu ? "absolute" : "hidden"} h-screen top-20 items-center bg-black bg-opacity-70 w-full justify-between z-20"
+            class="hidden md:flex flex-col {menu ? "absolute" : "hidden"} h-screen top-20 items-center bg-black bg-opacity-70 w-full justify-between z-50"
             in:fade={{ duration: 300 }}
             out:fade={{ duration: 300 }}
         >
@@ -107,7 +108,13 @@ import Footer from "../footer/Footer.svelte";
         </div>
     {/if}
     <div class="flex flex-col h-full justify-between w-full items-center">
-        <slot/>
+        {#if scroll}
+            <div class="w-full 2xs:overflow-x-scroll 2xs:mr-8">
+                <slot/>
+            </div>
+        {:else}
+            <slot />
+        {/if}
         <Footer />
     </div>
 </div>
