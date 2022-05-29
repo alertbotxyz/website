@@ -4,10 +4,10 @@
 .features {
     max-width: 1400px;
 }
-.features .feature {
+.home .features .feature {
     @apply flex flex-row mt-16 mx-4;
 }
-.features .feature .icon {
+.features .feature i {
     @apply bg-accent rounded-md h-12 px-3 flex items-center justify-center mr-4 text-2xl;
 }
 .features .feature .title {

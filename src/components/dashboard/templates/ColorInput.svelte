@@ -52,7 +52,7 @@
             reactive
             on:input={change}
             bind:hasError={hasError}
-            isColorInput
+            passesOwnValidation={hasError}
         />
         <div class="flex flex-col">
             {#if error}

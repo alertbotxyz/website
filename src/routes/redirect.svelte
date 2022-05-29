@@ -1,6 +1,6 @@
 <script>
     import { params } from "@roxi/routify";
-    $: params, console.log($params);
+    $: params;
     const redirects = {
         "docs": "docs.alertbot.net",
         "support-server": "discord.com/alertbot",

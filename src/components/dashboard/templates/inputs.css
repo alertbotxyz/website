@@ -11,3 +11,12 @@
 	width: 550px;
 	@apply flex flex-col items-center lg:w-2/3 xs:w-4/5;
 }
+.checkbox-container {
+    @apply flex flex-row ml-2 2xs:flex-col text-center;
+}
+.checkbox-label {
+    @apply ml-2 text-xs font-bold text-gray-400;
+}
+.save-changes-button {
+    @apply w-28 rounded-md mx-2 py-2 xs:py-1 xs:mt-2 xs:text-xs;
+}

@@ -1,39 +1,9 @@
 <script>
-    const changelogs = [
-        {
-            version: "2.2.0",
-            date: "04/05/2022",
-            description: "Changelog description this is some quite long description text this is repeated some description text",
-            updates: [
-                {
-                    title: "Update 1 title",
-                    description: "Update 1 description",
-                    changes: [
-                        {
-                            types: [ "Added", "Improved" ],
-                            link: {
-                                text: "Changelog 1 link text which is quite extra long",
-                                url: "Changelong 1 link url",
-                            },
-                            description: "Change 1 description and its quite very extra lonmg",
-                        },
-                        {
-                            types: [ "Removed", "Improved" ],
-                            link: {
-                                text: "Changelog 1 link text which is quite extra long",
-                                url: "Changelong 1 link url",
-                            },
-                            description: "Change 1 description and its quite very extra lonmg",
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
+    import data from "../../utils/data";
 </script>
 
 <div class="w-screen flex flex-col items-center pt-16">
-    {#each changelogs as changelog}
+    {#each data.changelog.data as changelog}
         <div class="w-7xx md:w-11/12 bg-dark-primary flex flex-col rounded-md mb-8">
             <div class="flex flex-row items-center justify-between p-4 bg-light-primary rounded-t-md tiny:flex-col tiny:p-3">
                 <div class="flex flex-row items-center">
@@ -48,20 +18,22 @@
                     <div class="flex flex-col">
                         <span class="text-xl font-bold mb-2">{update.title}</span>
                         {#each update.changes as change}
-                            <div class="flex flex-col mb-2">
-                                <div class="flex flex-row mb-1">
-                                    {#each change.types as type}
-                                        <span class="{type} font-bold px-2 py-1 my-1 mr-2 text-xs rounded-md">{type}</span>
-                                    {/each}
+                            <div class="flex flex-row md:flex-col mb-2">
+                                <div class="flex flex-row items-center 2xs:flex-col 2xs:items-start">
+                                    <div class="flex flex-row mb-1">
+                                        {#each change.types as type}
+                                            <span class="{type} font-bold px-2 py-1 my-1 mr-2 text-xs rounded-md">{type}</span>
+                                        {/each}
+                                    </div>
+                                    {#if change.link}
+                                        <a
+                                            class="text-accent"
+                                            href={change.link.url}
+                                        >
+                                            {change.link.text}
+                                        </a>
+                                    {/if}
                                 </div>
-                                {#if change.link}
-                                    <a
-                                        class="text-accent"
-                                        href={change.link.url}
-                                    >
-                                        {change.link.text}
-                                    </a>
-                                {/if}
                                 <span class="mt-1">{change.description}</span>
                             </div>
                         {/each}

@@ -1,7 +1,51 @@
 <script>
     import Navbar from "../components/navigation/Navbar.svelte";
     import Footer from "../components/footer/Footer.svelte";
+    import data from "../utils/data";
     import "../styles/index.css";
+
+    const features = [
+        {
+            title: "Create Templates",
+            description: "Alertbot allows you to create templates to enable alerting with maximum cusomisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
+            icon: "bxs-dashboard",
+            imageUrl: "https://storage.googleapis.com/alertbot-images/alertbot_create_template.png",
+            action: {
+                text: "Create a Template",
+                url: "/dashboard/templates/create",
+            }
+        },
+        {
+            title: "Send Alerts",
+            description: "Once you have created all the templates you need you can add servers to alert to. When you see a market oppurtunity enter values for your preset parameters and send the alert to all servers in one click.",
+            icon: "bxs-bell",
+            imageUrl: "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            action: {
+                text: "Send an Alert",
+                url: "/dashboard/templates/send-alert",
+            }
+        },
+        {
+            title: "Discord Bot",
+            description: "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
+            icon: "bxs-bot",
+            imageUrl: "https://storage.googleapis.com/alertbot-images/alertbot_discord_bot.png",
+            action: {
+                text: "Invite Alertbot",
+                url: "/redirect?link=bot-invite",
+            }
+        },
+        {
+            title: "Alert History",
+            description: "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
+            icon: "bx-history",
+            imageUrl: "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            action: {
+                text: "View Alert History",
+                url: "/dashboard/account#alert-history",
+            }
+        },
+    ]
 </script>
 
 <div class="flex flex-col items-center">
@@ -10,7 +54,7 @@
             <div class="flex flex-row lg:flex-col items-center w-full mt-48 lg:mt-24 justify-evenly px-96">
                 <div class="mx-20 flex flex-col sm:mx-0 lg:items-center lg:text-center">
                     <h1 class="text-8xl sm:text-6xl text-gray-600 dark:text-white">Alertbot</h1>
-                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300">Create presets and templates for seemless alerting.</p>
+                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300">{data.core.about}</p>
                     <div class="flex flex-row sm:flex sm:flex-col">
                         <a
                             href="/"
@@ -34,120 +78,44 @@
             </div>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#363C4E" fill-opacity="1" d="M0,128L60,144C120,160,240,192,360,186.7C480,181,600,139,720,133.3C840,128,960,160,1080,181.3C1200,203,1320,213,1380,218.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
-        <div class="w-screen flex flex-col items-center bg-light-primary">
+        <div class="home w-screen flex flex-col items-center bg-light-primary">
             <div class="features flex flex-col items-center">
                 <span class="text-accent lg:text-xl">ALERTBOT</span>
                 <span class="text-5xl text-center lg:text-6xl md:text-5xl sm:text-4xl font-bold my-4">A better way to alert</span>
                 <div class="grid grid-cols-2 grid-rows-2 my-4 lg:px-16 sm:px-2 sm:grid-cols-1">
-                    <div class="feature">
-                        <i class='bx bxs-dashboard icon'></i>
-                        <div class="flex flex-col">
-                            <span class="title">Create templates</span>
-                            <p class="description">Alertbot allows you to create templates to enable seemless . Alertbot allows you to create templates to enable seemless structured alerts.</p>
+                    {#each features as feature}
+                        <div class="feature">
+                            <i class="bx {feature.icon}"></i>
+                            <div class="flex flex-col">
+                                <span class="title">{feature.title}</span>
+                                <p class="description">{feature.description}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="feature">
-                        <i class='bx bxs-dashboard icon'></i>
-                        <div class="flex flex-col">
-                            <span class="title">Create templates</span>
-                            <p class="description">Alertbot allows you to create templates to enable seemless . Alertbot allows you to create templates to enable seemless structured alerts.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <i class='bx bxs-dashboard icon'></i>
-                        <div class="flex flex-col">
-                            <span class="title">Create templates</span>
-                            <p class="description">Alertbot allows you to create templates to enable seemless . Alertbot allows you to create templates to enable seemless structured alerts.</p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <i class='bx bxs-dashboard icon'></i>
-                        <div class="flex flex-col">
-                            <span class="title">Create templates</span>
-                            <p class="description">Alertbot allows you to create templates to enable seemless . Alertbot allows you to create templates to enable seemless structured alerts.</p>
-                        </div>
-                    </div>
+                    {/each}
                 </div>
             </div>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#363C4E" fill-opacity="1" d="M0,256L60,245.3C120,235,240,213,360,192C480,171,600,149,720,160C840,171,960,213,1080,213.3C1200,213,1320,171,1380,149.3L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
         <div class="showcase mt-32 flex flex-col items-center px-64 xl:px-16">
-            <div class="example flex-row md:flex-col">
-                <div class="sm:max-w-xs">
-                    <span class="font-bold text-5xl sm:text-3xl">Templates</span>
-                    <p class="mt-4 mb-8 text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores nihil accusamus perspiciatis deserunt, laboriosam hic facere asperiores delectus, ipsam facilis est totam nostrum illum quidem harum culpa! Consectetur, aut ea.</p>
-                    <a
-                        href="/dashboard/tempates/send-alert"
-                        class="bg-accent py-2 px-4 rounded-md"
-                    >
-                        Create a template
-                    </a>
+            {#each features as feature, i}
+                <div class="example {i % 2 !== 1 ? "flex-row" : "flex-row-reverse"} md:flex-col">
+                    <div class="sm:max-w-xs">
+                        <span class="font-bold text-5xl sm:text-3xl">{feature.title}</span>
+                        <p class="mt-4 mb-8 text-gray-400">{feature.description}</p>
+                        <a
+                            href="{feature.action.url}"
+                            class="bg-accent py-2 px-4 rounded-md"
+                        >
+                            {feature.action.text}
+                        </a>
+                    </div>
+                    <img
+                        src={feature.imageUrl}
+                        alt="send-alert-example"
+                        class="example-image md:mt-16 sm:max-w-xs"
+                    />
                 </div>
-                <img
-                    src="https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png"
-                    alt="send-alert-example"
-                    class="example-image md:mt-16 sm:max-w-xs"
-                />
-            </div>
-            <div class="example flex-row-reverse md:flex-col">
-                <div class="sm:max-w-xs">
-                    <span class="font-bold text-5xl">Alerts</span>
-                    <p class="mt-4 mb-8 text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores nihil accusamus perspiciatis deserunt, laboriosam hic facere asperiores delectus, ipsam facilis est totam nostrum illum quidem harum culpa! Consectetur, aut ea.</p>
-                    <a
-                        href="/dashboard/tempates/send-alert"
-                        class="bg-accent py-2 px-4 rounded-md"
-                    >
-                        Send an alert
-                    </a>
-                </div>
-                <img
-                    src="https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png"
-                    alt="send-alert-example"
-                    class="example-image md:mt-16 sm:max-w-xs"
-                />
-            </div>
-            <div class="example flex-row md:flex-col">
-                <div class="sm:max-w-xs">
-                    <span class="font-bold text-5xl">Servers</span>
-                    <p class="mt-4 mb-8 text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores nihil accusamus perspiciatis deserunt, laboriosam hic facere asperiores delectus, ipsam facilis est totam nostrum illum quidem harum culpa! Consectetur, aut ea.</p>
-                    <a
-                        href="/dashboard/tempates/send-alert"
-                        class="bg-accent py-2 px-4 rounded-md"
-                    >
-                        Add a server
-                    </a>
-                </div>
-                <img
-                    src="https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png"
-                    alt="send-alert-example"
-                    class="example-image md:mt-16 sm:max-w-xs"
-                />
-            </div>
-            <div class="example flex-row-reverse md:flex-col">
-                <div class="sm:max-w-xs">
-                    <span class="font-bold text-5xl">Discord Bot</span>
-                    <p class="mt-4 mb-8 text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores nihil accusamus perspiciatis deserunt, laboriosam hic facere asperiores delectus, ipsam facilis est totam nostrum illum quidem harum culpa! Consectetur, aut ea.</p>
-                    <a
-                        href="/dashboard/tempates/send-alert"
-                        class="bg-accent py-2 px-4 rounded-md"
-                    >
-                        Invite alertbot
-                    </a>
-                </div>
-                <img
-                    src="https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png"
-                    alt="send-alert-example"
-                    class="example-image md:mt-16 sm:max-w-xs"
-                />
-            </div>
-            <!--
-                Showcase:
-        
-                Alert - Send alert in dashboard and alert sent in channel
-                Templates - Create templates dashboard
-                Server groups - List of servers dashboard
-                Bot - Send alerts from bot discord, see financial data discord
-            -->
+            {/each}
         </div>
         <!-- 
             CTA

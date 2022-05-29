@@ -10,7 +10,7 @@
     export let divClass = undefined;
     export let error = undefined;
     export let type = undefined;
-    export let isColorInput = false;
+    export let passesOwnValidation = undefined;
 
     export let hasError = false;
 
@@ -19,30 +19,23 @@
     
     const dispatch = createEventDispatcher();
 
-    if (required && !defaultValue) {
-        error = "This field is required";
-        hasError = true;
-    };
-
     const checkValue = value => {
-        if (!isColorInput) {
-            if (required && value === "" || !value) {
+        if (required) {
+            if (value === "" || !value) {
                 error = "This field is required";
                 hasError = true;
+            } else if (url && !isValidUrl(value)) {
+                error = "Invalid URL";
+                hasError = true;
             } else {
-                error = undefined;
                 hasError = false;
+                error = "";
             };
-        };
-
-        if (url && value !== "" && !isValidUrl(value)) {
-            error = "Invalid URL";
-            hasError = true;
-        } else if (!required && !isColorInput) {
+        } else if (passesOwnValidation !== undefined || passesOwnValidation) {
             error = undefined;
             hasError = false;
         };
-    }
+    };
 
     $: checkValue(defaultValue);
 
@@ -56,7 +49,7 @@
     };
 </script>
 <div class="flex flex-col w-full {divClass}">
-    {#if error}
+    {#if hasError && error}
         <span class={error === "_empty" ? "text-transparent" : "text-error"}>{error === "_empty" ? "a" : error}</span>
     {/if}
     <input 

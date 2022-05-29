@@ -1,4 +1,3 @@
-import constants from "../utils/constants"
 import { makeRequest } from "./utils";
 
 export const createTemplate = async (templateData: {
@@ -24,6 +23,16 @@ export const createTemplate = async (templateData: {
 
 export const getAllTemplates = async () => {
     return makeRequest("/templates/all");
+};
+
+export const updateTemplate = async (oldTemplate, newTemplate) => {
+    return makeRequest("/templates", {
+        method: "PUT",
+        body: {
+            oldTemplate,
+            newTemplate,
+        },
+    });
 };
 
 export const deleteTemplate = async (templateName: string) => {

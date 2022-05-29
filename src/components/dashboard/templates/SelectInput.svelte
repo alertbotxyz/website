@@ -13,6 +13,7 @@
     export let options = [];
     export let extraClass = "";
     export let fullWidth = false;
+    export let help = "";
 
     export let hasError = false;
 
@@ -46,6 +47,7 @@
         labelFor={name}
         labelText={title}
         {required}
+        {help}
     />
     {#if error}
         <span class={error === "_empty" ? "text-transparent" : "text-error"}>{error === "_empty" ? "a" : error}</span>

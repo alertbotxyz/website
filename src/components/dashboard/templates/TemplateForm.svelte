@@ -1,13 +1,14 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import { fly, fade } from "svelte/transition";
     import ColorInput from "../../../components/dashboard/templates/ColorInput.svelte";
     import DoubleInput from "../../../components/dashboard/templates/DoubleInput.svelte";
     import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import SuccessModal from "../../modals/SuccessModal.svelte";
-    import { deleteTemplate } from "../../../api/templates";
+    import { deleteTemplate, updateTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
-    import { fly } from "svelte/transition";
+import Info from "../../Info.svelte";
 
     const dispatch = createEventDispatcher();
     
@@ -18,6 +19,16 @@
 
     $: success = false;
     $: updated = false;
+    $: hasError = false;
+    $: createParameterHasError = false;
+    $: createParameterErrorMessage = "";
+    $: successTitle = "";
+    $: successMessage = "";
+    $: newParamData = {
+        name: "",
+        withTitle: false,
+        boldTitle: false,
+    };
 
     $: template = defaultTemplate ? defaultTemplate : {
         name: "",
@@ -38,6 +49,7 @@
     };
 
     let originalTemplate = JSON.parse(JSON.stringify(defaultTemplate ?? {}));
+    const checkUpdate = () => updated = JSON.stringify(originalTemplate) !== JSON.stringify(template);
 
     const handleChange = e => {
         const { name, value } = e.detail || e.target;
@@ -59,13 +71,37 @@
 
             template[nested[0]] = obj[nested[0]];
         } else {
-            if (template[name] === undefined) throw new Error ("No such property");
+            if (template[name] === undefined) throw new Error("No such property");
             template[name] = value;
         };
 
-        updated = JSON.stringify(originalTemplate) !== JSON.stringify(template);
-        console.log(originalTemplate);
-        console.log(template);
+        checkUpdate();
+    };
+
+    const handleCheckboxChange = (event, parameterName) => {
+        const { name, checked } = event.detail || event.target;
+        template.parameters[parameterName][name] = checked;
+
+        checkUpdate();
+    };
+
+    const handleUpdateTemplate = () => {
+        submitting = true;
+        updateTemplate(originalTemplate, template).then(res => {
+            if (res.ok) {
+                successTitle = "Template updated";
+                successMessage = "Your template has been updated successfully";
+                success = true;
+                updated = false;
+            } else {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error updating the template",
+                });
+            };
+            submitting = false;
+        });
     };
 
     const handleDeleteTemplate = () => {
@@ -73,6 +109,8 @@
         if (confirm("Are you sure you want to delete this template?")) {
             deleteTemplate(template.name).then(res => {
                 if (res.ok) {
+                    successTitle = "Template deleted";
+                    successMessage = "Your template has been deleted successfully";
                     success = true;
                     dispatch("templateDeleted", template);
                 } else {
@@ -87,22 +125,152 @@
         };
     };
 
+    const handleDeleteParameter = parameterName => {
+        if (confirm("Are you sure you want to delete this parameter?")) {
+            // this is done to make sure the template is updated so svelte reacts to the change
+            const deletedOrder = template.parameters[parameterName].order;
+            let obj = template;
+            delete obj.parameters[parameterName];
+            Object.values(obj.parameters).forEach(param => {
+                if (param.order > deletedOrder) {
+                    obj.parameters[param.name].order = param.order - 1;
+                };
+            });
+            template = obj;
+            newParamData = {};
+
+            checkUpdate();
+        };
+    };
+
+    const testValidParameterName = parameterName => {
+        if (
+            Object.keys(template.parameters).find(t => t.toLowerCase() === parameterName.toLowerCase()) ||
+            !parameterName
+        ) {
+            createParameterHasError = true;
+            createParameterErrorMessage = !parameterName ? "Parameter name is required" : "A parameter with this name already exists";
+            return false;
+        } else {
+            createParameterHasError = false;
+            createParameterErrorMessage = "";
+            return true;
+        };
+    };
+
+    const handleCreateParameterChange = (e) => {
+        const { name, value } = e.detail || e.target;
+
+        if (name === "boldTitle" || name === "withTitle") {
+            newParamData[name] = value === "on" ? true : false;
+
+            if (newParamData.boldTitle && !newParamData.withTitle) {
+                createParameterHasError = true;
+                createParameterErrorMessage = "You must have a title if you want have it bold.";
+            } else {
+                createParameterHasError = false;
+                createParameterErrorMessage = "";
+            };
+        } else {
+            testValidParameterName(value);
+            newParamData[name] = value;
+        };
+    };
+
+    const handleCreateParameter = () => {
+        newParamData.order = Object.keys(template.parameters).length + 1;
+        
+        if (!testValidParameterName(newParamData.name)) {
+            addToast({
+                type: "error",
+                message: "There was an error creating the parameter",
+                title: `A parameter with the name ${newParamData.name} already exists on this template.`,
+            });
+        } else {
+            template.parameters[newParamData.name] = newParamData;
+            newParamData = {
+                name: "",
+                withTitle: false,
+                boldTitle: false,
+            };
+            createParameterHasError = false;
+            createParameterErrorMessage = "";
+            checkUpdate();
+        };
+    };
+
     const resetTemplate = () => {
         template = JSON.parse(JSON.stringify(originalTemplate ?? {}));
         updated = false
     };
 
-    $: hasError = false;
-
     const handleSubmit = () => {
         dispatch("submit", template);
+    };
+
+    const dragStart = (event, i) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.dropEffect = 'move';
+        const start = i;
+        event.dataTransfer.setData('text/plain', start);
+    };
+
+    const drop = (event, target) => {
+        event.dataTransfer.dropEffect = 'move'; 
+        const start = parseInt(event.dataTransfer.getData("text/plain"));
+
+        const newTracklist = Object.values(template.parameters);
+        const newTemplateList = [];
+
+        const moved = newTracklist.find(p => p.order === start);
+
+        // the parameter moved up so
+        newTracklist.forEach(param => {
+            if (param.name === moved.name) {
+                newTemplateList.push({
+                    ...moved,
+                    order: target,
+                });
+            } else if ((param.order > target && param.order > start) || (param.order < target && param.order < start)) {
+                // doesn't move
+                newTemplateList.push(param);
+            } else if (param.order >= target) {
+                // moved down
+                newTemplateList.push({
+                    ...param,
+                    order: param.order + (target < start ? 1 : -1),
+                });
+            } else {
+                // moved up
+                newTemplateList.push({
+                    ...param,
+                    order: param.order + (target < start ? 1 : -1),
+                });
+            };
+        });
+
+        template = {
+            ...template,
+            parameters: Object.fromEntries(newTemplateList.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0)).map(p => [p.name, p])),
+        };
+
+        checkUpdate();
+    };
+
+    const handleShareTemplate = () => {
+        navigator.clipboard.writeText(JSON.stringify(template));
+        addToast({
+            type: "success",
+            title: "Template data copied to clipboard",
+            message: "Paste in this text when propmted to when importing a template",
+        });
     };
 </script>
 
 <SuccessModal
     active={success}
-    title="Template deleted"
-    message="The template was successfully deleted."
+    title={successTitle}
+    message={successMessage}
     options={[
         {
             type: "link",
@@ -117,27 +285,29 @@
             url: "/dashboard/templates/create",
         },
     ]}
+    reload={true}
 />
 
-{#if updated}
+{#if updated && type === "edit"}
     <div 
-        class="absolute w-full bottom-4 flex flex-row justify-center items-center"
+        class="absolute w-full bottom-4 flex flex-row justify-center items-center z-50"
         in:fly={{ y: 200, duration: 300 }}
         out:fly={{ y: 50, duration: 300 }}
     >
-        <div class="flex flex-row justify-between items-center bg-very-dark-primary p-4 rounded-md w-8xx">
-            <span>You have unsaved changes</span>
-            <div class="flex flex-row">
+        <div class="flex flex-row 2xs:flex-col justify-between items-center bg-very-dark-primary p-4 rounded-md w-8xx 2xs:w-5/6">
+            <span class="text-center xs:text-sm">You have unsaved changes</span>
+            <div class="flex flex-row xs:flex-col 2xs:mt-2">
                 <button
-                    class="w-28 rounded-md bg-light-primary mx-2"
+                    class="bg-light-primary save-changes-button"
                     on:click={resetTemplate}
                 >
                     Reset
                 </button>
                 <button
-                    class="w-28 rounded-md bg-accent mx-2 py-2"
+                    class="bg-accent save-changes-button"
                     type="submit"
                     disabled={hasError || submitting || !updated}
+                    on:click={handleUpdateTemplate}
                 >
                     Save Changes
                 </button>
@@ -147,7 +317,12 @@
 {/if}
 
 <div class="flex flex-col w-full items-center fade-in pb-8">
-    <h1 class="text-center xs:text-2xl">{title}</h1>
+    <h1 class="text-center xs:text-2xl flex flex-row items-center">
+        {#if type === "edit"}
+            <Info text='No changes are saved until the "Save Changed" button is clicked'/>
+        {/if}
+        {title}
+    </h1>
     <div class="flex flex-row lg:flex-col lg:items-center w-full justify-center">
         <div class="dashboard-form-container">
             <form
@@ -229,22 +404,115 @@
                     on:change={handleChange}
                     bind:hasError={hasError}
                 />
-                {#if type === "update"}
-                    <div class="pt-4">
-                        <h2>Parameters</h2>
-                        {#if template.parameters && Object.values(template.parameters).length > 0}
-                            {#each Object.values(template.parameters) as parameter}
-                                <div class="flex flex-row justify-between items-center bg-dark-primary w-4xx sm:w-full p-2 rounded-sm border border-solid border-light-primary my-2">
-                                    <div class="flex flex-row items-center">
-                                        <i class='bx bx-grid-vertical text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
-                                        <span class="ml-2">{parameter.name}</span>
+                {#if type === "edit"}
+                    <div class="pt-4 flex flex-col">
+                        <div class="flex flex-col">
+                            <h2>Parameters</h2>
+                            {#if template.parameters && Object.values(template.parameters).length > 0}
+                                {#each Object.values(template.parameters).sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0)) as parameter}
+                                    <div 
+                                        class="flex flex-row justify-between items-center bg-dark-primary w-4xx md:w-full p-2 rounded-sm border border-solid border-light-primary my-2"
+                                        draggable={true}
+                                        on:dragstart={event => dragStart(event, parameter.order)}
+                                        on:drop|preventDefault={event => drop(event, parameter.order, parameter.name)}
+                                        ondragover="return false"
+                                    >
+                                        <div
+                                            class="flex flex-row items-center"
+                                            in:fade={{ duration: 300, delay: parameter.order * 100 }}
+                                        >
+                                            <i
+                                                class='bx bx-grid-vertical text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'
+                                            ></i>
+                                            <span
+                                                data-tooltip={parameter.name}
+                                                class="ml-2 w-32 2xs:text-xs 2xs:w-16 whitespace-nowrap hover:cursor-default"
+                                            >
+                                                {parameter.order}. {parameter.name}
+                                            </span>
+                                            <div class="checkbox-container">
+                                                <span class="checkbox-label">With title</span>
+                                                <input
+                                                    type="checkbox"
+                                                    name="withTitle"
+                                                    class="ml-2 bg-light-primary"
+                                                    checked={parameter.withTitle}
+                                                    on:change={e => handleCheckboxChange(e, parameter.name)}
+                                                />
+                                            </div>
+                                            <div class="checkbox-container">
+                                                <span class="checkbox-label">Bold Title</span>
+                                                <input
+                                                    type="checkbox"
+                                                    name="boldTitle"
+                                                    class="ml-2 bg-light-primary"
+                                                    checked={parameter.boldTitle}
+                                                    on:change={e => handleCheckboxChange(e, parameter.name)}
+                                                />
+                                            </div>
+                                        </div>
+                                        <button
+                                            class="bg-inherit"
+                                            on:click={handleDeleteParameter(parameter.name)}
+                                        >
+                                            <i class='bx bx-x text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
+                                        </button>
                                     </div>
-                                    <i class='bx bx-x text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
+                                {/each}
+                            {:else}
+                                <span class="text-gray-400">No parameters found</span>
+                            {/if}
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-xl">Create parameter</span>
+                            <form
+                                class="flex flex-col"
+                                on:submit|preventDefault={handleCreateParameter}
+                            >
+                                <SingleInput
+                                    name="name"
+                                    title="Name" 
+                                    placeholder="Name of the parameter"
+                                    bind:hasError={createParameterHasError}
+                                    required
+                                    on:change={handleCreateParameterChange}
+                                    error={createParameterErrorMessage}
+                                    passesOwnValidation={createParameterHasError}
+                                    defaultValue={newParamData.name}
+                                />
+                                <div class="flex flex-row">
+                                    <div class="flex flex-row items-center">
+                                        <Info text="Whether or not the title for the parameter should be bold"/>
+                                        <span class="text-xl">With title</span>
+                                        <input
+                                            type="checkbox"
+                                            name="withTitle"
+                                            class="ml-2 bg-light-primary w-4 h-4"
+                                            on:change={handleCreateParameterChange}
+                                            checked={newParamData.withTitle}
+                                        />
+                                    </div>
+                                    <div class="ml-8 flex flex-row items-center">
+                                        <Info text="Whether or not there should be a title for the parameter"/>
+                                        <span class="text-xl">Bold Title</span>
+                                        <input
+                                            type="checkbox"
+                                            name="boldTitle"
+                                            class="ml-2 bg-light-primary w-4 h-4"
+                                            on:change={handleCreateParameterChange}
+                                            checked={newParamData.boldTitle}
+                                        />
+                                    </div>
                                 </div>
-                            {/each}
-                        {:else}
-                            <span class="text-gray-400">No parameters found</span>
-                        {/if}
+                                <button
+                                    class="primary-button bg-accent mt-4"
+                                    disabled={createParameterHasError || submitting}
+                                    type="submit"
+                                >
+                                    Create Parameter
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 {/if}
                 {#if type === "create"}
@@ -256,7 +524,7 @@
                         Create
                     </button>
                 {/if}
-                {#if type === "update"}
+                {#if type === "edit"}
                     <div class="flex flex-row w-full justify-between 2xs:flex-col">
                         <button
                             type="submit"
@@ -269,6 +537,7 @@
                         <button
                             type="submit"
                             class="primary-button w-full ml-4 bg-gray-500 mt-4 2xs:ml-0"
+                            on:click={handleShareTemplate}
                         >
                             Share
                         </button>

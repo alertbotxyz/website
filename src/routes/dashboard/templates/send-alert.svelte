@@ -19,6 +19,22 @@
     $: success = false;
     $: successMessage = "";
 
+    $: parameterInputs = Object.values(template.parameters || {}).map(parameter => {
+        const parameterInput = inputs[parameter.name] || "";
+        if(parameter.withTitle) {
+            let parameterText = "";
+
+            parameterText = parameter.name + ":";
+            if (parameter.boldTitle) {
+                parameterText = `**${parameter.name}:**`;
+            };
+
+            return `${parameterText} ${parameterInput}`;
+        } else {
+            return parameterInput;
+        };
+    }).join("\\n");
+
     getAllTemplates().then(res => {
         if (res.ok) {
             templates = res.data;
@@ -79,21 +95,7 @@
         type: "embed",
         data: {
             title: template.title,
-            description: Object.values(template.parameters).map(parameter => {
-                const parameterInput = inputs[parameter.name] || "";
-                if(parameter.withTitle) {
-                    let parameterText = "";
-
-                    parameterText = parameter.name + ":";
-                    if (parameter.boldTitle) {
-                        parameterText = `**${parameter.name}:**`;
-                    };
-
-                    return `${parameterText} ${parameterInput}`;
-                } else {
-                    return parameterInput;
-                };
-            }).join("\\n"),
+            description: `${template.description}\n${parameterInputs}`,
             color: template.color,
             image: discordImage,
         }

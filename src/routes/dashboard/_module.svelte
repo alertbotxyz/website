@@ -21,7 +21,7 @@
         menu = !menu;
         document.querySelector("body").classList.toggle("overflow-hidden");
         document.querySelector("html").classList.toggle("overflow-hidden");
-    }
+    };
     
     makeRequest("/").then(res => {
         if(!res.ok) {

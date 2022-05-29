@@ -7,7 +7,7 @@
     import SelectInput from "../../../components/dashboard/templates/SelectInput.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import "../../../styles/templates.css";
-
+    import Info from "../../../components/Info.svelte";
 
     export let servers = [];
 
@@ -186,6 +186,7 @@
                 on:change={handleChange}
                 bind:hasError={hasError}
                 extraClass={"lg:mb-4"}
+                help="You and the bot must have permissions to send messages to the alert channel"
             />
             {#if data.guildId}
                 <Loading loading={fetchingGuild}>
@@ -203,6 +204,7 @@
                         on:change={handleChange}
                         bind:hasError={hasError}
                         extraClass={"lg:mb-4"}
+                        help="You can alert to the same server in multiple channels but not the same channel"
                     />
                     <SelectInput
                         name="mentionId"
@@ -223,6 +225,7 @@
                         on:change={handleChange}
                         bind:hasError={hasError}
                         extraClass={"lg:mb-4"}
+                        help="You can optionally choose a mention role which tags a role every time an alert is sent"
                     />
                     <button
                         class="bg-accent py-3 px-8 rounded-md lg:mt-8 lg:w-full lg:mr-4"

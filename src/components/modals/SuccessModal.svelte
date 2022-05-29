@@ -7,11 +7,13 @@
     export let message = "";
     export let active = false;
     export let options = [];
+    export let reload = false;
 
     const dispatch = createEventDispatcher();
 
     const handleModal = () => {
         active = false;
+        if (reload) window.location.reload();
         dispatch("close", { close: true });
     };
 </script>

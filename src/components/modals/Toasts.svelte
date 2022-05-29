@@ -35,7 +35,7 @@
                     </span>
                 </div>
                 <button
-                    class="bg-transparent flex items-start h-12"
+                    class="bg-transparent flex items-start h-12 hover:cursor-pointer"
                     on:click={() => handleRemoveToast(toast.id)}
                 >
                     <i class='icons bx bx-x'></i>

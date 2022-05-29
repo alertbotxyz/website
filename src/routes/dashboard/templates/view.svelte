@@ -34,7 +34,7 @@
             <TemplateForm 
                 title="Edit Template: {template.name}"
                 defaultTemplate={template}
-                type="update"
+                type="edit"
                 on:templateDeleted={e => updateTemplatesArray(e.detail.name)}
             />
         {:else if !template && !templates[0]}

@@ -12,6 +12,8 @@
     export let defaultValue = undefined;
     export let required = false;
     export let url = false;
+    export let passesOwnValidation = undefined;
+    export let help = "";
     
     export let hasError = false;
 
@@ -31,6 +33,7 @@
         labelFor={name}
         labelText={title}
         {required}
+        {help}
     />
     <Input 
         className="input focus:border-accent"
@@ -43,5 +46,6 @@
         {url}
         {required}
         bind:hasError={hasError}
+        {passesOwnValidation}
     />
 </div>

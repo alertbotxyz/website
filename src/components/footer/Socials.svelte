@@ -1,4 +1,5 @@
 <script>
+    import data from "../../utils/data.ts";
     import "./footer.css";
 </script>
 
@@ -7,28 +8,28 @@
     <div class="flex flex-row">
         <a
             class="social"
-            href="https://twitter.com/alertbot"
+            href={data.core.socials.twitter}
         >
             <i class='bx bxl-twitter' />
         </a>
         <a
             class="social"
-            href="https://github.com/alertbot"
+            href={data.core.socials.github}
         >
             <i class='bx bxl-github' />
         </a>
         <a
             class="social"
-            href="https://youtube.com/alertbot"
+            href={data.core.socials.patreon}
         >
-            <i class='bx bxl-youtube' />
+            <i class='bx bxl-patreon' ></i>
         </a>
         <a
             class="social"
-            href="https://facebook.com/alertbot"
+            href={data.core.socials.discord}
         >
-            <i class='bx bxl-facebook-circle' />
+            <i class='bx bxl-discord-alt'></i>
         </a>
     </div>
-    <span class="mt-4 font-bold text-gray-400">© 2022 Alertbot</span>
+    <span class="mt-4 font-bold text-gray-400">© 2022 {data.core.name}</span>
 </div>
