@@ -1,8 +1,9 @@
 <script>
-    import TemplateForm from "../../../components/dashboard/templates/TemplateForm.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import { createTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
+    import CreateTemplate from "../../../components/dashboard/templates/CreateTemplate.svelte";
+    import { defaultTemplateData } from "../../../utils/defaults";
 
     $: success = false;
     $: submitting = false;
@@ -49,27 +50,8 @@
     ]}
     on:close={handleClose}
 />
-<TemplateForm 
-    title="Create Template"
+<CreateTemplate
+    defaultTemplate={defaultTemplateData}
     on:submit={handleSubmit}
     {submitting}
-    defaultTemplate={success ? {
-            name: "",
-            title: "",
-            description: "",
-            color: "#63ffd0",
-            footer: {
-                text: "",
-                iconUrl: "",
-            },
-            thumbnail: {
-                url: "",
-            },
-            author: {
-                name: "",
-                iconUrl: "",
-            },
-        } : undefined
-    }
-    type="create"
 />

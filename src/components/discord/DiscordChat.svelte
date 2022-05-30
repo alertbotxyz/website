@@ -23,6 +23,9 @@
             <div class="flex flex-col ml-4 xs:ml-2">
                 <span class="flex flex-row 2xs:flex-col">
                     <span class="font-bold xs:text-xs">{discordMessage.author?.name ?? defaultUser.name}</span>
+                    {#if discordMessage.author?.bot}
+                        <span class="font-bold rounded-sm ml-1.5 text-tiny bg-blurple flex items-center px-1 h-4 mt-0.5">BOT</span>
+                    {/if}
                     <span class="ml-2 2xs:m-0 mt-1 text-gray-500 text-xs xs:text-tiny">Today at {currentDate}</span>
                 </span>
                 {#if discordMessage.type === "text"}

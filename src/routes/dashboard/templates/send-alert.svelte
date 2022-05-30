@@ -1,15 +1,16 @@
 <script>
-    import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import Loading from "../../../components/Loading.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import { getAllTemplates } from "../../../api/templates";
     import { sendAlert } from "../../../api/alert";
     import { addToast } from "../../../stores/toasts";
+    import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
+    import { parseTemplateParameters } from "../../../utils/core";
     
     export let templates = [];
 
-    $: discordImage = "";
+    $: discordImageUrl = "";
     $: template = {};
     $: inputs = {}; 
     $: templateName = "";
@@ -19,21 +20,7 @@
     $: success = false;
     $: successMessage = "";
 
-    $: parameterInputs = Object.values(template.parameters || {}).map(parameter => {
-        const parameterInput = inputs[parameter.name] || "";
-        if(parameter.withTitle) {
-            let parameterText = "";
-
-            parameterText = parameter.name + ":";
-            if (parameter.boldTitle) {
-                parameterText = `**${parameter.name}:**`;
-            };
-
-            return `${parameterText} ${parameterInput}`;
-        } else {
-            return parameterInput;
-        };
-    }).join("\\n");
+    $: parameterInputs = parseTemplateParameters(template?.parameters, inputs);
 
     getAllTemplates().then(res => {
         if (res.ok) {
@@ -54,7 +41,7 @@
     };
     const handleImageChange = e => {
         const { value } = e.detail;
-        discordImage = value;
+        discordImageUrl = value;
     };
     const handleTemplateSelect = e => {
         templateName = e.target.value;
@@ -72,6 +59,7 @@
         sendAlert({
             name: template.name,
             inputs,
+            imageUrl: discordImageUrl,
         }).then(res => {
             if (res.ok && !res.data.errors) {
                 success = true;
@@ -87,8 +75,8 @@
         });
     };
     const resetInputs = () => {
-        inputs = {};
-        discordImage = "";
+        inputs = Object.fromEntries(Object.keys(template.parameters).map(t => [t, ""]));
+        discordImageUrl = "";
     };
 
     $: discordChatData = template && template.parameters ? {
@@ -97,8 +85,14 @@
             title: template.title,
             description: `${template.description}\n${parameterInputs}`,
             color: template.color,
-            image: discordImage,
-        }
+            footer: template.footer,
+            thumbnail: template.thumbnail,
+            author: template.author,
+            image: discordImageUrl,
+        },
+        author: {
+            bot: true,
+        },
     } : {
         type: "text",
         data: {
@@ -140,23 +134,26 @@
                         class="flex flex-col w-full mt-8"
                         on:submit|preventDefault={sendAlertHandle}
                     >
-                        <SingleInput 
+                        <DashboardInput
                             name="imageUrl"
                             title="Image"
                             placeholder="Enter URL for image"
+                            validation={{
+                                url: true
+                            }}
+                            defaultValue={discordImageUrl}
                             on:change={handleImageChange}
-                            url={true}
                             bind:hasError={hasError}
                         />
                         <br class="mt-8"/>
                         {#if template?.parameters}
                             {#each Object.values(template?.parameters) as parameter}
-                                <SingleInput 
+                                <DashboardInput
                                     name={parameter.name}
                                     title={parameter.name}
                                     placeholder={"Enter " + parameter.name}
-                                    on:change={handleInput}
                                     defaultValue={inputs[parameter.name] || ""}
+                                    on:change={handleInput}
                                 />
                             {/each}
                             <button

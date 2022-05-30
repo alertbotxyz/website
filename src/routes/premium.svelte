@@ -1,26 +1,29 @@
 <script>
 	import Navbar from "../components/navigation/Navbar.svelte";
 	import "../styles/premium.css";
+	
+	import data from "../utils/data";
+	const plans = data.premium.plans;
 
-	const data = {
+	const pricingData = {
 		pricing: [
 			{
-				title: "Free",
-				price: "0",
-				description: "For small alerters",
+				title: plans.free.name,
+				price: plans.free.price,
+				description: plans.free.description,
 				text: "Already owned"
 			},
 			{
-				title: "Premium",
-				price: "9.99",
-				description: "For large alerters",
+				title: plans.premium.name,
+				price: plans.premium.price,
+				description: plans.premium.description,
 				active: true,
 				text: "Subscribe"
 			},
 			{
-				title: "Extra",
-				price: "19.99",
-				description: "For massive alerters",
+				title: plans.extra.name,
+				price: plans.extra.price,
+				description: plans.extra.description,
 				text: "Coming soon"
 			},
 		],
@@ -151,14 +154,14 @@
 			<div class="column w-64 sm:w-32">
 				<span class="header">Plans</span>
 				<div class="empty" />
-				{#each data.sections as section}
+				{#each pricingData.sections as section}
 					<span class="header">{section.name}</span>
 					{#each section.features as feature}
 						<span class="feature title">{feature.name ? feature.name : "Feature name"}</span>
 					{/each}
 				{/each}
 			</div>
-			{#each data.pricing as pricing}
+			{#each pricingData.pricing as pricing}
 				<div class="column features">
 					<span class="header">{pricing.title}</span>
 					<div class="pricing">
@@ -174,10 +177,10 @@
 							{pricing.text}
 						</a>
 					</div>
-					{#each data.sections as section}
+					{#each pricingData.sections as section}
 						<span class="empty-header">x</span>
 						{#each section.features as sectionFeature}
-							{@const featureText = sectionFeature[pricing.title.toLowerCase()]}
+							{@const featureText = sectionFeature[pricing?.title.toLowerCase()]}
 							<span class="feature text">
 								{#if featureText === "no"}
 									-

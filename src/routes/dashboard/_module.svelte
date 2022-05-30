@@ -7,7 +7,7 @@
     import Navbar from "../../components/navigation/Navbar.svelte";
     import Loading from "../../components/Loading.svelte";
     import ErrorPage from "../../components/ErrorPage.svelte";
-    import User from "../../components/User.svelte";
+    import User from "../../components/dashboard/User.svelte";
     import Logo from "../../components/Logo.svelte";
     import "../../styles/errors.css";
 

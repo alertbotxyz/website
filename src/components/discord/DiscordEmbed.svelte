@@ -16,70 +16,72 @@
     class="discord-embed mt-2 border-solid border-l-4 border-r-0 border-y-0 p-4"
     style="border-left-color: {color ? color : "#009dff"}"
 >
-    <div class="flex flex-row">
-        <div class="flex flex-col">
-            {#if author && author.name}
-                <span class="flex flex-row items-center mb-2">
-                    {#if author.iconUrl}
-                        <img
-                            src={author.iconUrl} 
-                            alt="authorIcon"
-                            class="w-6 rounded-full mr-2"
-                        />
-                    {/if}
-                    <span class="text-sm font-bold">{author.name}</span>
-                </span>
-            {/if}
-            {#if title}
-                <span class="text-md font-bold mb-2">{title}</span>
-            {/if}
-            <span class="flex flex-col text-sm">
-                {#if description}
-                    <span>
-                        {#each description.replace("\n", "\\n").split("\\n") as line}
-                            <!-- if it's surrounded by 2 stars on each side it should be bold -->
-                            {#if (/\*\*(.*?)\*\*/.test(line))}
-                                <span>
-                                    <span class="font-black">{line.split("**")[1]}</span>
-                                    <span>{line.split("**")[2]}</span>
-                                </span>
-                            {:else}
-                                <span>{line}</span>
-                            {/if}
-                            <br />
-                        {/each}
+    <div class="flex flex-col">
+        <div class="flex flex-row w-full justify-between">
+            <div class="flex flex-col">
+                {#if author && author.name}
+                    <span class="flex flex-row items-center mb-2">
+                        {#if author.iconUrl}
+                            <img
+                                src={author.iconUrl} 
+                                alt="authorIcon"
+                                class="w-6 rounded-full mr-2"
+                            />
+                        {/if}
+                        <span class="text-sm font-bold">{author.name}</span>
                     </span>
                 {/if}
-                {#if alert}
-                    <span>Alert goes here</span>
+                {#if title}
+                    <span class="text-md font-bold mb-2">{title}</span>
                 {/if}
-            </span>
-            {#if footer && footer.text}
-                <span class="flex flex-row items-center mt-2">
-                    {#if footer.iconUrl}
-                        <img
-                            src={footer.iconUrl} 
-                            alt="footerIcon"
-                            class="w-5 rounded-full mr-2"
-                        />
+                <span class="flex flex-col text-sm">
+                    {#if description}
+                        <span>
+                            {#each description.replace("\n", "\\n").split("\\n") as line}
+                                <!-- if it's surrounded by 2 stars on each side it should be bold -->
+                                {#if (/\*\*(.*?)\*\*/.test(line))}
+                                    <span>
+                                        <span class="font-black">{line.split("**")[1]}</span>
+                                        <span>{line.split("**")[2]}</span>
+                                    </span>
+                                {:else}
+                                    <span>{line}</span>
+                                {/if}
+                                <br />
+                            {/each}
+                        </span>
                     {/if}
-                    <span class="text-xs">{footer.text}</span>
+                    {#if alert}
+                        <span>Alert goes here</span>
+                    {/if}
                 </span>
-            {/if}
-            {#if image}
-                <!-- svelte-ignore a11y-img-redundant-alt -->
+                {#if footer && footer.text}
+                    <span class="flex flex-row items-center mt-2">
+                        {#if footer.iconUrl}
+                            <img
+                                src={footer.iconUrl} 
+                                alt="footerIcon"
+                                class="w-5 rounded-full mr-2"
+                            />
+                        {/if}
+                        <span class="text-xs">{footer.text}</span>
+                    </span>
+                {/if}
+            </div>
+            {#if thumbnail && thumbnail.url}
                 <img
-                    class="w-full mt-4 rounded-sm"
-                    src={image}
-                    alt="embed image"
+                    src={thumbnail.url}
+                    alt="thumbnail"
+                    class="w-20 h-20 rounded-md ml-8"
                 />
             {/if}
         </div>
-        {#if thumbnail && thumbnail.url}
+        {#if image}
+            <!-- svelte-ignore a11y-img-redundant-alt -->
             <img
-                src={thumbnail.url}
-                alt="thumbnail"
-                class="w-20 h-20 rounded-md ml-4"
+                class="w-full mt-4 rounded-sm"
+                src={image}
+                alt="embed image"
             />
         {/if}
     </div>

@@ -1,5 +1,5 @@
 <script>
-    import Info from "../components/Info.svelte";
+    import Info from "../Info.svelte";
     export let labelFor;
     export let labelText;
     export let required = false;

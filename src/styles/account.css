@@ -1,0 +1,21 @@
+.plan {
+    @apply border border-solid border-gray-600 p-4 flex flex-row lg:flex-col justify-between items-center;
+}
+.plan .text-container {
+    @apply flex flex-row lg:w-full lg:justify-between lg:mb-4 2xs:flex-col;
+}
+.plan .text-container .name {
+    @apply font-bold w-64 lg:w-auto;
+}
+.plan .text-container .price {
+    @apply flex flex-row w-32 lg:w-auto;
+}
+.plan .text-container .desc {
+    @apply ml-64 lg:ml-0;
+}
+.plan button {
+    @apply p-2 px-4 rounded-md font-bold
+}
+.payment {
+    @apply border border-solid border-gray-600 p-4 flex flex-row justify-between items-center lg:flex-col;
+}

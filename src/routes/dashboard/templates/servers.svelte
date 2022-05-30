@@ -1,13 +1,12 @@
 <script>
     import { addServer, deleteServer, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
     import { addToast } from "../../../stores/toasts";
-    import InputLabel from "../../../components/InputLabel.svelte";
+    import InputLabel from "../../../components/inputs/InputLabel.svelte";
     import Loading from "../../../components/Loading.svelte";
-    import SingleInput from "../../../components/dashboard/templates/SingleInput.svelte";
-    import SelectInput from "../../../components/dashboard/templates/SelectInput.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import "../../../styles/templates.css";
     import Info from "../../../components/Info.svelte";
+    import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
 
     export let servers = [];
 
@@ -172,63 +171,70 @@
     <div class="flex flex-col items-center pb-8">
         <h1 class="text-center xs:text-2xl">Alerting to {servers.length} servers</h1>
         <div class="flex flex-row lg:flex-col my-8 items-end pl-8 justify-center lg:w-5/6">
-            <SelectInput
+            <DashboardInput
                 name="guildId"
                 title="Guild"
                 placeholder="Choose a guild"
                 required
+                type="select"
                 fullWidth
-                options={userGuilds.map(guild => ({
+                data={{
+                    options: userGuilds.map(guild => ({
                         value: guild.id,
                         text: guild.name
-                    })
-                )}
+                    })),
+                }}
                 on:change={handleChange}
                 bind:hasError={hasError}
-                extraClass={"lg:mb-4"}
                 help="You and the bot must have permissions to send messages to the alert channel"
+                extraClass={"lg:mb-4"}
             />
             {#if data.guildId}
                 <Loading loading={fetchingGuild}>
-                    <SelectInput
+                    <DashboardInput
                         name="channelId"
                         title="Channel"
                         placeholder="Choose a channel"
                         required
+                        type="select"
                         fullWidth
-                        options={guildInfo.channels.map(channel => ({
+                        data={{
+                            options: guildInfo.channels.map(channel => ({
                                 value: channel.id,
                                 text: channel.name
-                            })
-                        )}
+                            })),
+                        }}
                         on:change={handleChange}
                         bind:hasError={hasError}
-                        extraClass={"lg:mb-4"}
                         help="You can alert to the same server in multiple channels but not the same channel"
+                        extraClass={"lg:mb-4"}
                     />
-                    <SelectInput
+                    <DashboardInput
                         name="mentionId"
                         title="Mention Role"
                         placeholder="Choose a role"
                         fullWidth
-                        options={[
-                            ...guildInfo.roles.map(role => ({
-                                    value: role.id,
-                                    text: role.name
-                                })
-                            ),
-                            {
-                                value: "everyone",
-                                text: "@everyone"
-                            }
-                        ]}
+                        type="select"
+                        data={{
+                            options: [
+                                ...guildInfo.roles.map(role => ({
+                                        value: role.id,
+                                        text: role.name
+                                    })
+                                ),
+                                {
+                                    value: "everyone",
+                                    text: "@everyone"
+                                }
+                            ],
+                        }}
                         on:change={handleChange}
                         bind:hasError={hasError}
-                        extraClass={"lg:mb-4"}
                         help="You can optionally choose a mention role which tags a role every time an alert is sent"
+                        extraClass={"lg:mb-4"}
                     />
                     <button
-                        class="bg-accent py-3 px-8 rounded-md lg:mt-8 lg:w-full lg:mr-4"
+                        class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4"
                         on:click={handleSubmit}
                         disabled={hasError || submitting}
                     >

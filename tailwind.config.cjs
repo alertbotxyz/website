@@ -20,6 +20,7 @@ module.exports = {
         accent: "#6366f1",
         "accent-blue": "#009dff",
         error: "#f87171",
+        blurple: "#454FBF",
       },
       spacing: {
         84: "22rem",

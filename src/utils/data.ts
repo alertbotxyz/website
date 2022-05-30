@@ -51,14 +51,58 @@ const data: {
         name: string;
         version: string;
         about: string;
+        websiteUrl: string;
         contact: {
             email: string;
+            privacy: string;
+            terms: string;
+            cookies: string;
         };
         socials: {
             patreon: string;
             twitter: string;
             github: string;
             discord: string;
+        };
+    };
+    features: {
+        title: string;
+        description: string;
+        icon: string;
+        imageUrl: string;
+        action: {
+            text: string;
+            url: string;
+        };
+    }[];
+    legal: {
+        privacy: {
+            lastUpdated: string;
+        };
+        terms: {
+            lastUpdated: string;
+        };
+        cookies: {
+            lastUpdated: string;
+        };
+    };
+    premium: {
+        plans: {
+            free: {
+                name: string;
+                price: string;
+                description: string;
+            };
+            premium: {
+                name: string;
+                price: string;
+                description: string;
+            };
+            extra: {
+                name: string;
+                price: string;
+                description: string;
+            };
         };
     }
 } = {
@@ -121,14 +165,90 @@ const data: {
         "name": "Alertbot",
         "version": "Alpha v0.1.0",
         "about": "Create presets and templates for seemless alerting.",
+        "websiteUrl": "https://alertbot.net",
         "contact": {
-            "email": "contact@alertbot.net"
+            "email": "contact@alertbot.net",
+            "privacy": "privacy@alertbot.net",
+            "terms": "terms@alertbot.net",
+            "cookies": "cookies@alertbot.net"
         },
         "socials": {
             "patreon": "https://www.patreon.com/alertbot",
             "twitter": "https://twitter.com/alertbot",
             "github": "https://github.com/alertbot",
             "discord": "https://discord.gg/YzjQZjX"
+        },
+    },
+    "features": [
+        {
+            "title": "Create Templates",
+            "description": "Alertbot allows you to create templates to enable alerting with maximum cusomisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
+            "icon": "bxs-dashboard",
+            "imageUrl": "https://storage.googleapis.com/alertbot-images/alertbot_create_template.png",
+            "action": {
+                "text": "Create a Template",
+                "url": "/dashboard/templates/create",
+            },
+        },
+        {
+            "title": "Send Alerts",
+            "description": "Once you have created all the templates you need you can add servers to alert to. When you see a market oppurtunity enter values for your preset parameters and send the alert to all servers in one click.",
+            "icon": "bxs-bell",
+            "imageUrl": "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            "action": {
+                "text": "Send an Alert",
+                "url": "/dashboard/templates/send-alert",
+            },
+        },
+        {
+            "title": "Discord Bot",
+            "description": "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
+            "icon": "bxs-bot",
+            "imageUrl": "https://storage.googleapis.com/alertbot-images/alertbot_discord_bot.png",
+            "action": {
+                "text": "Invite Alertbot",
+                "url": "/redirect?link=bot-invite",
+            },
+        },
+        {
+            "title": "Alert History",
+            "description": "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
+            "icon": "bx-history",
+            "imageUrl": "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            "action": {
+                "text": "View Alert History",
+                "url": "/dashboard/account#alert-history",
+            },
+        },
+    ],
+    "legal": {
+        "privacy": {
+            "lastUpdated": "28/05/2022",
+        },
+        "terms": {
+            "lastUpdated": "28/05/2022",
+        },
+        "cookies": {
+            "lastUpdated": "28/05/2022",
+        },
+    },
+    "premium": {
+        "plans": {
+            "free": {
+                "name": "Free",
+                "price": "0.00",
+                "description": "For small alerters",
+            },
+            "premium": {
+                "name": "Premium",
+                "price": "9.99",
+                "description": "For medium alerters",
+            },
+            "extra": {
+                "name": "Extra",
+                "price": "19.99",
+                "description": "For large alerters",
+            },
         },
     },
 };

@@ -25,3 +25,33 @@ export const formatDate = (date: Date, format: string): string => {
 
     return formattedDate;
 };
+
+export const parseTemplateParameters = (
+    parameters: {
+        [key: string]: {
+            name: string;
+            withTitle: boolean;
+            boldTitle: boolean;
+            order: number;
+        };
+    }, 
+    inputs?: {
+        [key: string]: string;
+    }
+): string => {
+    return Object.values(parameters || {}).map(parameter => {
+        const parameterInput = inputs ? inputs[parameter.name] : "";
+        if(parameter.withTitle) {
+            let parameterText = "";
+
+            parameterText = parameter.name + ":";
+            if (parameter.boldTitle) {
+                parameterText = `**${parameter.name}:**`;
+            };
+
+            return `${parameterText} ${parameterInput}`;
+        } else {
+            return parameterInput;
+        };
+    }).join("\\n");
+};

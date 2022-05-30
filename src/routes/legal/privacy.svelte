@@ -1,78 +1,17 @@
 <script>
 	import "../../styles/legal.css";
-
-	const lastUpdated = "28th May 2022";
-	const companyName = "AlertBot"
-	const websiteUrl = "https://alertbot.com"
+	import data from "../../utils/data";
 </script>
 
 <div class="legal-container">
 	<h1 class="font-bold mb-4">Privacy Policy</h1>
-	<p class="paragraph">Last updated at: {lastUpdated}</p>
-	<p class="paragraph">
-		This privacy notice for {companyName} ('<span>Company</span>', '<span>we</span>', '<span>us</span>', '<span>our</span>'), describes how and why we might collect, store, use, and/or share ('<span>process</span>') your information when you use our services ('<span>Services</span>'), such as when you:
-	</p>
-	<ul class="list">
-		<li>
-			Visit our website at
-			<a
-				class="link"
-				href={websiteUrl}
-			>
-				{websiteUrl}
-			</a>
-			, or any website of ours that links to this privacy notice
-		</li>
-		<li>
-			Engage with us in other related ways, including any sales, marketing, or events
-		</li>
-	</ul>
-	<div class="paragraph"><span>Questions or concerns?</span> Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at contact@alertbot.net.</div>
-	<span class="title">SUMMARY OF KEY POINTS</span>
-	<p class="paragraph italic">
-		This summary provides key points from our privacy notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our table of contents below to find the section you are looking for. You can also click 
-		<a
-			href="#toc"
-			class="link"
-		>
-			here
-		</a>
-		to go directly to our table of contents.
-	</p>
-	<p class="paragraph">
-		<span class="bold">What personal information do we process?</span>
-		When you visit, use, or navigate our Services, we may process personal information depending on how you interact with AlertBot and the Services, the choices you make, and the products and features you use. Click
-		<a
-			href="#personalinfo"
-			class="link"
-		>
-			here
-		</a> 
-		to learn more.
-	</p>
-	<p class="paragraph">
-		<span class="bold">Do we process any sensitive personal information?</span>
-		We do not process sensitive personal information.
-	</p>
-	<p class="paragraph">
-		<span class="bold">Do we receive any information from third parties?</span>
-		We do not receive any information from third parties.
-	</p>
-	<p class="paragraph">
-		<span class="bold">How do we process your information?</span>
-		We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so. Click 
-		<a
-			href="#infouse"
-			class="link"
-		>
-			here
-		</a> 
-		to learn more.
-	</p>
-	<span
-		class="title"
-		href="#toc"
-	>
-		TABLE OF CONTENTS
-	</span>
+	<p class="paragraph">Last updated at: {data.legal.privacy.lastUpdated}</p>
+	<div class="paragraph">We believe that your privacy is very important and this is why you should feel confident when using our website or submitting your personal data on it. Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="mailto:{data.core.contact.privacy}" class="link">{data.core.contact.privacy}</a>.</div>
+	<div class="paragraph">We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</div>
+	<div class="paragraph">We may collect data necessary to process your payment if you make purchases, such as your payment instrument number (such as a credit card number), and the security code associated with your payment instrument. All payment data is stored by Stripe. You may find their privacy notice link(s) here: <a href="https://stripe.com/en-gb/privacy" class="link">https://stripe.com/en-gb/privacy</a></div>
+	<div class="paragraph">Our Services offer you the ability to register and log in using your third-party social media account details (like your Discord logins). Where you choose to do this, we will receive certain profile information about you from your social media provider. The profile information we receive may vary depending on the social media provider concerned, but will often include your name, email address, friends list, and profile picture, as well as other information you choose to make public on such a social media platform.</div>
+	<div class="paragraph">We use the popular service, <a href="https://marketingplatform.google.com/about/analytics/" class="link">Google Analytics</a>, to record basic information regarding the visitors and usage of this website. This information can be, including but not limited to, visitor's IP address, browser's screen resolution or computer's operating system. This data is only used for traffic measurement purposes and for improving the user experience of this website. The data is confidential and will not be transferred to third parties in any way. </div>
+	<div class="paragraph">We may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over, and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services. </div>
+	<div class="paragraph">We may update our Privacy Policy from time to time. Thus, we advise you to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately, after they are posted on this page. </div>
+	<div class="paragraph">If you have questions or comments about this notice, you may email us at <a href="mailto:{data.core.contact.privacy}" class="link">{data.core.contact.privacy}</a>.</div>
 </div>

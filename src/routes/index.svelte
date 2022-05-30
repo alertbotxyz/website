@@ -3,49 +3,6 @@
     import Footer from "../components/footer/Footer.svelte";
     import data from "../utils/data";
     import "../styles/index.css";
-
-    const features = [
-        {
-            title: "Create Templates",
-            description: "Alertbot allows you to create templates to enable alerting with maximum cusomisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
-            icon: "bxs-dashboard",
-            imageUrl: "https://storage.googleapis.com/alertbot-images/alertbot_create_template.png",
-            action: {
-                text: "Create a Template",
-                url: "/dashboard/templates/create",
-            }
-        },
-        {
-            title: "Send Alerts",
-            description: "Once you have created all the templates you need you can add servers to alert to. When you see a market oppurtunity enter values for your preset parameters and send the alert to all servers in one click.",
-            icon: "bxs-bell",
-            imageUrl: "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
-            action: {
-                text: "Send an Alert",
-                url: "/dashboard/templates/send-alert",
-            }
-        },
-        {
-            title: "Discord Bot",
-            description: "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
-            icon: "bxs-bot",
-            imageUrl: "https://storage.googleapis.com/alertbot-images/alertbot_discord_bot.png",
-            action: {
-                text: "Invite Alertbot",
-                url: "/redirect?link=bot-invite",
-            }
-        },
-        {
-            title: "Alert History",
-            description: "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
-            icon: "bx-history",
-            imageUrl: "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
-            action: {
-                text: "View Alert History",
-                url: "/dashboard/account#alert-history",
-            }
-        },
-    ]
 </script>
 
 <div class="flex flex-col items-center">
@@ -71,9 +28,9 @@
                     </div>
                 </div>
                 <img
-                    src="https://storage.googleapis.com/alertbot-images/dashboard-create-template.png"
+                    src="https://storage.googleapis.com/alertbot-images/alertbot_create_template.png"
                     alt="alertbot-dashboard"
-                    class="w-6xx lg:w-8xx md:w-6xx sm:w-4xx xs:w-3xx rounded-md mx-20 lg:my-20 md:my-16 border border-solid border-dark-primary"
+                    class="w-6xx lg:w-8xx md:w-6xx sm:w-4xx xs:w-3xx rounded-md mx-20 lg:my-20 md:my-16"
                 />
             </div>
         </div>
@@ -83,7 +40,7 @@
                 <span class="text-accent lg:text-xl">ALERTBOT</span>
                 <span class="text-5xl text-center lg:text-6xl md:text-5xl sm:text-4xl font-bold my-4">A better way to alert</span>
                 <div class="grid grid-cols-2 grid-rows-2 my-4 lg:px-16 sm:px-2 sm:grid-cols-1">
-                    {#each features as feature}
+                    {#each data.features as feature}
                         <div class="feature">
                             <i class="bx {feature.icon}"></i>
                             <div class="flex flex-col">
@@ -97,7 +54,7 @@
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#363C4E" fill-opacity="1" d="M0,256L60,245.3C120,235,240,213,360,192C480,171,600,149,720,160C840,171,960,213,1080,213.3C1200,213,1320,171,1380,149.3L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
         <div class="showcase mt-32 flex flex-col items-center px-64 xl:px-16">
-            {#each features as feature, i}
+            {#each data.features as feature, i}
                 <div class="example {i % 2 !== 1 ? "flex-row" : "flex-row-reverse"} md:flex-col">
                     <div class="sm:max-w-xs">
                         <span class="font-bold text-5xl sm:text-3xl">{feature.title}</span>

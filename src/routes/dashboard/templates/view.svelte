@@ -1,12 +1,15 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import { params } from "@roxi/routify";
-    import TemplateForm from "../../../components/dashboard/templates/TemplateForm.svelte";
     import Loading from "../../../components/Loading.svelte";
     import { getAllTemplates } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
+    import CreateTemplate from "../../../components/dashboard/templates/CreateTemplate.svelte";
 
     export let templates = [];
     $: loading = true;
+
+    const dispatch = createEventDispatcher();
     
     getAllTemplates().then(res => {
         if (res.ok) {
@@ -31,11 +34,9 @@
 <Loading {loading}>
     <div class="flex flex-col items-center fade-in h-full">
         {#if template && template.name}
-            <TemplateForm 
-                title="Edit Template: {template.name}"
+            <CreateTemplate
                 defaultTemplate={template}
                 type="edit"
-                on:templateDeleted={e => updateTemplatesArray(e.detail.name)}
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">

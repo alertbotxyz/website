@@ -1,5 +1,5 @@
 <script>
-    import User from "../User.svelte";
+    import User from "../dashboard/User.svelte";
 
     export let user;
     export let loggedIn = false;
