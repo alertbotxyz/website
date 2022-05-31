@@ -1,12 +1,12 @@
 type changeType = "Added" | "Removed" | "Improved" | "Fixed" | "Updated";
 
 const images = {
-    "logo": "/images/logo.webp",
-    "create_template_example": "/images/alertbot_create_template.webp",
-    "discord_bot_example": "/images/alertbot_discord_bot.webp",
-    "user_avatar": "/images/alertbot_user_avatar.webp",
-    "send_alert_example": "/images/alertbot_create_template.webp",
-    "alert_history_example": "/images/alertbot_create_template.webp",
+    "logo": "/images/logo.png",
+    "create_template_example": "/images/alertbot_create_template.png",
+    "discord_bot_example": "/images/alertbot_discord_bot.png",
+    "user_avatar": "/images/alertbot_user_avatar.png",
+    "send_alert_example": "/images/alertbot_create_template.png",
+    "alert_history_example": "/images/alertbot_create_template.png",
 };
 const data: {
     blog: {
