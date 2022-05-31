@@ -1,12 +1,12 @@
 type changeType = "Added" | "Removed" | "Improved" | "Fixed" | "Updated";
 
 const images = {
-    "logo": "/images/logo.png",
-    "create_template_example": "/images/alertbot_create_template.png",
-    "discord_bot_example": "/images/alertbot_discord_bot.png",
-    "user_avatar": "/images/alertbot_user_avatar.png",
-    "send_alert_example": "/images/alertbot_create_template.png",
-    "alert_history_example": "/images/alertbot_create_template.png",
+    "logo": "/images/logo.webp",
+    "create_template_example": "/images/alertbot_create_template.webp",
+    "discord_bot_example": "/images/alertbot_discord_bot.webp",
+    "user_avatar": "/images/alertbot_user_avatar.webp",
+    "send_alert_example": "/images/alertbot_create_template.webp",
+    "alert_history_example": "/images/alertbot_create_template.webp",
 };
 const data: {
     blog: {
@@ -199,7 +199,7 @@ const data: {
     "features": [
         {
             "title": "Create Templates",
-            "description": "Alertbot allows you to create templates to enable alerting with maximum cusomisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
+            "description": "Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
             "icon": "dashboard",
             "imageUrl": images.create_template_example,
             "action": {
@@ -209,7 +209,7 @@ const data: {
         },
         {
             "title": "Send Alerts",
-            "description": "Once you have created all the templates you need you can add servers to alert to. When you see a market oppurtunity enter values for your preset parameters and send the alert to all servers in one click.",
+            "description": "Once you have created all the templates you need you can add servers to alert to. When you see a market opportunity enter values for your preset parameters and send the alert to all servers in one click.",
             "icon": "white-bell",
             "imageUrl": images.send_alert_example,
             "action": {
