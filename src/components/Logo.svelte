@@ -1,9 +1,12 @@
+<script>
+    import data from "../utils/data";
+</script>
 <a
     class="flex flex-row items-center z-100"
     href="/"
 >
     <img
-        src="https://storage.googleapis.com/alertbot-images/logo.png"
+        src={data.images.logo}
         alt="alertbot"
         class="w-8 rounded-md"
     />

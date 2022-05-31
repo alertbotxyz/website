@@ -12,6 +12,7 @@
     import "../../styles/errors.css";
 
     export let error;
+
     $: loading = true;
     $: user = undefined;
     $: menu = false;
@@ -59,8 +60,13 @@
                 <button
                     class="bg-none bg-transparent outline-none focus:outline-none mr-4"
                     on:click={handleMenu}
+                    aria-label="Open sidebar"
                 >
-                    <i class='bx bx-menu-alt-left text-3xl'></i>
+                    <img
+                        src="/icons/menu-left.svg"
+                        alt="menu"
+                        class="h-8"
+                    />
                 </button>
                 <User
                     {user}

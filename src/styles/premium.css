@@ -38,5 +38,5 @@
     @apply border-solid border-b border-t-0 border-x-0 border-gray-700 p-4 md:p-3 md:text-sm sm:text-tiny;
 }
 .column .feature.text {
-    @apply text-gray-400 text-center;
+    @apply text-gray-400 text-center h-14;
 }

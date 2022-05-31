@@ -237,6 +237,7 @@
                         class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4"
                         on:click={handleSubmit}
                         disabled={hasError || submitting}
+                        aria-label="Add server"
                     >
                         Add Server
                     </button>
@@ -293,6 +294,7 @@
                             class="bg-gray-500 px-8 py-2 md:mt-4 rounded-md flex items-center justify-center" 
                             on:click={handleDeleteServer(server.channel.id)}
                             disabled={submitting}
+                            aria-label="Delete server"
                         >
                             Delete
                         </button>

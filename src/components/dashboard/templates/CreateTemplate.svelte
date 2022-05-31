@@ -2,13 +2,14 @@
     import { createEventDispatcher } from "svelte";
     import { addToast } from "../../../stores/toasts";
     import { deleteTemplate, updateTemplate } from "../../../api/templates";
+    import { parseTemplateParameters } from "../../../utils/core";
+    import data from "../../../utils/data";
     import DiscordChat from "../../discord/DiscordChat.svelte";
     import DashboardInput from "../../inputs/DashboardInput.svelte";
     import Info from "../../Info.svelte";
     import SaveChangesPopup from "./SaveChangesPopup.svelte";
     import ParametersForm from "./ParametersForm.svelte";
     import SuccessModal from "../../modals/SuccessModal.svelte";
-import { parseTemplateParameters } from "../../../utils/core";
 
     export let type = "create";
     export let defaultTemplate = undefined;
@@ -258,6 +259,7 @@ import { parseTemplateParameters } from "../../../utils/core";
                     class="primary-button w-full bg-accent mt-4"
                     disabled={hasError || submitting}
                     on:click={handleSubmit}
+                    aria-label="Create template"
                 >
                     Create
                 </button>
@@ -279,6 +281,7 @@ import { parseTemplateParameters } from "../../../utils/core";
                         class="primary-button w-full mr-4 bg-red-400 mt-4 2xs:mr-0"
                         disabled={hasError || submitting}
                         on:click={handleDeleteTemplate}
+                        aria-label="Delete template"
                     >
                         Delete
                     </button>
@@ -286,6 +289,7 @@ import { parseTemplateParameters } from "../../../utils/core";
                         type="submit"
                         class="primary-button w-full ml-4 bg-gray-500 mt-4 2xs:ml-0"
                         on:click={handleShareTemplate}
+                        aria-label="Share template"
                     >
                         Share
                     </button>
@@ -303,7 +307,7 @@ import { parseTemplateParameters } from "../../../utils/core";
                         },
                         author: {
                             name: "oscarッ",
-                            iconUrl: "https://storage.googleapis.com/alertbot-images/alertbot_user_avatar.png",
+                            iconUrl: data.images.user_avatar,
                         }
                     },
                     {
@@ -328,7 +332,7 @@ import { parseTemplateParameters } from "../../../utils/core";
                         },
                         author: {
                             name: "oscarッ",
-                            iconUrl: "https://storage.googleapis.com/alertbot-images/alertbot_user_avatar.png",
+                            iconUrl: data.images.user_avatar,
                         }
                     }
                 ]}

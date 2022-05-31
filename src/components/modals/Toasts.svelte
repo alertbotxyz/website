@@ -1,5 +1,5 @@
 <script>
-    import { removeToast, toasts } from "../../stores/toasts";
+    import { removeToast, toasts, addToast } from "../../stores/toasts";
     import { fly } from "svelte/transition";
     import "../../styles/toasts.css";
 
@@ -16,11 +16,23 @@
                 out:fly={{ x: -200, duration: 300 }}
             >
                 {#if toast.type === "error"}
-                    <i class='icons left bx bx-error-alt'></i>
+                    <img
+                        src="/icons/error.svg"
+                        alt="error"
+                        class="h-8 icons"
+                    />
                 {:else if toast.type === "success"}
-                    <i class='icons left bx bx-check-circle'></i>
+                    <img
+                        src="/icons/green-check-circle.svg"
+                        alt="check circle"
+                        class="h-8 icons"
+                    />
                 {:else if toast.type === "info"}
-                    <i class='icons left bx bx-info-circle' ></i>
+                    <img
+                        src="/icons/blue-info.svg"
+                        alt="info"
+                        class="h-8 icons"
+                    />
                 {/if}
                 <div class="flex flex-col pt-3 w-full pl-3 xs:pl-1">
                     <span class="title font-bold xs:text-xs">{toast.title}</span>
@@ -37,8 +49,13 @@
                 <button
                     class="bg-transparent flex items-start h-12 hover:cursor-pointer"
                     on:click={() => handleRemoveToast(toast.id)}
+                    aria-label="Close toast"
                 >
-                    <i class='icons bx bx-x'></i>
+                    <img
+                        src="/icons/x.svg"
+                        alt="x"
+                        class="h-8 icons"
+                    />
                 </button>
             </div>
         {/each}

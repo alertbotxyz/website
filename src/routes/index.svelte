@@ -28,8 +28,8 @@
                     </div>
                 </div>
                 <img
-                    src="https://storage.googleapis.com/alertbot-images/alertbot_create_template.png"
-                    alt="alertbot-dashboard"
+                    src={data.images.create_template_example}
+                    alt="alertbot-dashboard-example"
                     class="w-6xx lg:w-8xx md:w-6xx sm:w-4xx xs:w-3xx rounded-md mx-20 lg:my-20 md:my-16"
                 />
             </div>
@@ -42,7 +42,11 @@
                 <div class="grid grid-cols-2 grid-rows-2 my-4 lg:px-16 sm:px-2 sm:grid-cols-1">
                     {#each data.features as feature}
                         <div class="feature">
-                            <i class="bx {feature.icon}"></i>
+                            <img
+                                src="/icons/{feature.icon}.svg" 
+                                alt="{feature.title} icon"
+                                class="bg-accent rounded-md h-12 w-12 p-2 mr-4"
+                            />
                             <div class="flex flex-col">
                                 <span class="title">{feature.title}</span>
                                 <p class="description">{feature.description}</p>
@@ -68,7 +72,7 @@
                     </div>
                     <img
                         src={feature.imageUrl}
-                        alt="send-alert-example"
+                        alt="{feature.title} example"
                         class="example-image md:mt-16 sm:max-w-xs"
                     />
                 </div>

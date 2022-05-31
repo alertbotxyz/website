@@ -20,7 +20,11 @@
 
 <Modal {active}>
     <div class="modal md:min-w-0 md:w-11/12 flex flex-col items-center rounded-md bg-light-primary p-4">
-        <i class='bx bx-check-circle text-6xl text-green-400 mt-4'></i>
+        <img
+            src="/icons/green-check-circle.svg"
+            alt="green-check-circle"
+            class="w-14"
+        />
         <span class="text-3xl font-bold mt-4">{title}</span>
         <span class="text-gray-400 my-4 text-center">{message}</span>
         <div class="flex flex-row w-full justify-center mt-4">
@@ -36,6 +40,7 @@
                     <button
                         class="button {option.color || "bg-accent"}"
                         on:click={handleModal}
+                        aria-label={option.text}
                     >
                         {option.text}
                     </button>

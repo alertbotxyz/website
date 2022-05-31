@@ -1,4 +1,5 @@
 <script>
+    import data from "../../utils/data";
     export let loggedIn = false;
     export let user = undefined;
 </script>
@@ -10,10 +11,7 @@
             href="/dashboard/account"
         >
             <img
-                src={
-                    user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : 
-                    "https://storage.googleapis.com/alertbot-images/discord_default_avatar.png"
-                } 
+                src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : data.images.logo} 
                 alt="avatar"
                 class="w-10 rounded-md ml-6"
             />

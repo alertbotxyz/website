@@ -9,7 +9,7 @@
         token: "ABdrF-Edno0q4i1o1GFX7jv_0yo48ns0kQ:1638388220428",
         name: "Alertbot",
         discriminator: "6969",
-        avatarUrl: "https://storage.googleapis.com/alertbot-images/logo.png",
+        avatarUrl: data.images.logo,
         id: "965663863313936415",
     };
 
@@ -74,7 +74,12 @@
                         on:change={handleBotChange}
                         reactive
                     />
-                    <button class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full">Save</button>
+                    <button
+                        class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full"
+                        aria-label="Save bot token"
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
         </div>
@@ -89,7 +94,12 @@
                     </div>
                     <span class="desc">{data.premium.plans.free.description}</span>
                 </div>
-                <button class="bg-dark-primary">Cancel your subscripttion</button>
+                <button
+                    class="bg-dark-primary"
+                    aria-label="Free subscription"
+                >
+                    Cancel your subscripttion
+                </button>
             </div>
             <div class="plan">
                 <div class="text-container">
@@ -100,7 +110,12 @@
                     </div>
                     <span class="desc">{data.premium.plans.premium.description}</span>
                 </div>
-                <button class="bg-accent">Upgrade</button>
+                <button 
+                    class="bg-accent"
+                    aria-label="Premium subscription"
+                >
+                    Upgrade
+                </button>
             </div>
             <div class="plan rounded-b-md">
                 <div class="text-container">
@@ -111,7 +126,12 @@
                     </div>
                     <span class="desc">{data.premium.plans.extra.description}</span>
                 </div>
-                <button class="bg-accent">Upgrade</button>
+                <button 
+                    class="bg-accent"
+                    aria-label="Extra subscription"
+                >
+                    Upgrade
+                </button>
             </div>
         </div>
         <h2 class="my-8">Billing history</h2>

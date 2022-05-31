@@ -10,25 +10,41 @@
             class="social"
             href={data.core.socials.twitter}
         >
-            <i class='bx bxl-twitter' />
+            <img
+                src="/icons/twitter.svg" 
+                alt="twitter"
+                class="w-2/3"
+            />
         </a>
         <a
             class="social"
             href={data.core.socials.github}
         >
-            <i class='bx bxl-github' />
+            <img
+                src="/icons/github.svg" 
+                alt="github"
+                class="w-2/3"
+            />
         </a>
         <a
             class="social"
             href={data.core.socials.patreon}
         >
-            <i class='bx bxl-patreon' ></i>
+            <img
+                src="/icons/patreon.svg" 
+                alt="patreon"
+                class="w-2/3"
+            />
         </a>
         <a
             class="social"
             href={data.core.socials.discord}
         >
-            <i class='bx bxl-discord-alt'></i>
+            <img
+                src="/icons/discord.svg" 
+                alt="discord"
+                class="w-2/3"
+            />
         </a>
     </div>
     <span class="mt-4 font-bold text-gray-400">© 2022 {data.core.name}</span>

@@ -1,4 +1,13 @@
 type changeType = "Added" | "Removed" | "Improved" | "Fixed" | "Updated";
+
+const images = {
+    "logo": "/images/logo.png",
+    "create_template_example": "/images/alertbot_create_template.png",
+    "discord_bot_example": "/images/alertbot_discord_bot.png",
+    "user_avatar": "/images/alertbot_user_avatar.png",
+    "send_alert_example": "/images/alertbot_create_template.png",
+    "alert_history_example": "/images/alertbot_create_template.png",
+};
 const data: {
     blog: {
         data: {
@@ -104,6 +113,14 @@ const data: {
                 description: string;
             };
         };
+    };
+    images: {
+        logo: string;
+        create_template_example: string;
+        discord_bot_example: string;
+        send_alert_example: string;
+        alert_history_example: string;
+        user_avatar: string;
     }
 } = {
     "blog": {
@@ -183,8 +200,8 @@ const data: {
         {
             "title": "Create Templates",
             "description": "Alertbot allows you to create templates to enable alerting with maximum cusomisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
-            "icon": "bxs-dashboard",
-            "imageUrl": "https://storage.googleapis.com/alertbot-images/alertbot_create_template.png",
+            "icon": "dashboard",
+            "imageUrl": images.create_template_example,
             "action": {
                 "text": "Create a Template",
                 "url": "/dashboard/templates/create",
@@ -193,8 +210,8 @@ const data: {
         {
             "title": "Send Alerts",
             "description": "Once you have created all the templates you need you can add servers to alert to. When you see a market oppurtunity enter values for your preset parameters and send the alert to all servers in one click.",
-            "icon": "bxs-bell",
-            "imageUrl": "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            "icon": "white-bell",
+            "imageUrl": images.send_alert_example,
             "action": {
                 "text": "Send an Alert",
                 "url": "/dashboard/templates/send-alert",
@@ -203,8 +220,8 @@ const data: {
         {
             "title": "Discord Bot",
             "description": "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
-            "icon": "bxs-bot",
-            "imageUrl": "https://storage.googleapis.com/alertbot-images/alertbot_discord_bot.png",
+            "icon": "bot",
+            "imageUrl": images.discord_bot_example,
             "action": {
                 "text": "Invite Alertbot",
                 "url": "/redirect?link=bot-invite",
@@ -213,8 +230,8 @@ const data: {
         {
             "title": "Alert History",
             "description": "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
-            "icon": "bx-history",
-            "imageUrl": "https://cdn.discordapp.com/attachments/972228240636772412/972420568836104222/send-alert.png",
+            "icon": "history",
+            "imageUrl": images.alert_history_example,
             "action": {
                 "text": "View Alert History",
                 "url": "/dashboard/account#alert-history",
@@ -251,6 +268,7 @@ const data: {
             },
         },
     },
+    images,
 };
 
 export default data;

@@ -11,7 +11,11 @@
         class="flex flex-row items-center"
         href="mailto:{data.core.contact.email}"
     >
-        <i class='bx bx-envelope text-accent' ></i>
+        <img
+            src="/icons/envelope.svg"
+            alt="email-envelope"
+            class="w-5"
+        />
         <span class="ml-2 font-bold">{data.core.contact.email}</span>
     </a>
     <span class="mt-4 font-bold text-gray-400">{data.core.version}</span>

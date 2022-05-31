@@ -20,6 +20,7 @@
                 <button
                     class="bg-light-primary save-changes-button"
                     on:click={() => dispatch("cancelSaveChanges")}
+                    aria-label="Reset changes"
                 >
                     Reset
                 </button>
@@ -28,6 +29,7 @@
                     type="submit"
                     disabled={disabled || !updated}
                     on:click={() => dispatch("confirmSaveChanges")}
+                    aria-label="Save changes"
                 >
                     Save Changes
                 </button>

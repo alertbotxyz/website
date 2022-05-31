@@ -160,6 +160,7 @@
                                 type="submit"
                                 class="primary-button bg-accent mt-4"
                                 disabled={hasError || submitting}
+                                aria-label="Send alert"
                             >
                                 Send Alert
                             </button>

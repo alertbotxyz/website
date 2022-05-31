@@ -157,7 +157,7 @@
 				{#each pricingData.sections as section}
 					<span class="header">{section.name}</span>
 					{#each section.features as feature}
-						<span class="feature title">{feature.name ? feature.name : "Feature name"}</span>
+						<span class="feature title h-14">{feature.name ? feature.name : "Feature name"}</span>
 					{/each}
 				{/each}
 			</div>
@@ -185,7 +185,13 @@
 								{#if featureText === "no"}
 									-
 								{:else if featureText === "yes"}
-									<span><i class='bx bxs-check-circle text-green-400'></i></span>
+									<span>
+										<img
+											src="/icons/green-check-circle.svg"
+											alt="check"
+											class="h-6 md:h-4"
+										/>
+									</span>
 								{:else if featureText === "unlimited"}
 									Unlimited
 								{:else}

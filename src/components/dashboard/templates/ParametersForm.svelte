@@ -167,9 +167,11 @@
                         class="flex flex-row items-center"
                         transition:fade={{ duration: 300, delay: 300 }}
                     >
-                        <i
-                            class='bx bx-grid-vertical text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'
-                        ></i>
+                        <img
+                            src="/icons/grid-vertical.svg"
+                            alt="vertical-grid"
+                            class="hover:cursor-pointer text-lg"
+                        />
                         <span
                             data-tooltip={parameter.name}
                             class="ml-2 w-32 2xs:text-xs 2xs:w-16 whitespace-nowrap hover:cursor-default"
@@ -200,8 +202,13 @@
                     <button
                         class="bg-inherit"
                         on:click={handleDeleteParameter(parameter.name)}
+                        aria-label="Delete parameter"
                     >
-                        <i class='bx bx-x text-gray-400 font-bold flex items-center justify-center hover:cursor-pointer text-lg'></i>
+                        <img
+                            src="/icons/x.svg"
+                            alt="x"
+                            class="hover:cursor-pointer text-lg mt-1"
+                        />
                     </button>
                 </div>
             {/each}
@@ -254,6 +261,7 @@
                 class="primary-button bg-accent mt-4"
                 disabled={hasError || submitting}
                 type="submit"
+                aria-label="Create parameter"
             >
                 Create Parameter
             </button>

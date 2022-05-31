@@ -54,8 +54,13 @@
             <button
                 class="bg-none bg-transparent outline-none focus:outline-none"
                 on:click={handleMenu}
+                aria-label="Open navbar"
             >
-                <i class='bx bx-menu-alt-right text-3xl'></i>
+                <img
+                    src="/icons/menu-right.svg"
+                    alt="menu-right"
+                    class="w-8"
+                />
             </button>
         </div>
     </div>

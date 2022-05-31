@@ -1,12 +1,13 @@
 <script>
     import { formatDate } from "../../utils/core";
+    import data from "../../utils/data";
     import DiscordEmbed from "./DiscordEmbed.svelte";
 
     export let messages;
 
     const defaultUser = {
         name: "Alertbot",
-        iconUrl: "https://storage.googleapis.com/alertbot-images/logo.png",
+        iconUrl: data.images.logo,
     };
 
     const currentDate = formatDate(new Date(Date.now()), "hh:mmapm");

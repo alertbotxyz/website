@@ -17,5 +17,5 @@
     @apply text-blue-400;
 }
 .icons {
-    @apply flex justify-center text-2xl p-3 xs:p-1 xs:pt-2 xs:text-lg;
+    @apply mt-4 ml-4;
 }
