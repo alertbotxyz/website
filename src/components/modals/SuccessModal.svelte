@@ -49,3 +49,14 @@
         </div>
     </div>
 </Modal>
+
+<style>
+    .modal {
+        min-width: 500px;
+    }
+    @media screen and (max-width: 768px) {
+        .modal {
+            min-width: 200px;
+        }
+    }
+</style>

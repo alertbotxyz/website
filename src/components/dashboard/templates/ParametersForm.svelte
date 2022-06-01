@@ -235,8 +235,11 @@
             />
             <div class="flex flex-row">
                 <div class="flex flex-row items-center">
-                    <Info text="Whether or not the title for the parameter should be bold"/>
-                    <span class="text-xl">With title</span>
+                    <Info
+                        text="Whether or not the title for the parameter should be bold" 
+                        right
+                    />
+                    <span class="text-xl 2xs:text-sm xs:text-xs">With title</span>
                     <input
                         type="checkbox"
                         name="withTitle"
@@ -247,7 +250,7 @@
                 </div>
                 <div class="ml-8 flex flex-row items-center">
                     <Info text="Whether or not there should be a title for the parameter"/>
-                    <span class="text-xl">Bold Title</span>
+                    <span class="text-xl 2xs:text-sm xs:text-xs">Bold Title</span>
                     <input
                         type="checkbox"
                         name="boldTitle"

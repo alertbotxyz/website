@@ -40,10 +40,20 @@ module.exports = {
         "12xx": "1200px",
       },
       fontSize: {
+        "mini": "0.5rem",
         "tiny": "0.6rem",
         "10xl": "10rem",
         "11xl": "12rem",
-      }
+      },
+      minWidth: {
+        "sm": "30px",
+        "1xx": "100px",
+        "2xx": "200px",
+      },
+      maxWidth: {
+        "1xx": "100px",
+        "2xx": "200px",
+      },
     },
     screens: {
       xl: { max: "1450px" },

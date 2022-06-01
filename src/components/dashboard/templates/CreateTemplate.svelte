@@ -150,7 +150,10 @@
 <div class="flex flex-col w-full items-center fade-in pb-8">
     <h1 class="text-center xs:text-2xl flex flex-row items-center">
         {#if type === "edit"}
-            <Info text='No changes are saved until the "Save Changed" button is clicked'/>
+            <Info
+                text='No changes are saved until the "Save Changed" button is clicked'
+                right
+            />
             <span>Edit Template: {template.name}</span>
         {:else}
             <span>Create Template</span>

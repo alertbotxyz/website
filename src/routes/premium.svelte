@@ -1,6 +1,6 @@
 <script>
 	import Info from "../components/Info.svelte";
-import Navbar from "../components/navigation/Navbar.svelte";
+	import Navbar from "../components/navigation/Navbar.svelte";
 	import "../styles/premium.css";
 	
 	import data from "../utils/data";
@@ -182,7 +182,12 @@ import Navbar from "../components/navigation/Navbar.svelte";
 				{#each pricingData.sections as section}
 					<span class="header">{section.name}</span>
 					{#each section.features as feature}
-						<span class="feature title h-14 flex flex-row"><Info text={feature.description}/> {feature.name ? feature.name : "Feature name"}</span>
+						<span class="feature title h-14 flex flex-row">
+							<Info
+								text={feature.description}
+								right
+							/> {feature.name ? feature.name : "Feature name"}
+							</span>
 					{/each}
 				{/each}
 			</div>

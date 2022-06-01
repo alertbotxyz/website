@@ -11,7 +11,10 @@
     for={labelFor}
 >
     {#if help}
-        <Info text={help}/>
+        <Info
+            text={help} 
+            right
+        />
     {/if}
     {labelText}
     {#if required}

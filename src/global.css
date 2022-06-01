@@ -90,8 +90,7 @@ input {
 }
 
 [data-tooltip]:before {
-	@apply absolute bottom-full left-1/2 mb-1 p-2 rounded-sm bg-very-dark-primary text-white text-center text-sm;
-	min-width: 200px;
+	@apply absolute bottom-full left-1/2 mb-1 p-2 rounded-sm bg-very-dark-primary text-white text-center text-sm min-w-2xx;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	content: attr(data-tooltip);
@@ -118,4 +117,23 @@ input {
 [data-tooltip=false]:hover:after {
 	visibility: hidden;
 	opacity: 0;
+}
+
+@media screen and (max-width: 1280px) {
+	[data-tooltip].right:hover:before,
+	[data-tooltip].right:hover:after {
+		transform: translate(-10%, 0)
+	}
+	[data-tooltip].left:hover:before,
+	[data-tooltip].left:hover:after {
+		transform: translate(-90%, 0)
+	}
+	[data-tooltip].right:before,
+	[data-tooltip].right:after {
+		transform: translate(-10%, 5px)
+	}
+	[data-tooltip].left:before,
+	[data-tooltip].left:after {
+		transform: translate(-90%, 5px)
+	}
 }

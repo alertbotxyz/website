@@ -114,7 +114,7 @@
     {/if}
     <div class="flex flex-col h-full justify-between w-full items-center">
         {#if scroll}
-            <div class="w-full 2xs:overflow-x-scroll 2xs:mr-8">
+            <div class="w-full 2xs:overflow-scroll  2xs:mr-8">
                 <slot/>
             </div>
         {:else}

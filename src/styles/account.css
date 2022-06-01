@@ -17,5 +17,8 @@
     @apply p-2 px-4 rounded-md font-bold
 }
 .payment {
-    @apply border border-solid border-gray-600 p-4 flex flex-row justify-between items-center lg:flex-col;
+    @apply border border-solid border-gray-600 p-4 flex flex-row justify-between items-center xs:p-3;
+}
+.payment.last {
+    @apply border-t-0 rounded-b-md;
 }
