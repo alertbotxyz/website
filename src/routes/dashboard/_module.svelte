@@ -10,11 +10,12 @@
     import User from "../../components/dashboard/User.svelte";
     import Logo from "../../components/Logo.svelte";
     import "../../styles/errors.css";
+    import { setUser, userStore } from "../../stores/user";
 
     export let error;
 
     $: loading = true;
-    $: user = undefined;
+    $: user = userStore;
     $: menu = false;
     $: loggedIn = user && !error;
 
@@ -38,6 +39,7 @@
 
     getUser().then(res => {
         if (res.ok) {
+            setUser(res.data);
             user = res.data;
         };
     });

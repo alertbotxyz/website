@@ -7,6 +7,7 @@ const images = {
     "user_avatar": "/images/alertbot_user_avatar.png",
     "send_alert_example": "/images/alertbot_create_template.png",
     "alert_history_example": "/images/alertbot_create_template.png",
+    "default_avatar": "/images/alertbot_default_avatar.png",
 };
 const data: {
     blog: {
@@ -181,7 +182,7 @@ const data: {
     "core": {
         "name": "Alertbot",
         "version": "Alpha v0.1.0",
-        "about": "Create presets and templates for seemless alerting.",
+        "about": "Create presets and templates for seamless alerting.",
         "websiteUrl": "https://alertbot.net",
         "contact": {
             "email": "contact@alertbot.net",

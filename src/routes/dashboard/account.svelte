@@ -1,17 +1,41 @@
 <script>
+    import { userStore } from "../../stores/user";
+    import { getBotUser } from "../../api/auth";
     import Info from "../../components/Info.svelte";
     import InputLabel from "../../components/inputs/InputLabel.svelte";
     import StandardInput from "../../components/inputs/StandardInput.svelte";
     import data from "../../utils/data.ts";
     import "../../styles/account.css";
+    import Loading from "../../components/Loading.svelte";
 
+    $: loading = false;
     $: bot = {
-        token: "ABdrF-Edno0q4i1o1GFX7jv_0yo48ns0kQ:1638388220428",
-        name: "Alertbot",
-        discriminator: "6969",
-        avatarUrl: data.images.logo,
-        id: "965663863313936415",
+        token: "",
+        name: "",
+        discriminator: "",
+        avatarUrl: "",
+        id: "",
     };
+
+    const getBot = () => {
+        loading = true
+        getBotUser().then(res => {
+            if (res.ok) {
+                bot = {
+                    token: $userStore?.botToken,
+                    name: res.data.username,
+                    discriminator: res.data.discriminator,
+                    avatarUrl: res.data.avatar ? `https://cdn.discordapp.com/avatars/${res.data.id}/${res.data.avatar}.png?size=96` : data.images.default_avatar,
+                    id: res.data.id,
+                };
+            } else {
+                // toasts
+            };
+            loading = false;
+        });
+    };
+
+    getBot();
 
     const handleBotChange = e => {
         const { name, value } = e.detail;
@@ -30,59 +54,62 @@
 <div class="flex flex-col w-full items-center pb-8">
     <div class="flex flex-col w-11/12">
         <h1 class="my-16 lg:my-12">Account</h1>
-        <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full">
-            <div class="flex flex-row 2xs:w-full">
-                {#if bot.token}
-                    <div class="rounded-md border border-solid border-gray-600 py-3 px-4 flex flex-row items-center lg:mt-8 2xs:flex-col 2xs:w-full">
-                        <div class="flex flex-row items-center">
-                            <img
-                                src={bot.avatarUrl}
-                                alt="bot avatar"
-                                class="rounded-full w-12 h-12 shadow-sm shadow-gray-600"
-                            />
-                            <div class="flex flex-row text-xl ml-2 font-bold">
-                                <span>{bot.name}</span>
-                                <span class="text-gray-400 ml-0.5">#{bot.discriminator}</span>
+        <Loading {loading}>
+            <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full">
+                <div class="flex flex-row 2xs:w-full">
+                    {#if bot.token}
+                        <div class="rounded-md border border-solid border-gray-600 py-3 px-4 flex flex-row items-center lg:mt-8 2xs:flex-col 2xs:w-full mr-8 lg:mr-0">
+                            <div class="flex flex-row items-center">
+                                <img
+                                    src={bot.avatarUrl}
+                                    alt="bot avatar"
+                                    class="rounded-full w-12 h-12 shadow-sm shadow-gray-600"
+                                />
+                                <div class="flex flex-row text-xl ml-2 font-bold">
+                                    <span>{bot.name}</span>
+                                    <span class="text-gray-400 ml-0.5">#{bot.discriminator}</span>
+                                </div>
+                                <Info
+                                    text="Invite this bot to every server you want to alert to."
+                                    style="text-xl mt-0.5"
+                                />
                             </div>
-                            <Info
-                                text="Invite this bot to every server you want to alert to."
-                                style="text-xl mt-0.5"
-                            />
+                            <a
+                                href=" https://discord.com/oauth2/authorize?client_id={bot.id}&scope=bot&permissions=8"
+                                class=" py-2 w-32 ml-8 text-center bg-accent rounded-md"
+                                target="_blank"
+                            >
+                                Invite
+                            </a>
                         </div>
-                        <a
-                            href="/"
-                            class=" py-2 w-32 ml-8 text-center bg-accent rounded-md"
-                        >
-                            Invite
-                        </a>
-                    </div>
-                    <!-- <span class="ml-4 font-bold">You can edit your bot in the discord <a href="/" class="primary-link">developer dashboard</a></span> -->
-                {/if}
-            </div>
-            <div class="flex flex-col ml-8 lg:ml-0 w-full">
-                <InputLabel
-                    labelFor="token"
-                    labelText="Bot Token"
-                    help="Your bot token is used to connect to your bot. You can find, create or edit your bot in the discord developer dashboard."
-                />
-                <div class="flex flex-row 2xs:flex-col">
-                    <StandardInput
-                        style="w-full rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 font-bold"
-                        name="token"
-                        placeholder="Enter your bots token"
-                        defaultValue={bot.token}
-                        on:change={handleBotChange}
-                        reactive
+                        <!-- <span class="ml-4 font-bold">You can edit your bot in the discord <a href="/" class="primary-link">developer dashboard</a></span> -->
+                    {/if}
+                </div>
+                <div class="flex flex-col lg:ml-0 w-full">
+                    <InputLabel
+                        labelFor="token"
+                        labelText="Bot Token"
+                        help="Your bot token is used to connect to your bot. You can find, create or edit your bot in the discord developer dashboard."
                     />
-                    <button
-                        class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full"
-                        aria-label="Save bot token"
-                    >
-                        Save
-                    </button>
+                    <div class="flex flex-row 2xs:flex-col">
+                        <StandardInput
+                            style="w-full rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 font-bold"
+                            name="token"
+                            placeholder="Enter your bots token"
+                            defaultValue={bot.token}
+                            on:change={handleBotChange}
+                            reactive
+                        />
+                        <button
+                            class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full"
+                            aria-label="Save bot token"
+                        >
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Loading>
         <h2 class="my-8">Plan</h2>
         <div class="flex flex-col w-full">
             <div class="plan rounded-t-md">

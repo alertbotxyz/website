@@ -1,5 +1,6 @@
 <script>
-	import Navbar from "../components/navigation/Navbar.svelte";
+	import Info from "../components/Info.svelte";
+import Navbar from "../components/navigation/Navbar.svelte";
 	import "../styles/premium.css";
 	
 	import data from "../utils/data";
@@ -33,28 +34,30 @@
 				features: [
 					{
 						name: "Monthly alerts",
-						free: "100",
+						free: "100", // "int", "unlimited", "yes", "no"
 						premium: "unlimited",
 						extra: "unlimited",
+						description: "How many alerts you can send per month",
 					},
 					{
 						name: "View alert history",
-						free: "no", // "int", "unlimited", "yes", "no"
-						premium: "yes",
-						extra: "yes",
-					},
-					{
-						name: "View public alerts",
 						free: "no",
 						premium: "yes",
 						extra: "yes",
+						description: "Whether or not you can view your alert history",
 					},
-					{
-						name: "Send public alerts",
-						free: "no",
-						premium: "no",
-						extra: "yes",
-					},
+					// {
+					// 	name: "View public alerts",
+					// 	free: "no",
+					// 	premium: "yes",
+					// 	extra: "yes",
+					// },
+					// {
+					// 	name: "Send public alerts",
+					// 	free: "no",
+					// 	premium: "no",
+					// 	extra: "yes",
+					// },
 				],
 			},
 			{
@@ -65,12 +68,14 @@
 						free: "5",
 						premium: "unlimited",
 						extra: "unlimited",
+						description: "How many templates you can have at a time",
 					},
 					{
 						name: "Import/Export",
 						free: "no",
 						premium: "yes",
 						extra: "yes",
+						description: "Whether or not you can import and export templates",
 					},
 				],
 			},
@@ -78,52 +83,72 @@
 				name: "Servers",
 				features: [
 					{
-						name: "Server limit",
-						free: "5",
-						premium: "unlimited",
-						extra: "unlimited",
-					},
-					{
-						name: "Server groups",
-						free: "no",
+						name: "Multiple servers",
+						free: "yes",
 						premium: "yes",
 						extra: "yes",
+						description: "Whether or not you can alert to multiple servers at once",
 					},
+					{
+						name: "Server limit",
+						free: "5",
+						premium: "100",
+						extra: "unlimited",
+						description: "How many servers you can alert to at once",
+					},
+					// {
+					// 	name: "Server groups",
+					// 	free: "no",
+					// 	premium: "yes",
+					// 	extra: "yes",
+					// },
 				],
 			},
 			{
 				name: "Bot",
 				features: [
 					{
+						name: "Send alerts",
+						free: "yes",
+						premium: "yes",
+						extra: "yes",
+						description: "Whether or not you can send alerts with the bot",
+					},
+					{
 						name: "Prices",
 						free: "yes",
 						premium: "yes",
 						extra: "yes",
+						description: "View prices of different tickers",
 					},
 					{
 						name: "Charts",
 						free: "no",
 						premium: "yes",
 						extra: "yes",
+						description: "View charts for different tickers",
 					},
 					{
 						name: "News",
 						free: "no",
 						premium: "yes",
 						extra: "yes",
+						description: "Get live news to a channel in your server",
 					},
 					{
 						name: "Whales",
 						free: "no",
 						premium: "yes",
 						extra: "yes",
+						description: "Get live whale alerts to a channel in your server",
 					},
-					{
-						name: "Flow algo",
-						free: "no",
-						premium: "no",
-						extra: "yes",
-					},
+					// {
+					// 	name: "Flow algo",
+					// 	free: "no",
+					// 	premium: "no",
+					// 	extra: "yes",
+					// 	description: "No description yet",
+					// },
 				],
 			},
 			{
@@ -157,7 +182,7 @@
 				{#each pricingData.sections as section}
 					<span class="header">{section.name}</span>
 					{#each section.features as feature}
-						<span class="feature title h-14">{feature.name ? feature.name : "Feature name"}</span>
+						<span class="feature title h-14 flex flex-row"><Info text={feature.description}/> {feature.name ? feature.name : "Feature name"}</span>
 					{/each}
 				{/each}
 			</div>

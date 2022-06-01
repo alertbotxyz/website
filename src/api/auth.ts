@@ -8,3 +8,7 @@ export const login = () => {
 export const getUser = async () => {
     return makeRequest("/discord/user");
 };
+
+export const getBotUser = async () => {
+    return makeRequest("/discord/bot");
+};
