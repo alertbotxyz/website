@@ -1,6 +1,7 @@
 {
   "name": "starter",
   "type": "module",
+  "module": "esnext",
   "scripts": {
     "dev": "vite",
     "dev:routify": "routify",

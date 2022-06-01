@@ -13,12 +13,12 @@
     if (!isValidUrl(image)) image = undefined;
 </script>
 <div 
-    class="discord-embed mt-2 border-solid border-l-4 border-r-0 border-y-0 p-4"
+    class="discord-embed"
     style="border-left-color: {color ? color : "#009dff"}"
 >
     <div class="flex flex-col">
         <div class="flex flex-row w-full justify-between">
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full">
                 {#if author && author.name}
                     <span class="flex flex-row items-center mb-2">
                         {#if author.iconUrl}
@@ -28,11 +28,11 @@
                                 class="w-6 rounded-full mr-2"
                             />
                         {/if}
-                        <span class="text-sm font-bold">{author.name}</span>
+                        <span class="text-sm font-bold break-words">{author.name}</span>
                     </span>
                 {/if}
                 {#if title}
-                    <span class="text-md font-bold mb-2">{title}</span>
+                    <span class="text-md font-bold mb-2 break-words">{title}</span>
                 {/if}
                 <span class="flex flex-col text-sm">
                     {#if description}
@@ -40,12 +40,12 @@
                             {#each description.replace("\n", "\\n").split("\\n") as line}
                                 <!-- if it's surrounded by 2 stars on each side it should be bold -->
                                 {#if (/\*\*(.*?)\*\*/.test(line))}
-                                    <span>
+                                    <span class="break-words">
                                         <span class="font-black">{line.split("**")[1]}</span>
                                         <span>{line.split("**")[2]}</span>
                                     </span>
                                 {:else}
-                                    <span>{line}</span>
+                                    <span class="break-words">{line}</span>
                                 {/if}
                                 <br />
                             {/each}
@@ -64,7 +64,7 @@
                                 class="w-5 rounded-full mr-2"
                             />
                         {/if}
-                        <span class="text-xs">{footer.text}</span>
+                        <span class="text-xs break-words">{footer.text}</span>
                     </span>
                 {/if}
             </div>
@@ -89,7 +89,10 @@
 
 <style lang="postcss">
     .discord-embed {
+        @apply mt-2 border-solid border-l-4 border-r-0 border-y-0 p-4 h-fit w-fit inline-block;
         background-color: #2a2d35;
         border-radius: 0.2rem;
+        max-width: 400px;
+        min-width: 100px;
     }
 </style>

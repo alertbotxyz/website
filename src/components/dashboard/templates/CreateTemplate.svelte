@@ -160,7 +160,7 @@
         {/if}
     </h1>
     <div class="flex flex-row lg:flex-col lg:items-center w-full justify-center">
-        <div class="dashboard-form-container">
+        <div class="dashboard-form-container mr-12 lg:mr-0">
             <form
                 class="flex flex-col w-full mt-8"
                 on:submit|preventDefault={handleSubmit}
@@ -189,6 +189,7 @@
                     defaultValue={template.description}
                     on:change={handleChange}
                     bind:hasError={hasError}
+                    help="You can use \n to make a new line"
                 />
                 <DashboardInput
                     name="color"

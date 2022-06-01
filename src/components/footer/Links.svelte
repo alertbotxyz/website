@@ -23,6 +23,12 @@
         >
             Source code
         </a>
+        <a
+            class="link"
+            href="/premium"
+        >
+            Premium
+        </a>
     </div>
     <div class="footer-container link-container tiny:items-center">
         <span class="link-title">Company</span>

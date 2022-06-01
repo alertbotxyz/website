@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import { fade } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
     import { flip } from 'svelte/animate';
     import Info from "../../Info.svelte";
     import DashboardInput from "../../inputs/DashboardInput.svelte";
@@ -216,7 +216,10 @@
             <span class="text-gray-400">No parameters found</span>
         {/if}
     </div>
-    <div class="flex flex-col">
+    <div
+        class="flex flex-col"
+        transition:fly={{ duration: 300 }}
+    >
         <span class="font-bold text-xl">Create parameter</span>
         <form
             class="flex flex-col"

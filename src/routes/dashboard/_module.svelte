@@ -15,7 +15,7 @@
     export let error;
 
     $: loading = true;
-    $: user = userStore;
+    $: user = $userStore;
     $: menu = false;
     $: loggedIn = user && !error;
 
