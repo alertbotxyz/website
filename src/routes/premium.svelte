@@ -184,7 +184,7 @@
 					{#each section.features as feature}
 						<span class="feature title h-14 flex flex-row">
 							<Info
-								text={feature.description}
+								text={feature.description || "No description yet"}
 								right
 							/> {feature.name ? feature.name : "Feature name"}
 							</span>
