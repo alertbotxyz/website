@@ -33,6 +33,12 @@
                         alt="info"
                         class="h-8 icons"
                     />
+                {:else if toast.type === "warning"}
+                    <img
+                        src="/icons/warning.svg"
+                        alt="warning"
+                        class="h-8 icons"
+                    />
                 {/if}
                 <div class="flex flex-col pt-3 w-full pl-3 xs:pl-1">
                     <span class="title font-bold xs:text-xs">{toast.title}</span>

@@ -98,5 +98,11 @@
         >
             Cookie policy
         </a>
+        <a
+            class="link"
+            href="/legal/refunds"
+        >
+            Refund Policy
+        </a>
     </div>
 </div>

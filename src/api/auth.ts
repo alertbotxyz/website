@@ -12,3 +12,14 @@ export const getUser = async () => {
 export const getBotUser = async () => {
     return makeRequest("/discord/bot");
 };
+
+export const getUserAccountData = async () => {
+    return makeRequest("/discord/user-account");
+};
+
+export const updateBotToken = async (botToken: string) => {
+    return makeRequest("/discord/user", {
+        method: "PUT",
+        body: { botToken },
+    });
+};

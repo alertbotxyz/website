@@ -15,8 +15,8 @@
     $: errorMessage = "";
     $: newParamData = {
         name: "",
-        withTitle: false,
-        boldTitle: false,
+        withTitle: true,
+        boldTitle: true,
     };
 
     const dragStart = (event, i) => {

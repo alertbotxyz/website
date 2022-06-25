@@ -95,6 +95,9 @@ const data: {
         cookies: {
             lastUpdated: string;
         };
+        refunds: {
+            lastUpdated: string;
+        };
     };
     premium: {
         plans: {
@@ -248,6 +251,9 @@ const data: {
         },
         "cookies": {
             "lastUpdated": "28/05/2022",
+        },
+        "refunds": {
+            "lastUpdated": "25/06/2022",
         },
     },
     "premium": {

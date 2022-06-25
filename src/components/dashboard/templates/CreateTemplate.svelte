@@ -108,6 +108,7 @@
 
     const handleSubmit = () => {
         dispatch("submit", template);
+        template = {};
     };
 </script>
 
@@ -318,7 +319,10 @@
                         type: "embed",
                         data: {
                             title: template.title,
-                            description: `${template.description}${type === "edit" ? "\n" + parseTemplateParameters(template?.parameters) : ""}`,
+                            description: 
+                                template.description +
+                                (template.description && template.parameters ? "\n" : "") +
+                                (type === "edit" ? parseTemplateParameters(template?.parameters) : ""),
                             color: template.color,
                             footer: template.footer,
                             thumbnail: template.thumbnail,

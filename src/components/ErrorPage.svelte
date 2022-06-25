@@ -10,7 +10,7 @@
 <Navbar>
     <div class="py-44 w-full flex flex-col items-center justify-center slow-fade-in xs:mt-8 z-10 ">
         <h1 class="error-code font-bold">{code}</h1>
-        <span class="text-5xl sm:text-3xl font-bold">{title}</span>
+        <span class="text-5xl sm:text-3xl font-bold text-center">{title}</span>
         {#if message}
             <span class="text-2xl sm:text-xl text-gray-400 text-center px-2 my-2 sm:my-8">{message}</span>
         {/if}

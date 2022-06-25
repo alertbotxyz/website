@@ -14,7 +14,7 @@
 </script>
 <div 
     class="discord-embed"
-    style="border-left-color: {color ? color : "#009dff"}"
+    style="border-left-color: {color ? color.includes("#") ? color : `#${parseInt(color).toString(16)}` : "#009dff"}"
 >
     <div class="flex flex-col">
         <div class="flex flex-row w-full justify-between">
@@ -35,14 +35,19 @@
                     <span class="text-md font-bold mb-2 break-words">{title}</span>
                 {/if}
                 <span class="flex flex-col text-sm">
-                    {#if description}
+                    {#if description && description.length > 0}
                         <span>
-                            {#each description.replace("\n", "\\n").split("\\n") as line}
+                            {#each description.replace(/\n|\\n/g, "\\n").split("\\n") as line}
                                 <!-- if it's surrounded by 2 stars on each side it should be bold -->
                                 {#if (/\*\*(.*?)\*\*/.test(line))}
                                     <span class="break-words">
-                                        <span class="font-black">{line.split("**")[1]}</span>
-                                        <span>{line.split("**")[2]}</span>
+                                        {#each line.split("**") as part, i}
+                                            {#if i % 2 === 1}
+                                                <span class="font-bold">{part}</span>
+                                            {:else}
+                                                <span>{part}</span>
+                                            {/if}
+                                        {/each}
                                     </span>
                                 {:else}
                                     <span class="break-words">{line}</span>

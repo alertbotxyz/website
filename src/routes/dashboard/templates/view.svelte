@@ -37,6 +37,9 @@
             <CreateTemplate
                 defaultTemplate={template}
                 type="edit"
+                on:templateDeleted={evt => {
+                    updateTemplatesArray(evt.detail.name);
+                }}
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">

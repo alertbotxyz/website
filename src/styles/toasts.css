@@ -7,6 +7,9 @@
 .toast.info .icons.left {
     @apply text-blue-400;
 }
+.toast.warning .icons.left {
+    @apply text-orange-400;
+}
 .toast.error .title {
     @apply text-error;
 }
@@ -15,6 +18,9 @@
 }
 .toast.info .title {
     @apply text-blue-400;
+}
+.toast.warning .title {
+    @apply text-orange-400;
 }
 .icons {
     @apply mt-4 ml-4;
