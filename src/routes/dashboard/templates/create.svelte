@@ -11,6 +11,7 @@
     const handleSubmit = e => {
         submitting = true;
         success = false;
+
         createTemplate(e.detail).then(({ data, status }) => {
             if (status > 299) {
                 addToast({
@@ -18,6 +19,7 @@
                     message: data.message,
                     title: "There was an error creating the template"
                 });
+                
                 success = false;
             } else {
                 success = true;
@@ -51,7 +53,6 @@
     on:close={handleClose}
 />
 <CreateTemplate
-    defaultTemplate={defaultTemplateData}
     on:submit={handleSubmit}
     {submitting}
 />

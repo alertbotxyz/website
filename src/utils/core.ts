@@ -32,7 +32,7 @@ export const formatDate = (date: Date, format: string): string => {
     formattedDate = formattedDate.replace("M", month.toString());
     formattedDate = formattedDate.replace("dd", day.toString().padStart(2, "0"));
     formattedDate = formattedDate.replace("d", day.toString());
-    if (formattedDate.includes("apm")) formattedDate = formattedDate.replace("hh", (hours - 12).toString());
+    if (formattedDate.includes("apm")) formattedDate = formattedDate.replace("hh", (hours > 12 ? hours - 12 : hours).toString());
     formattedDate = formattedDate.replace("hh", hours.toString().padStart(2, "0"));
     formattedDate = formattedDate.replace("mm", minutes.toString().padStart(2, "0"));
     formattedDate = formattedDate.replace("ss", seconds.toString().padStart(2, "0"));

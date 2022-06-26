@@ -1,3 +1,24 @@
+<script context="module">
+    import { setUser, userStore } from "../../stores/user";
+
+    export const load = async () => {
+        getUser().then(res => {
+            if (res.ok) {
+                setUser(res.data);
+                return {
+                    props: { user: res.data },
+                };
+            } else {
+                return {
+                    props: {
+                        error: res.error.message,
+                        status: res.status,
+                    },
+                };
+            };
+        });
+    };
+</script>
 <script>
     import { fade, fly } from "svelte/transition";
     import { addToast } from "../../stores/toasts";
@@ -10,9 +31,10 @@
     import User from "../../components/dashboard/User.svelte";
     import Logo from "../../components/Logo.svelte";
     import "../../styles/errors.css";
-    import { setUser, userStore } from "../../stores/user";
 
     export let error;
+    export let user;
+    export let status;
 
     $: loading = true;
     $: user = $userStore;
@@ -26,7 +48,9 @@
     };
     
     makeRequest("/").then(res => {
-        if(!res.ok) {
+        if (status === 401) return;
+
+        if (!res.ok) {
             error = res.error.message;
             addToast({
                 type: "error",
@@ -34,14 +58,8 @@
                 title: "There was an error communicating with the server"
             });
         };
-        loading = false;
-    });
 
-    getUser().then(res => {
-        if (res.ok) {
-            setUser(res.data);
-            user = res.data;
-        };
+        loading = false;
     });
 </script>
 

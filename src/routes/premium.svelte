@@ -2,6 +2,7 @@
 	import Info from "../components/Info.svelte";
 	import Navbar from "../components/navigation/Navbar.svelte";
 	import "../styles/premium.css";
+import constants from "../utils/constants";
 	
 	import data from "../utils/data";
 	const plans = data.premium.plans;
@@ -170,6 +171,8 @@
 			},
 		],
 	};
+
+	// only premium link should be active (extra and free should be disabled)
 </script>
 
 <Navbar scroll>
@@ -201,8 +204,8 @@
 						</span>
 						<span class="description">{pricing.description}</span>
 						<a
-							href="/"
-							class="subscribe {pricing.active && "active"}"
+							href={`${constants.api.url}/subscription/checkout?level=${pricing.title.toLowerCase()}`}
+							class="subscribe {pricing.active && "active"} {pricing.title.toLowerCase() === "premium" ? "" : "pointer-events-none"}"
 						>
 							{pricing.text}
 						</a>

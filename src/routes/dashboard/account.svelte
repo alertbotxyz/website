@@ -2,12 +2,16 @@
     import { getBotUser, getUserAccountData, updateBotToken } from "../../api/auth";
 
     const setNewBot = (botData) => {
-        return {
+        const bot = {
             name: botData.username ?? botData.name,
             discriminator: botData.discriminator,
             avatar: botData.avatar ? `https://cdn.discordapp.com/avatars/${botData.id}/${botData.avatar}.png` : data.images.default_avatar,
             id: botData.id,
         };
+
+        if (botData.token) bot.token = botData.token;
+
+        return bot;
     };
 
     export const load = async () => {
@@ -46,26 +50,29 @@
     export let error;
 
     $: loading = false;
+    $: botIsLoading = false;
     $: user = {
         customerId: $userStore.customerId,
         subscription: {
             level: $userStore?.subscription?.level,
             price: $userStore?.subscription?.price || 0,
             interval: $userStore?.subscription?.interval || "month",
-            renews: formatDate($userStore?.subscription?.expires * 1000, "dd/MM/yyyy"),
+            renews: formatDate($userStore?.subscription?.expires, "dd/MM/yyyy"),
         },
         billing: [],
         alerts: [],
         stats: {
             templates: 0,
             servers: 0,
+            alerts: 0,
         },
     };
     $: customerPortalUrl = `${constants.api.url}/subscription/customer-portal?customerId=${user.customerId}`;
     $: newBotToken = "";
+    $: alertHistoryPage = 1;
 
     $: bot = {
-        token: $userStore?.botToken,
+        token: $userStore.botToken,
         ...bot
     };
 
@@ -90,8 +97,6 @@
         alert_history: false,
     };
 
-    let start = Date.now();
-
     getUserAccountData().then(res => {
         if (res.ok) {
             user = {
@@ -101,6 +106,7 @@
                 stats: {
                     templates: res.data.templateCount,
                     servers: res.data.serverCount,
+                    alerts: res.data.alertCount,
                 },
             };
         } else {
@@ -125,14 +131,19 @@
                 title: "Error",
             });
         };
+        botIsLoading = true;
 
-        loading = true;
+        // update the bot token on the user
         updateBotToken(newBotToken).then(res => {
             if (res.ok) {
+                // fetch bot data using updated token (from the user)
                 getBotUser().then(res => {
                     if (res.ok) {
-                        bot = setNewBot(res.data);
-                        error = "";
+                        error = undefined;
+                        bot = setNewBot({
+                            token: newBotToken,
+                            ...res.data
+                        });
                     } else {
                         addToast({
                             type: "error",
@@ -148,7 +159,8 @@
                     title: "Error",
                 });
             };
-            loading = false;
+
+            botIsLoading = false;
         });
     };
 </script>
@@ -159,33 +171,35 @@
             <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full my-8 mb-16">
                 <div class="flex flex-row 2xs:w-full">
                     {#if bot && bot.token && !error}
-                        <div class="rounded-md border border-solid border-gray-600 py-3 px-4 flex flex-row items-center lg:mt-8 2xs:flex-col 2xs:w-full mr-8 lg:mr-0">
-                            <div class="flex flex-row items-center tiny:flex-col">
-                                <img
-                                    src={bot.avatar}
-                                    alt="bot avatar"
-                                    class="rounded-full w-12 h-12 shadow-sm shadow-gray-600"
-                                />
-                                <div class="flex flex-row tiny:py-2">
-                                    <div class="flex flex-row text-xl ml-2 font-bold">
-                                        <span>{bot.name}</span>
-                                        <span class="text-gray-400 ml-0.5">#{bot.discriminator}</span>
-                                    </div>
-                                    <Info
-                                        text="Invite this bot to every server you want to alert to."
-                                        style="text-xl mt-0.5"
-                                        left
+                        <Loading loading={botIsLoading}>
+                            <div class="rounded-md border border-solid border-gray-600 py-3 px-4 flex flex-row items-center lg:mt-8 2xs:flex-col 2xs:w-full mr-8 lg:mr-0">
+                                <div class="flex flex-row items-center tiny:flex-col">
+                                    <img
+                                        src={bot.avatar}
+                                        alt="bot avatar"
+                                        class="rounded-full w-12 h-12 shadow-sm shadow-gray-600"
                                     />
+                                    <div class="flex flex-row tiny:py-2">
+                                        <div class="flex flex-row text-xl ml-2 font-bold">
+                                            <span>{bot.name}</span>
+                                            <span class="text-gray-400 ml-0.5">#{bot.discriminator}</span>
+                                        </div>
+                                        <Info
+                                            text="Invite this bot to every server you want to alert to."
+                                            style="text-xl mt-0.5"
+                                            left
+                                        />
+                                    </div>
                                 </div>
+                                <a
+                                    href=" https://discord.com/oauth2/authorize?client_id={bot.id}&scope=bot%20applications.commands&permissions=8"
+                                    class=" py-2 w-32 ml-8 2xs:ml-0 text-center bg-accent rounded-md"
+                                    target="_blank"
+                                >
+                                    Invite
+                                </a>
                             </div>
-                            <a
-                                href=" https://discord.com/oauth2/authorize?client_id={bot.id}&scope=bot%20applications.commands&permissions=8"
-                                class=" py-2 w-32 ml-8 2xs:ml-0 text-center bg-accent rounded-md"
-                                target="_blank"
-                            >
-                                Invite
-                            </a>
-                        </div>
+                        </Loading>
                     {/if}
                 </div>
                 <div class="flex flex-col lg:ml-0 w-full">
@@ -296,7 +310,7 @@
                             </div>
                             {#each user.billing as invoice, i}
                                 <div class="payment {(i + 1 === user.billing.length) && "last"}">
-                                    <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(invoice.date * 1000, "dd/MM/yy")}</span>
+                                    <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(invoice.date, "dd/MM/yy")}</span>
                                     <span class="w-1/4 flex text-gray-400 2xs:text-xs xs:text-tiny xs:justify-center xs:text-center">Alertbot {invoice.level || "premium"} - {invoice.interval}ly billing</span>
                                     <span class="w-1/4 flex justify-center 2xs:text-xs">{invoice.amount / 100}({invoice.currency.toUpperCase() || "USD"})</span>
                                     <a
@@ -331,7 +345,7 @@
                     <div class="stats flex flex-row w-full justify-between 2xs:flex-col 2xs:items-center mt-8">
                         <div class="stat">
                             <span class="text">Sent</span>
-                            <span class="number">{user.alerts.length}</span>
+                            <span class="number">{user.stats.alerts}</span>
                             <span class="text">Alerts</span>
                         </div>
                         <div class="stat center">
@@ -347,20 +361,46 @@
                     </div>
                     <span class="font-bold text-xl">Alerts</span>
                     <div class="pb-8 pt-4 grid">
-                        <DiscordChat
-                            messages={user.alerts.map(alert => {
-                                return {
-                                    type: "embed",
-                                    data: alert.embed,
-                                    date: alert.date,
-                                    author: {
-                                        name: bot.name,
-                                        iconUrl: bot.avatarUrl,
-                                        id: bot.id,
-                                    },
-                                };
-                            })}
-                        />
+                        {#if user.alerts.length > 0}
+                            <DiscordChat
+                                messages={
+                                user.alerts
+                                    .map(alert => {
+                                        return {
+                                            type: "embed",
+                                            data: alert.embed,
+                                            date: alert.date,
+                                            author: {
+                                                name: bot.name,
+                                                iconUrl: bot.avatarUrl,
+                                                id: bot.id,
+                                            },
+                                            link: `/dashboard/alerts/${alert.alertId}`
+                                        };
+                                    })
+                                    .slice((alertHistoryPage - 1) * 20, alertHistoryPage * 20)
+                                }
+                            />
+                            {#if user.alerts.length >= 20}
+                                <div class="flex flex-row mt-4">
+                                    <span
+                                        class="px-2 py-1 font-bold bg-light-primary rounded-l-md hover:cursor-pointer"
+                                        on:click={() => alertHistoryPage > 1 && alertHistoryPage--}
+                                    >
+                                        {"<"}
+                                    </span>
+                                    <span class="px-2 py-1 mx-1 font-bold bg-light-primary hover:cursor-default">{alertHistoryPage}</span>
+                                    <span
+                                        class="px-2 py-1 font-bold bg-light-primary rounded-r-md hover:cursor-pointer"
+                                        on:click={() => alertHistoryPage < Math.ceil(user.alerts.length / 20) && alertHistoryPage++}
+                                    >
+                                        {">"}
+                                    </span>
+                                </div>
+                            {/if}
+                        {:else}
+                            <span>No alerts found</span>
+                        {/if}
                     </div>
                 </div>
             {/if}

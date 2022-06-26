@@ -7,6 +7,7 @@
     import "../../../styles/templates.css";
     import Info from "../../../components/Info.svelte";
     import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
+import { userStore } from "../../../stores/user";
 
     export let servers = [];
 
@@ -75,7 +76,7 @@
                 addToast({
                     type: "error",
                     message: res.error.message,
-                    title: "There was an error fetching the templates"
+                    title: "There was an error fetching guilds"
                 });
                 servers = [];
             };
@@ -97,7 +98,7 @@
 
         addServer(guildId, channelId, mentionId).then(res => {
             if (res.ok) {
-                successMessage = `Server was successfully added to alert list with channel #${data.channelName} with role ${data.roleName && data.roleName !== "" ? data.roleName : "no mention role"}`;
+                successMessage = `Server was successfully added to alert list with channel #${data.channelName} with ${data.roleName && data.roleName !== "" ? `role ${data.roleName}` : "no mention role"}`;
                 addSuccess = true;
                 getServers();
             } else {
@@ -170,80 +171,93 @@
 <Loading {loading}>
     <div class="flex flex-col items-center pb-8">
         <h1 class="text-center xs:text-2xl">Alerting to {servers.length} servers</h1>
-        <div class="flex flex-row lg:flex-col my-8 items-end pl-8 justify-center lg:w-5/6">
-            <DashboardInput
-                name="guildId"
-                title="Guild"
-                placeholder="Choose a guild"
-                required
-                type="select"
-                fullWidth
-                data={{
-                    options: userGuilds.map(guild => ({
-                        value: guild.id,
-                        text: guild.name
-                    })),
-                }}
-                on:change={handleChange}
-                bind:hasError={hasError}
-                help="You and the bot must have permissions to send messages to the alert channel"
-                extraClass={"lg:mb-4"}
-            />
-            {#if data.guildId}
-                <Loading loading={fetchingGuild}>
-                    <DashboardInput
-                        name="channelId"
-                        title="Channel"
-                        placeholder="Choose a channel"
-                        required
-                        type="select"
-                        fullWidth
-                        data={{
-                            options: guildInfo.channels.map(channel => ({
-                                value: channel.id,
-                                text: channel.name
-                            })),
-                        }}
-                        on:change={handleChange}
-                        bind:hasError={hasError}
-                        help="You can alert to the same server in multiple channels but not the same channel"
-                        extraClass={"lg:mb-4"}
-                    />
-                    <DashboardInput
-                        name="mentionId"
-                        title="Mention Role"
-                        placeholder="Choose a role"
-                        fullWidth
-                        type="select"
-                        data={{
-                            options: [
-                                ...guildInfo.roles.map(role => ({
-                                        value: role.id,
-                                        text: role.name
-                                    })
-                                ),
-                                {
-                                    value: "everyone",
-                                    text: "@everyone"
-                                }
-                            ],
-                        }}
-                        on:change={handleChange}
-                        bind:hasError={hasError}
-                        help="You can optionally choose a mention role which tags a role every time an alert is sent"
-                        extraClass={"lg:mb-4"}
-                    />
-                    <button
-                        class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4"
-                        on:click={handleSubmit}
-                        disabled={hasError || submitting}
-                        aria-label="Add server"
-                    >
-                        Add Server
-                    </button>
-                </Loading>
-            {/if}
-        </div>
+        {#if $userStore.botToken}
+            <div class="flex flex-row lg:flex-col my-8 items-end pl-8 justify-center lg:w-5/6">
+                <DashboardInput
+                    name="guildId"
+                    title="Guild"
+                    placeholder="Choose a guild"
+                    required
+                    type="select"
+                    fullWidth
+                    data={{
+                        options: userGuilds.map(guild => ({
+                            value: guild.id,
+                            text: guild.name
+                        })),
+                    }}
+                    on:change={handleChange}
+                    bind:hasError={hasError}
+                    help="You and the bot must have permissions to send messages to the alert channel"
+                    extraClass={"lg:mb-4"}
+                />
+                {#if data.guildId}
+                    <Loading loading={fetchingGuild}>
+                        <DashboardInput
+                            name="channelId"
+                            title="Channel"
+                            placeholder="Choose a channel"
+                            required
+                            type="select"
+                            fullWidth
+                            data={{
+                                options: guildInfo.channels.map(channel => ({
+                                    value: channel.id,
+                                    text: channel.name
+                                })),
+                            }}
+                            on:change={handleChange}
+                            bind:hasError={hasError}
+                            help="You can alert to the same server in multiple channels but not the same channel"
+                            extraClass={"lg:mb-4"}
+                        />
+                        <DashboardInput
+                            name="mentionId"
+                            title="Mention Role"
+                            placeholder="Choose a role"
+                            fullWidth
+                            type="select"
+                            data={{
+                                options: [
+                                    ...guildInfo.roles.map(role => ({
+                                            value: role.id,
+                                            text: role.name
+                                        })
+                                    ),
+                                    {
+                                        value: "everyone",
+                                        text: "@everyone"
+                                    }
+                                ],
+                            }}
+                            on:change={handleChange}
+                            bind:hasError={hasError}
+                            help="You can optionally choose a mention role which tags a role every time an alert is sent"
+                            extraClass={"lg:mb-4"}
+                        />
+                        <button
+                            class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4"
+                            on:click={handleSubmit}
+                            disabled={hasError || submitting}
+                            aria-label="Add server"
+                        >
+                            Add Server
+                        </button>
+                    </Loading>
+                {/if}
+            </div>
+        {:else}
+            <span class="mt-4 text-lg">
+                You need to
+                <a
+                    href="/dashboard/account"
+                    class="primary-link"
+                >
+                    set a bot token
+                </a>
+                to add servers.
+            </span>
+        {/if}
         {#if servers && servers.length > 0}
             <div class="grid grid-cols-1 w-full place-items-center sm:grid-cols-2 xs:grid-cols-1">
                 {#each servers as server}
@@ -265,12 +279,14 @@
                             <div class="flex flex-col ml-4 2xs:ml-0 2xs:w-full 2xs:items-center">
                                 <span class="server-guild-info mb-1">
                                     In channel 
-                                    <span
+                                    <a
                                         class="text"
                                         data-tooltip="Channel id: {server.channel.id}"
+                                        href="https://discord.com/channels/{server.guild.id}/{server.channel.id}"
+                                        target="_blank"
                                     >
-                                        #{server.channel.name}
-                                    </span>
+                                        <span class="hover:cursor-pointer primary-link">#{server.channel.name}</span>
+                                    </a>
                                 </span>
                                 {#if server.role?.name}
                                     <span class="server-guild-info">

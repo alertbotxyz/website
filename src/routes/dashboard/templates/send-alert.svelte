@@ -83,7 +83,7 @@
         type: "embed",
         data: {
             title: template.title,
-            description: `${template.description}\n${parameterInputs}`,
+            description: `${template.description ? template.description + "\n" : ""}${parameterInputs}` ,
             color: template.color,
             footer: template.footer,
             thumbnail: template.thumbnail,

@@ -41,3 +41,10 @@ export const deleteTemplate = async (templateName: string) => {
         query: { name: templateName },
     });
 };
+
+export const importTemplate = async (templateId: string) => {
+    return makeRequest(`/templates/id`, {
+        method: "GET",
+        query: { templateId },
+    });
+}

@@ -26,7 +26,10 @@
                 <hr class="w-full h-0 border-t-0 border-gray-600"/>
             </div>
         {/if}
-        <div class="flex flex-row m-2">
+        <a
+            class="flex flex-row m-2 {discordMessage.link ? "" : "pointer-events-none"}"
+            href={discordMessage.link ?? ""}
+        >
             <img
                 src={discordMessage.author?.iconUrl ?? defaultUser.iconUrl} 
                 alt="avatar"
@@ -57,7 +60,7 @@
                     <DiscordEmbed 
                         title={discordMessage.data.title}
                         description={discordMessage.data.description}
-                        color={discordMessage.data.color ?? "#009dff"}
+                        color={discordMessage.data.color ?? "#63ffd0"}
                         footer={discordMessage.data.footer}
                         thumbnail={discordMessage.data.thumbnail}
                         author={discordMessage.data.author}
@@ -66,7 +69,7 @@
                     />
                 {/if}
             </div>
-        </div>
+        </a>
     {/each}
 </div>
 

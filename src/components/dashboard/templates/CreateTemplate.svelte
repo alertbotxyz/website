@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import { addToast } from "../../../stores/toasts";
-    import { deleteTemplate, updateTemplate } from "../../../api/templates";
+    import { deleteTemplate, updateTemplate, importTemplate } from "../../../api/templates";
     import { parseTemplateParameters } from "../../../utils/core";
     import data from "../../../utils/data";
     import DiscordChat from "../../discord/DiscordChat.svelte";
@@ -10,6 +10,7 @@
     import SaveChangesPopup from "./SaveChangesPopup.svelte";
     import ParametersForm from "./ParametersForm.svelte";
     import SuccessModal from "../../modals/SuccessModal.svelte";
+    import { defaultTemplateData } from "../../../utils/defaults";
 
     export let type = "create";
     export let defaultTemplate = undefined;
@@ -17,7 +18,7 @@
 
     const dispatch = createEventDispatcher();
 
-    $: template = defaultTemplate ?? {};
+    $: template = type === "edit" ? defaultTemplate ? defaultTemplate : {} : defaultTemplateData;
     $: hasError = false;
     $: updated = false;
     $: success = {
@@ -25,6 +26,7 @@
         message: "",
         title: "",
     };
+    $: importTemplateId = undefined;
 
     let originalTemplate = JSON.parse(JSON.stringify(defaultTemplate ?? {}));
     const checkUpdate = () => updated = JSON.stringify(originalTemplate) !== JSON.stringify(template);
@@ -98,17 +100,47 @@
     };
 
     const handleShareTemplate = () => {
-        navigator.clipboard.writeText(JSON.stringify(template));
+        navigator.clipboard.writeText(template.templateId);
+
         addToast({
             type: "success",
             title: "Template data copied to clipboard",
-            message: "Paste in this text when propmted to when importing a template",
+            message: "Paste in this id when propmted to when importing a template",
         });
     };
 
     const handleSubmit = () => {
         dispatch("submit", template);
         template = {};
+    };
+
+    const handleImportChange = e => {
+        const { value } = e.detail || e.target;
+        importTemplateId = value;
+    };
+
+    const handleImportTemplate = () => {
+        submitting = true;
+
+        importTemplate(importTemplateId).then(res => {
+            if (res.ok) {
+                template = res.data;
+                originalTemplate = JSON.parse(JSON.stringify(template));
+
+                addToast({
+                    type: "success",
+                    message: "The data of the template was imported successfully",
+                    title: "Template successfully imported",
+                });
+            } else {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error importing the template",
+                });
+            };
+            submitting = false;
+        });
     };
 </script>
 
@@ -268,6 +300,23 @@
                 >
                     Create
                 </button>
+                <div class="w-full flex flex-col mt-4">
+                    <DashboardInput
+                        name="templateId"
+                        title="Import"
+                        placeholder="Enter the id of the template to import (tmp_abcdef0123456789)"
+                        defaultValue={template.name}
+                        on:change={handleImportChange}
+                    />
+                    <button
+                        class="primary-button w-full bg-gray-600 mt-2"
+                        disabled={submitting}
+                        aria-label="Import template"
+                        on:click={handleImportTemplate}
+                    >
+                        Import
+                    </button>
+                </div>
             {:else if type === "edit"}
                 <ParametersForm
                     parameters={template.parameters}
