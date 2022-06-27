@@ -20,3 +20,20 @@ export const sendAlert = async ({
         },
     });
 };
+
+export const getAlertById = async (alertId: string) => {
+    return makeRequest("/alert", {
+        method: "GET",
+        query: { alertId },
+    });
+};
+
+export const retryAlerts = async (alertId: string, servers: any[]) => {
+    return makeRequest("/alert/retry", {
+        method: "PUT",
+        body: {
+            alertId,
+            servers,
+        },
+    });
+};

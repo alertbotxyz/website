@@ -56,6 +56,7 @@
     const sendAlertHandle = () => {
         submitting = true;
         success = false;
+        
         sendAlert({
             name: template.name,
             inputs,
@@ -67,7 +68,7 @@
             } else {
                 addToast({
                     type: "error",
-                    message: `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}`,
+                    message: res.data ? `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}` : "An unknown error occured.",
                     title: "There was an error sending the alert",
                 });
             };
