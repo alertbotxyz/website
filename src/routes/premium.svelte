@@ -13,20 +13,20 @@ import constants from "../utils/constants";
 				title: plans.free.name,
 				price: plans.free.price,
 				description: plans.free.description,
-				text: "Already owned"
+				text: "Already owned",
 			},
 			{
 				title: plans.premium.name,
 				price: plans.premium.price,
 				description: plans.premium.description,
 				active: true,
-				text: "Subscribe"
+				text: "Subscribe",
 			},
 			{
 				title: plans.extra.name,
 				price: plans.extra.price,
 				description: plans.extra.description,
-				text: "Coming soon"
+				text: "Coming soon",
 			},
 		],
 		sections: [
@@ -35,7 +35,8 @@ import constants from "../utils/constants";
 				features: [
 					{
 						name: "Monthly alerts",
-						free: "100", // "int", "unlimited", "yes", "no"
+						// "int", "unlimited", "yes", "no"
+						free: "100",
 						premium: "unlimited",
 						extra: "unlimited",
 						description: "How many alerts you can send per month",

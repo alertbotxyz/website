@@ -1,9 +1,9 @@
-import { makeRequest } from './utils';
+import { makeRequest } from "./utils";
 
-export const getAllServers = async () => {
-    return makeRequest("/servers/all")
+export const getAllServers = () => {
+    return makeRequest("/servers/all");
 };
-export const addServer = async (guildId: string, channelId: string, mentionId: string) => {
+export const addServer = (guildId: string, channelId: string, mentionId: string) => {
     return makeRequest("/servers", {
         method: "POST",
         body: {
@@ -13,18 +13,18 @@ export const addServer = async (guildId: string, channelId: string, mentionId: s
         },
     });
 };
-export const deleteServer = async (channelId: string) => {
+export const deleteServer = (channelId: string) => {
     return makeRequest("/servers", {
         method: "DELETE",
         query: { channelId },
     });
 };
-export const getGuildInfo = async (guildId: string) => {
+export const getGuildInfo = (guildId: string) => {
     return makeRequest("/servers/info", {
         method: "GET",
         query: { guildId },
     });
 };
-export const getAllGuilds = async () => {
+export const getAllGuilds = () => {
     return makeRequest("/servers/all-guilds");
 };

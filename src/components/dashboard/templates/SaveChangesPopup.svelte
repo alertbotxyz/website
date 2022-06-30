@@ -1,5 +1,5 @@
 <script>
-    import { fly, fade } from "svelte/transition";
+    import { fly } from "svelte/transition";
     import { createEventDispatcher } from "svelte";
     
     export let updated = false;

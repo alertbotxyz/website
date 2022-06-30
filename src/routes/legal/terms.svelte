@@ -1,6 +1,6 @@
 <script>
+    import data from "../../utils/data";
 	import "../../styles/legal.css";
-    import data from "../../utils/data.ts";
 </script>
 
 <div class="legal-container">

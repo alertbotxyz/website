@@ -1,6 +1,5 @@
 <script>
     import Navbar from "../components/navigation/Navbar.svelte";
-    import Footer from "../components/footer/Footer.svelte";
     import data from "../utils/data";
     import "../styles/index.css";
 </script>

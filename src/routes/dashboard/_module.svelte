@@ -1,7 +1,7 @@
 <script context="module">
     import { setUser, userStore } from "../../stores/user";
 
-    export const load = async () => {
+    export const load = () => {
         getUser().then(res => {
             if (res.ok) {
                 setUser(res.data);
@@ -25,11 +25,9 @@
     import { getUser } from "../../api/auth";
     import { makeRequest } from "../../api/utils";
     import Sidebar from "../../components/navigation/Sidebar.svelte";
-    import Navbar from "../../components/navigation/Navbar.svelte";
     import Loading from "../../components/Loading.svelte";
     import ErrorPage from "../../components/ErrorPage.svelte";
     import User from "../../components/dashboard/User.svelte";
-    import Logo from "../../components/Logo.svelte";
     import "../../styles/errors.css";
 
     export let error;
@@ -55,7 +53,7 @@
             addToast({
                 type: "error",
                 message: res.error.message,
-                title: "There was an error communicating with the server"
+                title: "There was an error communicating with the server",
             });
         };
 

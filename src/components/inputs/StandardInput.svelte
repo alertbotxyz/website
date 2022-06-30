@@ -34,13 +34,13 @@
                 error = "";
             };
         } else if (validation?.color) {
-                if (!isValidColor(defaultValue, required)) {
-                    error = "Invalid color";
-                    hasError = true;
-                } else {
-                    error = "";
-                    hasError = false;
-                };
+            if (!isValidColor(defaultValue, required)) {
+                error = "Invalid color";
+                hasError = true;
+            } else {
+                error = "";
+                hasError = false;
+            };
         } else if (validation?.url && !isValidUrl(value, required)) {
             error = "Invalid URL";
             hasError = true;

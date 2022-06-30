@@ -1,5 +1,4 @@
 <script>
-    import { now } from "svelte/internal";
     import { formatDate, isSameDate, isToday } from "../../utils/core";
     import data from "../../utils/data";
     import DiscordEmbed from "./DiscordEmbed.svelte";
@@ -17,7 +16,7 @@
         {@const prevMessage = messages[i - 1] || undefined}
         {@const messageDate = discordMessage.date || Date.now()}
         {@const prevMessageDate = prevMessage?.date || Date.now()}
-        {@const prevIsSameAuthor = (prevMessage?.author?.id && discordMessage.author?.id) && prevMessage?.author?.id === discordMessage.author?.id}
+        {@const prevIsSameAuthor = prevMessage?.author?.id && discordMessage.author?.id && prevMessage?.author?.id === discordMessage.author?.id}
         {@const prevIsSameDate = isSameDate(messageDate, prevMessageDate)}
         {#if !prevIsSameDate && prevMessage}
             <div class="flex flex-row items-center px-4">
@@ -46,8 +45,8 @@
                         </div>
                         <span class="ml-2 2xs:m-0 mt-1 text-gray-500 text-xs xs:text-tiny">
                             {
-                                isToday(new Date(messageDate)) 
-                                ? "Today" 
+                                isToday(new Date(messageDate))
+                                ? "Today"
                                 : formatDate(new Date(messageDate), "dd/MM/yyyy")
                             } at {formatDate(new Date(messageDate), "hh:mmapm")}
                         </span>

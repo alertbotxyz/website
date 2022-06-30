@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { makeRequest } from "./utils";
 
-export const createTemplate = async (templateData: {
+export const createTemplate = (templateData: {
     name: string;
     title?: string;
     description?: string;
@@ -21,11 +22,11 @@ export const createTemplate = async (templateData: {
     });
 };
 
-export const getAllTemplates = async () => {
+export const getAllTemplates = () => {
     return makeRequest("/templates/all");
 };
 
-export const updateTemplate = async (oldTemplate, newTemplate) => {
+export const updateTemplate = (oldTemplate, newTemplate) => {
     return makeRequest("/templates", {
         method: "PUT",
         body: {
@@ -35,16 +36,16 @@ export const updateTemplate = async (oldTemplate, newTemplate) => {
     });
 };
 
-export const deleteTemplate = async (templateName: string) => {
-    return makeRequest(`/templates`, {
+export const deleteTemplate = (templateName: string) => {
+    return makeRequest("/templates", {
         method: "DELETE",
         query: { name: templateName },
     });
 };
 
-export const importTemplate = async (templateId: string) => {
-    return makeRequest(`/templates/id`, {
+export const importTemplate = (templateId: string) => {
+    return makeRequest("/templates/id", {
         method: "GET",
         query: { templateId },
     });
-}
+};

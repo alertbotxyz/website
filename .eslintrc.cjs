@@ -5,8 +5,6 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -56,10 +54,6 @@ module.exports = {
             {
                 "properties": "always",
             },
-        ],
-        "curly": [
-            "error",
-            "multi",
         ],
         "default-case": [
             "error",
@@ -239,12 +233,6 @@ module.exports = {
         ],
         "no-whitespace-before-property": [
             "error",
-        ],
-        "object-curly-newline": [
-            "error",
-            {
-                "minProperties": 2,
-            },
         ],
         "object-curly-spacing": [
             "error",

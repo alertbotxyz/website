@@ -24,11 +24,11 @@
             addToast({
                 title: "There was an error fetching the alert",
                 type: "error",
-                message: res.error.message
+                message: res.error.message,
             });
         };
 
-        const ms = Date.now() - alert.date
+        const ms = Date.now() - alert.date;
         const minutes = Math.floor(ms / 1000 / 60);
         
         if (minutes < 15) canStillRetry = true;
@@ -43,7 +43,7 @@
                 addToast({
                     title: "Success",
                     type: "success",
-                    message: "Alert sent successfully"
+                    message: "Alert sent successfully",
                 });
 
                 alert = {
@@ -54,7 +54,7 @@
                 addToast({
                     title: "There was an error retrying the alert",
                     type: "error",
-                    message: res.data ? `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}` : "An unknown error occured."
+                    message: res.data ? `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}` : "An unknown error occured.",
                 });
             };
             submitting = false;
@@ -107,7 +107,7 @@
                                     <button
                                         class="ml-2 rounded-md w-16 text-center font-bold bg-accent border border-solid border-white"
                                         disabled={!canStillRetry || submitting}
-                                        on:click={retryServers([server])}
+                                        on:click={retryServers([ server ])}
                                     >
                                         Retry
                                     </button>
@@ -118,7 +118,7 @@
                 </div>
                 <button
                     class="rounded-md w-32 h-8 mt-4 text-center font-bold bg-accent border border-solid border-white"
-                    disabled={!canStillRetry || !alert.servers.filter(server => !server.successful).length  || submitting}
+                    disabled={!canStillRetry || !alert.servers.filter(server => !server.successful).length || submitting}
                     on:click={retryServers(alert.servers.filter(server => !server.successful))}
                 >
                     Retry All

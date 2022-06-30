@@ -1,13 +1,11 @@
 <script>
     import { addServer, deleteServer, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
     import { addToast } from "../../../stores/toasts";
-    import InputLabel from "../../../components/inputs/InputLabel.svelte";
+    import { userStore } from "../../../stores/user";
     import Loading from "../../../components/Loading.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
     import "../../../styles/templates.css";
-    import Info from "../../../components/Info.svelte";
     import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
-import { userStore } from "../../../stores/user";
 
     export let servers = [];
 
@@ -43,7 +41,7 @@ import { userStore } from "../../../stores/user";
                     addToast({
                         type: "error",
                         message: res.error.message,
-                        title: "There was an error fetching guild info"
+                        title: "There was an error fetching guild info",
                     });
                 } else {
                     guildInfo = res.data;
@@ -59,7 +57,7 @@ import { userStore } from "../../../stores/user";
             addToast({
                 type: "error",
                 message: res.error.message,
-                title: "There was an error fetching guilds"
+                title: "There was an error fetching guilds",
             });
         } else {
             userGuilds = res.data;
@@ -76,7 +74,7 @@ import { userStore } from "../../../stores/user";
                 addToast({
                     type: "error",
                     message: res.error.message,
-                    title: "There was an error fetching guilds"
+                    title: "There was an error fetching guilds",
                 });
                 servers = [];
             };
@@ -105,7 +103,7 @@ import { userStore } from "../../../stores/user";
                 addToast({
                     type: "error",
                     message: res.error.message,
-                    title: "There was an error adding the server"
+                    title: "There was an error adding the server",
                 });
             };
             handleModal();
@@ -117,14 +115,14 @@ import { userStore } from "../../../stores/user";
         submitting = true;
         deleteServer(channelId).then(res => {
             if (res.ok) {
-                successMessage = `Server was successfully removed from alert list`;
+                successMessage = "Server was successfully removed from alert list";
                 deleteSuccess = true;
                 updateServersArray(channelId);
             } else {
                 addToast({
                     type: "error",
                     message: res.error.message,
-                    title: "There was an error deleting the server"
+                    title: "There was an error deleting the server",
                 });
             };
             submitting = false;
@@ -183,7 +181,7 @@ import { userStore } from "../../../stores/user";
                     data={{
                         options: userGuilds.map(guild => ({
                             value: guild.id,
-                            text: guild.name
+                            text: guild.name,
                         })),
                     }}
                     on:change={handleChange}
@@ -203,7 +201,7 @@ import { userStore } from "../../../stores/user";
                             data={{
                                 options: guildInfo.channels.map(channel => ({
                                     value: channel.id,
-                                    text: channel.name
+                                    text: channel.name,
                                 })),
                             }}
                             on:change={handleChange}
@@ -221,13 +219,13 @@ import { userStore } from "../../../stores/user";
                                 options: [
                                     ...guildInfo.roles.map(role => ({
                                             value: role.id,
-                                            text: role.name
+                                            text: role.name,
                                         })
                                     ),
                                     {
                                         value: "everyone",
-                                        text: "@everyone"
-                                    }
+                                        text: "@everyone",
+                                    },
                                 ],
                             }}
                             on:change={handleChange}

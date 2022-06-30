@@ -125,6 +125,7 @@ const data: {
         send_alert_example: string;
         alert_history_example: string;
         user_avatar: string;
+        default_avatar: string;
     }
 } = {
     "blog": {

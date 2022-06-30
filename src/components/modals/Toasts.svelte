@@ -1,5 +1,5 @@
 <script>
-    import { removeToast, toasts, addToast } from "../../stores/toasts";
+    import { removeToast, toasts } from "../../stores/toasts";
     import { fly } from "svelte/transition";
     import "../../styles/toasts.css";
 

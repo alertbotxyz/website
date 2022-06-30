@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import { fade, fly } from "svelte/transition";
-    import { flip } from 'svelte/animate';
+    import { flip } from "svelte/animate";
     import Info from "../../Info.svelte";
     import DashboardInput from "../../inputs/DashboardInput.svelte";
 
@@ -10,7 +10,7 @@
     export let parameters = {};
     export let submitting = false;
 
-    $: parametersArray = Object.values(parameters || {}).sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0));
+    $: parametersArray = Object.values(parameters || {}).sort((a, b) => a.order > b.order ? 1 : (b.order > a.order ? -1 : 0));
     $: hasError = false;
     $: errorMessage = "";
     $: newParamData = {
@@ -20,14 +20,14 @@
     };
 
     const dragStart = (event, i) => {
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.dropEffect = 'move';
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.dropEffect = "move";
         const start = i;
-        event.dataTransfer.setData('text/plain', start);
+        event.dataTransfer.setData("text/plain", start);
     };
 
     const drop = (event, target) => {
-        event.dataTransfer.dropEffect = 'move'; 
+        event.dataTransfer.dropEffect = "move";
         const start = parseInt(event.dataTransfer.getData("text/plain"));
 
         const newTracklist = Object.values(parameters);
@@ -42,7 +42,7 @@
                     ...moved,
                     order: target,
                 });
-            } else if ((param.order > target && param.order > start) || (param.order < target && param.order < start)) {
+            } else if (param.order > target && param.order > start || param.order < target && param.order < start) {
                 // doesn't move
                 newTemplateList.push(param);
             } else if (param.order >= target) {
@@ -60,7 +60,7 @@
             };
         });
 
-        parameters = Object.fromEntries(newTemplateList.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0)).map(p => [p.name, p])),
+        parameters = Object.fromEntries(newTemplateList.sort((a, b) => a.order > b.order ? 1 : (b.order > a.order ? -1 : 0)).map(p => [ p.name, p ])),
         
         dispatch("parameterChanged", parameters);
     };
@@ -91,7 +91,7 @@
         if (confirm("Are you sure you want to delete this parameter?")) {
             // this is done to make sure the template is updated so svelte reacts to the change
             const deletedOrder = parameters[parameterName].order;
-            let obj = parameters;
+            const obj = parameters;
             delete obj[parameterName];
             Object.values(obj).forEach(param => {
                 if (param.order > deletedOrder) {

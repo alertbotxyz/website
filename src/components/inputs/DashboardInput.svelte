@@ -64,7 +64,7 @@
         {/if}
         {#if data.double}
             <div class="flex flex-row w-full xs:flex-col">
-                {#each ["left", "right"] as side}
+                {#each [ "left", "right" ] as side}
                     <StandardInput
                         style="input focus:border-accent xs:mr-0"
                         reactive

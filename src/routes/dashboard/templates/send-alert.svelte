@@ -12,7 +12,7 @@
 
     $: discordImageUrl = "";
     $: template = {};
-    $: inputs = {}; 
+    $: inputs = {};
     $: templateName = "";
     $: loading = true;
     $: submitting = false;
@@ -29,7 +29,7 @@
             addToast({
                 type: "error",
                 message: res.error.message,
-                title: "There was an error fetching the templates"
+                title: "There was an error fetching the templates",
             });
         };
         loading = false;
@@ -49,7 +49,7 @@
 
         if (template?.parameters) {
             inputs = Object.fromEntries(
-                Object.values(template.parameters).map(t => [t.name, ""])
+                Object.values(template.parameters).map(t => [ t.name, "", ])
             );
         };
     };
@@ -76,7 +76,7 @@
         });
     };
     const resetInputs = () => {
-        inputs = Object.fromEntries(Object.keys(template.parameters).map(t => [t, ""]));
+        inputs = Object.fromEntries(Object.keys(template.parameters).map(t => [ t, "", ]));
         discordImageUrl = "";
     };
 
@@ -97,7 +97,7 @@
     } : {
         type: "text",
         data: {
-            content: "No template parameters."
+            content: "No template parameters.",
         },
     };
 </script>
@@ -139,9 +139,7 @@
                             name="imageUrl"
                             title="Image"
                             placeholder="Enter URL for image"
-                            validation={{
-                                url: true
-                            }}
+                            validation={{ url: true }}
                             defaultValue={discordImageUrl}
                             on:change={handleImageChange}
                             bind:hasError={hasError}
@@ -181,7 +179,7 @@
                 <div class="dashboard-form-container">
                     <h1 class="text-transparent mb-2">Embed</h1>
                     <DiscordChat
-                        messages={[discordChatData]}
+                        messages={[ discordChatData ]}
                     />
                 </div>
             </div>

@@ -3,7 +3,6 @@
     import { createTemplate } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
     import CreateTemplate from "../../../components/dashboard/templates/CreateTemplate.svelte";
-    import { defaultTemplateData } from "../../../utils/defaults";
 
     $: success = false;
     $: submitting = false;
@@ -17,7 +16,7 @@
                 addToast({
                     type: "error",
                     message: data.message,
-                    title: "There was an error creating the template"
+                    title: "There was an error creating the template",
                 });
                 
                 success = false;

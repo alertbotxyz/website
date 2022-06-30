@@ -357,25 +357,25 @@
                     {
                         type: "text",
                         data: {
-                            content: "I can't wait for the next alert!"
+                            content: "I can't wait for the next alert!",
                         },
                         author: {
                             name: "oscarッ",
                             iconUrl: data.images.user_avatar,
-                        }
+                        },
                     },
                     {
                         type: "embed",
                         data: {
                             title: template.title,
-                            description: 
+                            description:
                                 template.description +
                                 (template.description && template.parameters ? "\n" : "") +
                                 (type === "edit" ? parseTemplateParameters(template?.parameters) : ""),
                             color: template.color,
                             footer: template.footer,
                             thumbnail: template.thumbnail,
-                            author: template.author
+                            author: template.author,
                         },
                         author: {
                             bot: true,
@@ -385,13 +385,13 @@
                     {
                         type: "text",
                         data: {
-                            content: "What a great alert!"
+                            content: "What a great alert!",
                         },
                         author: {
                             name: "oscarッ",
                             iconUrl: data.images.user_avatar,
-                        }
-                    }
+                        },
+                    },
                 ]}
             />
         </div>

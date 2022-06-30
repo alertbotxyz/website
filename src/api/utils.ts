@@ -16,7 +16,7 @@ export const makeRequest = async (endpoint: string, options?: {
     const method = options?.method || "GET";
     let url = `${constants.api.url}${endpoint}`;
 
-    if (options?.query) url += "?" + new URLSearchParams(options.query);
+    if (options?.query) url += `?${new URLSearchParams(options.query)}`;
 
     try {
         const res = await fetch(url, {
@@ -33,7 +33,7 @@ export const makeRequest = async (endpoint: string, options?: {
 
         let json;
 
-        try {   
+        try {
             json = await res.json();
         } catch (err) {
             console.log(err);
@@ -43,17 +43,13 @@ export const makeRequest = async (endpoint: string, options?: {
             status: res.status,
             ok: res.ok,
             data: json,
-            error: {
-                message: json?.message || json?.error?.message,
-            },
+            error: { message: json?.message || json?.error?.message },
         };
     } catch (err: any) {
         return {
             status: 400,
             ok: false,
-            error: {
-                message: err.message,
-            },
+            error: { message: err.message },
         };
     };
 };

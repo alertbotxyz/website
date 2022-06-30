@@ -10,7 +10,7 @@ export const removeToast = (id: string) => {
 
 export const addToast = (toast: {
     title: string;
-    message: string;
+    message?: string;
     type: "error" | "success" | "info" | "warning";
 }) => {
     const id = Math.floor(Math.random() * 1000).toString()

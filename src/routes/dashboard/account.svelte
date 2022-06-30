@@ -1,15 +1,24 @@
+<!-- <script context="module" lang="ts"> -->
 <script context="module">
     import { getBotUser, getUserAccountData, updateBotToken } from "../../api/auth";
+    import { userStore } from "../../stores/user";
+
+    // : {
+    //     id: string;
+    //     username: string;
+    //     discriminator: string;
+    //     avatar?: string;
+    //     token?: string;
+    // }
 
     const setNewBot = (botData) => {
         const bot = {
-            name: botData.username ?? botData.name,
+            name: botData.username,
             discriminator: botData.discriminator,
             avatar: botData.avatar ? `https://cdn.discordapp.com/avatars/${botData.id}/${botData.avatar}.png` : data.images.default_avatar,
             id: botData.id,
+            token: botData.token,
         };
-
-        if (botData.token) bot.token = botData.token;
 
         return bot;
     };
@@ -24,7 +33,7 @@
         } else {
             return {
                 props: {
-                    error: res.error.message,
+                    error: res.error?.message,
                 },
             };
         };
@@ -32,17 +41,18 @@
 </script>
 
 <script>
+// <script lang="ts">
     import { slide } from "svelte/transition";
+    // import { AccountUser, AlertData, AlertPage } from "../../types/user";
     import { addToast } from "../../stores/toasts";
-    import { setUser, userStore } from "../../stores/user";
+    import { getAlertPage } from "../../api/alert";
     import constants from "../../utils/constants";
-    import data from "../../utils/data.ts";
+    import data from "../../utils/data";
     import { formatDate } from "../../utils/core";
     import Info from "../../components/Info.svelte";
     import InputLabel from "../../components/inputs/InputLabel.svelte";
     import StandardInput from "../../components/inputs/StandardInput.svelte";
     import Loading from "../../components/Loading.svelte";
-    import DiscordEmbed from "../../components/discord/DiscordEmbed.svelte";
     import DiscordChat from "../../components/discord/DiscordChat.svelte";
     import "../../styles/account.css";
 
@@ -52,14 +62,11 @@
     $: loading = true;
     $: botIsLoading = false;
 
+    // let user: AccountUser;
+    let user;
     $: user = {
         customerId: $userStore.customerId,
-        subscription: {
-            level: $userStore?.subscription?.level,
-            price: $userStore?.subscription?.price || 0,
-            interval: $userStore?.subscription?.interval || "month",
-            renews: formatDate($userStore?.subscription?.expires, "dd/MM/yyyy"),
-        },
+        subscription: $userStore.subscription,
         billing: [],
         alerts: [],
         stats: {
@@ -76,6 +83,8 @@
 
     $: newBotToken = "";
     $: alertHistoryPage = 1;
+    // $: alertHistoryPageData = ([] as AlertData[]);
+    $: alertHistoryPageData = [];
     $: hash = window.location.hash.substring(1);
     $: dropdowns = {
         current_plan: hash === "current-plan" || !hash,
@@ -93,7 +102,7 @@
         loading = true;
         getBotUser().then(res => {
             if (res.ok) bot = setNewBot(res.data);
-            else error = res.error.message;
+            else error = res.error?.message;
             loading = false;
         });
     };
@@ -103,13 +112,19 @@
             user = {
                 ...user,
                 billing: res.data.billingHistory,
-                alerts: res.data.alertHistory,
+                alerts: [ 
+                    {
+                        pageNumber: 1,
+                        alertHistory: res.data.alertHistory
+                    },
+                ],
                 stats: {
                     templates: res.data.templateCount,
                     servers: res.data.serverCount,
                     alerts: res.data.alertCount,
                 },
             };
+            alertHistoryPageData = res.data.alertHistory;
         } else {
             addToast({
                 type: "error",
@@ -121,8 +136,47 @@
         loading = false;
     });
 
+    const changePage = pageNumber => {
+        const pageCount = Math.ceil(user.stats.alerts / 20);
+
+        if (pageNumber > pageCount || pageNumber < 1) return;
+        // const existingPage: AlertPage | undefined = user.alerts?.find(page => page.pageNumber === pageNumber);
+        const existingPage = user.alerts?.find(page => page.pageNumber === pageNumber);
+
+        if (existingPage) {
+            console.log(existingPage);
+
+            alertHistoryPage = pageNumber;
+            alertHistoryPageData = existingPage.alertHistory;
+        } else {
+            getAlertPage(pageNumber).then(res => {
+                if (res.ok) {
+                    user = {
+                        ...user,
+                        alerts: [
+                            ...user.alerts || [],
+                            {
+                                pageNumber,
+                                alertHistory: res.data,
+                            },
+                        ],
+                    };
+
+                    alertHistoryPage = pageNumber;
+                    alertHistoryPageData = res.data;
+                } else {
+                    addToast({
+                        type: "error",
+                        message: "Something went wrong while fetching this alert page.",
+                        title: "Error",
+                    });
+                };
+            });
+        };
+    };
+
     const handleBotChange = e => {
-        const { name, value } = e.detail;
+        const { value } = e.detail;
         newBotToken = value;
     };
 
@@ -158,7 +212,7 @@
             } else {
                 addToast({
                     type: "error",
-                    message: res.error.message,
+                    message: res.error?.message,
                     title: "Error",
                 });
             };
@@ -220,6 +274,7 @@
                                 defaultValue={bot.token}
                                 on:change={handleBotChange}
                                 reactive
+                                type="text"
                             />
                             <button
                                 class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full"
@@ -268,7 +323,7 @@
                                             <span class="text-xl">${user.subscription.price / 100}</span>
                                             <span class="text-sm text-gray-400 m-0.5">/{user.subscription.interval}</span>
                                         </span>
-                                        <span>Your plan renews on <span class="text-gray-400">{user.subscription.renews}</span></span>
+                                        <span>Your plan renews on <span class="text-gray-400">{formatDate(new Date($userStore.subscription?.expires || 0), "dd/MM/yyyy")}</span></span>
                                     </div>
                                     <div class="flex flex-col 2xs:mt-8 justify-between">
                                         <a href={user.portalUrl} class="bg-accent px-12 py-2 rounded-md text-center text-sm mb-1">Update Plan</a>
@@ -309,7 +364,7 @@
                         transition:slide={{ duration: 300 }}
                     >
                         <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 my-8 w-full"/>
-                        {#if user.billing?.length > 0}
+                        {#if user.billing && user.billing.length > 0}
                             <div class="flex flex-col w-full">
                                 <div class="border-b-0 payment rounded-t-md">
                                     <span class="w-1/4 flex xs:text-sm">Date</span>
@@ -319,8 +374,8 @@
                                 </div>
                                 {#each user.billing as invoice, i}
                                     <div class="payment {(i + 1 === user.billing.length) && "last"}">
-                                        <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(invoice.date, "dd/MM/yy")}</span>
-                                        <span class="w-1/4 flex text-gray-400 2xs:text-xs xs:text-tiny xs:justify-center xs:text-center">Alertbot {invoice.level || "premium"} - {invoice.interval}ly billing</span>
+                                        <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(new Date(invoice.date), "dd/MM/yy")}</span>
+                                        <span class="w-1/4 flex text-gray-400 2xs:text-xs xs:text-tiny xs:justify-center xs:text-center">Alertbot premium - {invoice.interval}ly billing</span>
                                         <span class="w-1/4 flex justify-center 2xs:text-xs">{invoice.amount / 100}({invoice.currency.toUpperCase() || "USD"})</span>
                                         <a
                                             href={invoice.invoiceUrl}
@@ -349,6 +404,7 @@
                     Alert History
                 </span>
                 {#if dropdowns.alert_history}
+                    <!-- svelte-ignore missing-declaration -->
                     <div
                         class="mb-24 {!dropdowns.alert_history && "hidden"}"
                         transition:slide={{ duration: 300 }}
@@ -373,10 +429,11 @@
                         </div>
                         <span class="font-bold text-xl">Alerts</span>
                         <div class="pb-8 pt-4 grid">
-                            {#if user.alerts.length > 0}
+                            {#if alertHistoryPageData.length > 0}
+                                <!-- svelte-ignore missing-declaration -->
                                 <DiscordChat
                                     messages={
-                                    user.alerts
+                                    alertHistoryPageData
                                         .map(alert => {
                                             return {
                                                 type: "embed",
@@ -390,21 +447,27 @@
                                                 link: `/dashboard/alerts/${alert.alertId}`
                                             };
                                         })
-                                        .slice((alertHistoryPage - 1) * 20, alertHistoryPage * 20)
                                     }
                                 />
-                                {#if user.alerts.length >= 20}
+                                {#if user.stats.alerts >= 20}
                                     <div class="flex flex-row mt-4">
                                         <span
                                             class="px-2 py-1 font-bold bg-light-primary rounded-l-md hover:cursor-pointer"
-                                            on:click={() => alertHistoryPage > 1 && alertHistoryPage--}
+                                            on:click={() => changePage(alertHistoryPage - 1)}
                                         >
                                             {"<"}
                                         </span>
-                                        <span class="px-2 py-1 mx-1 font-bold bg-light-primary hover:cursor-default">{alertHistoryPage}</span>
+                                        {#each {length: Math.ceil(user.stats.alerts / 20)} as _, pageNumber}
+                                            <span 
+                                                class="px-2 py-1 ml-1 font-bold bg-light-primary hover:cursor-pointer {pageNumber + 1 === alertHistoryPage && "bg-dark-primary"}"
+                                                on:click={() => changePage(pageNumber + 1)}
+                                            >
+                                                {pageNumber + 1}
+                                            </span>
+                                        {/each}
                                         <span
-                                            class="px-2 py-1 font-bold bg-light-primary rounded-r-md hover:cursor-pointer"
-                                            on:click={() => alertHistoryPage < Math.ceil(user.alerts.length / 20) && alertHistoryPage++}
+                                            class="px-2 py-1 font-bold bg-light-primary rounded-r-md hover:cursor-pointer ml-1"
+                                            on:click={() => changePage(alertHistoryPage + 1)}
                                         >
                                             {">"}
                                         </span>

@@ -8,8 +8,6 @@
 
     export let templates = [];
     $: loading = true;
-
-    const dispatch = createEventDispatcher();
     
     getAllTemplates().then(res => {
         if (res.ok) {
@@ -18,7 +16,7 @@
             addToast({
                 type: "error",
                 message: res.error.message,
-                title: "There was an error fetching the templates"
+                title: "There was an error fetching the templates",
             });
         };
         loading = false;

@@ -1,6 +1,6 @@
-import { makeRequest } from './utils';
+import { makeRequest } from "./utils";
 
-export const sendAlert = async ({
+export const sendAlert = ({
     name,
     inputs,
     imageUrl,
@@ -21,19 +21,26 @@ export const sendAlert = async ({
     });
 };
 
-export const getAlertById = async (alertId: string) => {
+export const getAlertById = (alertId: string) => {
     return makeRequest("/alert", {
         method: "GET",
         query: { alertId },
     });
 };
 
-export const retryAlerts = async (alertId: string, servers: any[]) => {
+export const retryAlerts = (alertId: string, servers: any[]) => {
     return makeRequest("/alert/retry", {
         method: "PUT",
         body: {
             alertId,
             servers,
         },
+    });
+};
+
+export const getAlertPage = (page: number) => {
+    return makeRequest("/alert/page", {
+        method: "GET",
+        query: { page },
     });
 };
