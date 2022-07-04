@@ -1,6 +1,7 @@
 <script>
     import { params } from "@roxi/routify";
     import data from "../../utils/data.ts";
+    import "../../styles/blog.css";
 
     $: blogName = $params.blog;
     $: blog = data.blog.data.find(blog => blog.title === blogName?.replaceAll("_", " "));
@@ -20,7 +21,7 @@
                     <span class="bg-gray-800 text-xs rounded-full px-2 py-1 text-gray-400 font-bold mr-2">{tag}</span>
                 {/each}
             </div>
-            <div class="flex flex-row mb-4">
+            <div class="flex flex-row mb-12">
                 <img
                     src={blog.author.avatar.url}
                     alt="author-avatar"
@@ -70,12 +71,3 @@
         {/if}
     {/if}
 </div>
-
-<style lang="postcss">
-    .paragraph {
-        @apply text-gray-400;
-    }
-    .title {
-        @apply text-2xl font-bold mb-2;
-    }
-</style>

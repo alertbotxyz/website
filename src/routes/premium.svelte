@@ -67,7 +67,7 @@ import constants from "../utils/constants";
 				features: [
 					{
 						name: "Template limit",
-						free: "5",
+						free: "3",
 						premium: "unlimited",
 						extra: "unlimited",
 						description: "How many templates you can have at a time",

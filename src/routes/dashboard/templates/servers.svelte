@@ -68,7 +68,12 @@
         loading = true;
         getAllServers().then(res => {
             if (res.ok) {
-                servers = res.data;
+                servers = res.data.map((server, i) => {
+                    return {
+                        ...server,
+                        disabled: i >= 5 && userStore.subscription.level === "free",
+                    };
+                });
                 data.guildId = "";
             } else {
                 addToast({
@@ -259,7 +264,7 @@
         {#if servers && servers.length > 0}
             <div class="grid grid-cols-1 w-full place-items-center sm:grid-cols-2 xs:grid-cols-1">
                 {#each servers as server}
-                    <div class="w-1/2 lg:w-5/6 h-20 md:h-auto md:py-4 rounded-md bg-light-primary my-2 flex md:flex-col items-center justify-between px-3 sm:px-0">
+                    <div class="w-1/2 lg:w-5/6 h-20 md:h-auto md:py-4 rounded-md bg-light-primary my-2 flex md:flex-col items-center justify-between px-3 sm:px-0 {server.disabled && "bg-dark-primary"}">
                         <div class="flex flex-row items-center md:justify-between md:w-full md:px-8 sm:px-2 sm:flex-col">
                             <div class="flex flex-row sm:flex-col items-center sm:mb-4 xs:flex-row">
                                 <img 

@@ -1,6 +1,6 @@
 <script>
-    import Navbar from "./navigation/Navbar.svelte";
-    import "../styles/errors.css";
+    import Navbar from "../navigation/Navbar.svelte";
+    import "../../styles/errors.css";
 
     export let code = 404;
     export let title = "Page not found";

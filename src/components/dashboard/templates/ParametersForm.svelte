@@ -139,8 +139,8 @@
             parameters[newParamData.name] = newParamData;
             newParamData = {
                 name: "",
-                withTitle: false,
-                boldTitle: false,
+                withTitle: true,
+                boldTitle: true,
             };
             hasError = false;
             errorMessage = "";

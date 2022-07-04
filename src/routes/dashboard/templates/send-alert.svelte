@@ -72,6 +72,14 @@
                     title: "There was an error sending the alert",
                 });
             };
+
+            if (res.data.warning) {
+                addToast({
+                    type: "warning",
+                    message: res.data.warning,
+                    title: "Warning",
+                });
+            };
             submitting = false;
         });
     };

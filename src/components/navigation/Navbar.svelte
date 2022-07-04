@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex flex-col min-h-screen w-full items-center justify-between">
-    <div class="navbar bg-gray-300 dark:bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8 z-20">
+    <div class="bg-gray-300 dark:bg-light-primary flex flex-row w-screen h-20 items-center justify-between px-8 z-20">
         <Logo />
         <div class="flex flex-row px-8 lg:px-2 md:hidden">
             <a
@@ -112,7 +112,7 @@
             </div>
         </div>
     {/if}
-    <div class="flex flex-col h-full justify-between w-full items-center">
+    <div class="flex flex-col h-full w-full items-center">
         {#if scroll}
             <div class="w-full 2xs:overflow-scroll  2xs:mr-8">
                 <slot/>

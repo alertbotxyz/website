@@ -7,19 +7,19 @@
         <span class="link-title">Alertbot</span>
         <a
             class="link"
-            href="/redirect?url=bot-invite"
+            href="/redirect?link=bot-invite"
         >
             Invite alertbot
         </a>
         <a
             class="link"
-            href="/redirect?url=support-server"
+            href="/redirect?link=support-server"
         >
             Support server
         </a>
         <a
             class="link"
-            href="/redirect?url=source-code"
+            href="/redirect?link=social-github"
         >
             Source code
         </a>
@@ -34,7 +34,7 @@
         <span class="link-title">Company</span>
         <a
             class="link"
-            href="/info/about"
+            href="/redirect?link=about"
         >
             About
         </a>

@@ -32,7 +32,7 @@
                     </span>
                 {/if}
                 {#if title}
-                    <span class="text-md font-bold mb-2 break-words">{title}</span>
+                    <span class="text-md font-bold {(description && description != "undefined" && description.length > 0) && "mb-2"} break-words">{title}</span>
                 {/if}
                 <span class="flex flex-col text-sm">
                     {#if description && description != "undefined" && description.length > 0}

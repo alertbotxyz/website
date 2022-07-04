@@ -144,8 +144,6 @@
         const existingPage = user.alerts?.find(page => page.pageNumber === pageNumber);
 
         if (existingPage) {
-            console.log(existingPage);
-
             alertHistoryPage = pageNumber;
             alertHistoryPageData = existingPage.alertHistory;
         } else {

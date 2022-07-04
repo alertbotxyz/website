@@ -26,7 +26,7 @@
     import { makeRequest } from "../../api/utils";
     import Sidebar from "../../components/navigation/Sidebar.svelte";
     import Loading from "../../components/Loading.svelte";
-    import ErrorPage from "../../components/ErrorPage.svelte";
+    import ErrorPage from "../../components/errors/ErrorPage.svelte";
     import User from "../../components/dashboard/User.svelte";
     import "../../styles/errors.css";
 

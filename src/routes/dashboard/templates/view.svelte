@@ -1,9 +1,10 @@
 <script>
     import { createEventDispatcher } from "svelte";
     import { params } from "@roxi/routify";
-    import Loading from "../../../components/Loading.svelte";
     import { getAllTemplates } from "../../../api/templates";
     import { addToast } from "../../../stores/toasts";
+    import { userStore } from "../../../stores/user";
+    import Loading from "../../../components/Loading.svelte";
     import CreateTemplate from "../../../components/dashboard/templates/CreateTemplate.svelte";
 
     export let templates = [];
@@ -11,7 +12,12 @@
     
     getAllTemplates().then(res => {
         if (res.ok) {
-            templates = res.data;
+            templates = res.data.map((template, i) => {
+                return {
+                    ...template,
+                    disabled: i >= 3 && $userStore.subscription.level === "free",
+                };
+            });
         } else {
             addToast({
                 type: "error",
@@ -38,6 +44,9 @@
                 on:templateDeleted={evt => {
                     updateTemplatesArray(evt.detail.name);
                 }}
+                disabled={
+                    templates.find(t => t.name === template.name).disabled
+                }
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">
@@ -58,7 +67,7 @@
                 <div class="template-container w-full">
                     {#each templates as templ}
                         <a
-                            class="template flex flex-row items-center bg-light-primary py-6 px-4 w-full justify-between rounded-md my-4"
+                            class="template flex flex-row items-center bg-light-primary py-6 px-4 w-full justify-between rounded-md my-4 {templ.disabled && "bg-dark-primary"}"
                             href="?template={templ.name}"
                         >
                             <span class="text-xl font-bold">{templ.name}</span>

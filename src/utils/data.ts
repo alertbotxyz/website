@@ -126,62 +126,108 @@ const data: {
         alert_history_example: string;
         user_avatar: string;
         default_avatar: string;
-    }
+    };
 } = {
     "blog": {
         "data": [
-            // {
-            //     "category": "Development",
-            //     "date": "28/05/2022",
-            //     "title": "Developing alert bot",
-            //     "description": "In this blog I talk about how development of alertbot started and progress of it.",
-            //     "thumbnail": {
-            //         "url": "https://storage.googleapis.com/alertbot-images/dashboard-create-template.png",
-            //     },
-            //     "tags": ["Development"],
-            //     "author": {
-            //         "name": "Atom",
-            //         "avatar": {
-            //             "url": "https://storage.googleapis.com/alertbot-images/logo.png",
-            //         },
-            //     },
-            //     "content": [
-            //         {
-            //             "type": "title",
-            //             "data": "A history of alertbot"
-            //         },
-            //         {
-            //             "type": "paragraph",
-            //             "data": "I started working on alert bot back in ~August 2019 and was very close to releasing it before summer. However I never released it as I was having issues with compatibility on IOS browsers. This along with the fact that I was getting bored of the project meant that I never ended up releasing it. However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all."
-            //         }
-            //     ]
-            // }
-        ]
+            {
+                "category": "About",
+                "date": "03/07/2022",
+                "title": "About alertbot",
+                "description": "In this blog I talk about what alertbot is, its history and its road-map.",
+                "thumbnail": {
+                    "url": "https://storage.googleapis.com/alertbot-images/landing_page.png",
+                },
+                "tags": [ "Development" ],
+                "author": {
+                    "name": "Atom",
+                    "avatar": {
+                        "url": "https://storage.googleapis.com/alertbot-images/logo.png",
+                    },
+                },
+                "content": [
+                    {
+                        "type": "paragraph",
+                        "data": "This blog is still being written.",
+                    },
+                    {
+                        "type": "title",
+                        "data": "What is alertbot?",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "Alertbot is this:",
+                    },
+                    {
+                        "type": "title",
+                        "data": "A history of alertbot",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": `
+                            I started working on alert bot back in ~August 2021 and was very close to releasing it before summer ended.
+                            However I never released it as I was having issues with compatibility on IOS browsers.
+                            This along with the fact that I was getting bored of the project meant that I never ended up releasing it.
+                            However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all.
+                            Eventually I came back to the project, almost a year later, with my improved skills and ability to produce a viable product.
+                            This time it was built way better, with more and better features and with a completely different framework (Svelte).
+                            I implemented various good practices into my code (unlike before) ensuring a better user experience and a reliable product.
+                        `,
+                    },
+                ],
+            },
+        ],
     },
     "changelog": {
         "data": [
-            // {
-            //     "version": "0.1.0",
-            //     "date": "28/05/2022",
-            //     "description": "This is the main description for the whole update",
-            //     "updates": [
-            //         {
-            //             "title": "Change 1",
-            //             "description": "This is the first big change in the update",
-            //             "changes": [
-            //                 {
-            //                     "types": [ "Added", "Improved" ],
-            //                     "description": "This is a small change 1 in the update"
-            //                 },
-            //                 {
-            //                     "types": [ "Added", "Improved" ],
-            //                     "description": "This is a small change 2 in the update"
-            //                 },
-            //             ]
-            //         },
-            //     ],
-            // }
-        ]
+            {
+                "version": "0.1.0",
+                "date": "02/07/2022",
+                "description": "Initial beta release for alertbot",
+                "updates": [
+                    {
+                        "title": "Alerts",
+                        "description": "Send alerts to your Discord server",
+                        "changes": [
+                            {
+                                "types": [ "Added" ],
+                                "description": "Send alerts to multiple servers at once",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "Preview alert in Discord-like UI",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "View alert history and stats",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "Retry failed alerts",
+                            },
+                        ],
+                    },
+                    {
+                        "title": "Templates",
+                        "description": "Create templates to send alerts",
+                        "changes": [
+                            {
+                                "types": [ "Added" ],
+                                "description": "Create fully customizable templates",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "Import and share templates",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "Preview template in Discord-like UI",
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     },
     "core": {
         "name": "Alertbot",
@@ -192,13 +238,13 @@ const data: {
             "email": "contact@alertbot.net",
             "privacy": "privacy@alertbot.net",
             "terms": "terms@alertbot.net",
-            "cookies": "cookies@alertbot.net"
+            "cookies": "cookies@alertbot.net",
         },
         "socials": {
             "patreon": "https://www.patreon.com/alertbot",
             "twitter": "https://twitter.com/alertbot",
             "github": "https://github.com/alertbot",
-            "discord": "https://discord.gg/YzjQZjX"
+            "discord": "https://discord.gg/YzjQZjX",
         },
     },
     "features": [

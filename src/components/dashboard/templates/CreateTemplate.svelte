@@ -11,10 +11,12 @@
     import ParametersForm from "./ParametersForm.svelte";
     import SuccessModal from "../../modals/SuccessModal.svelte";
     import { defaultTemplateData } from "../../../utils/defaults";
+    import Modal from "../../modals/Modal.svelte";
 
     export let type = "create";
     export let defaultTemplate = undefined;
     export let submitting = false;
+    export let disabled = false;
 
     const dispatch = createEventDispatcher();
 
@@ -105,7 +107,7 @@
         addToast({
             type: "success",
             title: "Template data copied to clipboard",
-            message: "Paste in this id when propmted to when importing a template",
+            message: "Paste in this id when importing a template",
         });
     };
 
@@ -144,6 +146,29 @@
     };
 </script>
 
+<Modal active={disabled}>
+    <div class="rounded-md bg-light-primary px-8 py-6 flex flex-col items-center">
+        <span class="text-xl font-bold">Free template limit reached.</span>
+        <div class="mt-4">
+            <span>To continue using this template upgrade to</span>
+            <a
+                href="/premium"
+                class="primary-link"
+            >
+                alertbot premium
+            </a>.
+        </div>
+        <div class="mt-2">
+            <span>Or</span>
+            <a
+                href="/dashboard/templates/view"
+                class="primary-link"
+            >
+                go back to dashboard
+            </a>
+        </div>
+    </div>
+</Modal>
 {#if type === "edit"}
     <SaveChangesPopup
         disabled={hasError || submitting}
@@ -304,8 +329,7 @@
                     <DashboardInput
                         name="templateId"
                         title="Import"
-                        placeholder="Enter the id of the template to import (tmp_abcdef0123456789)"
-                        defaultValue={template.name}
+                        placeholder="Enter the id of the template to import e.g tmp_lk3azhwq6xd9jf4q"
                         on:change={handleImportChange}
                     />
                     <button
