@@ -136,13 +136,13 @@ const data: {
                 "title": "About alertbot",
                 "description": "In this blog I talk about what alertbot is, its history and its road-map.",
                 "thumbnail": {
-                    "url": "https://storage.googleapis.com/alertbot-images/landing_page.png",
+                    "url": "https://storage.googleapis.com/alertbot-images/examples/landing_page.png",
                 },
                 "tags": [ "Development" ],
                 "author": {
                     "name": "Atom",
                     "avatar": {
-                        "url": "https://storage.googleapis.com/alertbot-images/logo.png",
+                        "url": "/images/logo.png",
                     },
                 },
                 "content": [
