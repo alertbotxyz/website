@@ -1,6 +1,6 @@
 <script>
     import Logo from "../../Logo.svelte";
-import Section from "../main/Section.svelte";
+    import Section from "../main/Section.svelte";
     import SidebarSection from "./SidebarSection.svelte";
     import SidebarSubsection from "./SidebarSubsection.svelte";
 
@@ -27,7 +27,7 @@ import Section from "../main/Section.svelte";
 </script>
 
 <nav class="sidebar">
-    <div class="w-full ml-8 mb-4">
+    <div class="logo-container">
         <Logo />
     </div>
     {#each navbar as navbarObject}

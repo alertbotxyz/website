@@ -44,6 +44,11 @@
 .sidebar .subsection-title {
     @apply text-gray-400 my-1 hover:text-gray-100 transition-all;
 }
+.sidebar .logo-container {
+    border-color: #2A2F4566;
+    @apply w-full pl-8 pb-4 border border-solid border-x-0 border-t-0;
+}
+
 .docs {
     display: flex;
     flex-direction: column;

@@ -1,9 +1,10 @@
 <script>
     import Docs from "../components/docs/Docs.svelte";
-import Attribute from "../components/docs/main/Attribute.svelte";
-import Divider from "../components/docs/main/Divider.svelte";
+    import Attribute from "../components/docs/main/Attribute.svelte";
+    import Bold from "../components/docs/main/Bold.svelte";
+    import Divider from "../components/docs/main/Divider.svelte";
     import Header from "../components/docs/main/Header.svelte";
-import Image from "../components/docs/main/Image.svelte";
+    import Image from "../components/docs/main/Image.svelte";
     import Link from "../components/docs/main/Link.svelte";
     import Paragraph from "../components/docs/main/Paragraph.svelte";
     import Section from "../components/docs/main/Section.svelte";
@@ -156,6 +157,12 @@ import Image from "../components/docs/main/Image.svelte";
                 <Paragraph>Templates allow you to have a preset format to send your alerts with. You are limited to 3 templates with the free plan but you can have unlimited with <Link href="{link}/premiuim">premium</Link>.</Paragraph>
                 <Paragraph>You can create, update and delete templates; and add, re-order and remove parameters within your template.</Paragraph>
                 <Paragraph>If you are a premium user, you can share and import other peoples templates.</Paragraph>
+                <Header>Pre-made templates</Header>
+                <Paragraph>Here is a list of pre-made templates you can use. Copy the id and paste it in the import section on the create template page.</Paragraph>
+                <Paragraph><Bold>Entry:</Bold> tmp_premade_entry</Paragraph>
+                <Paragraph><Bold>Update:</Bold> tmp_premade_comment</Paragraph>
+                <Paragraph><Bold>Comment:</Bold> temp_premade_update</Paragraph>
+                <Paragraph><Bold>Exit:</Bold> tmp_premade_exit</Paragraph>
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of create template</Paragraph>
