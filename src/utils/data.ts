@@ -209,11 +209,15 @@ const data: {
                     },
                     {
                         "title": "Templates",
-                        "description": "Create templates to send alerts",
+                        "description": "Templates allow you to have a preset format to send your alerts with",
                         "changes": [
                             {
                                 "types": [ "Added" ],
-                                "description": "Create fully customizable templates",
+                                "description": "Create, update and delete templates",
+                            },
+                            {
+                                "types": [ "Added" ],
+                                "description": "Add, re-order and remove parameters within your template",
                             },
                             {
                                 "types": [ "Added" ],
@@ -221,7 +225,7 @@ const data: {
                             },
                             {
                                 "types": [ "Added" ],
-                                "description": "Preview template in Discord-like UI",
+                                "description": "Preview template in discord-like UI",
                             },
                         ],
                     },

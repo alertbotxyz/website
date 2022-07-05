@@ -1,0 +1,97 @@
+* {
+    --primary-color: #171E27;
+    --primary-color-light: #1C232C;
+    --secondary-color: #2D3748;
+    --secondary-color-light: #343C4D;
+    --text-color: #b4bdc7; 
+    --title-color: #ffffff;
+    --accent-color: #618EEF;
+
+    --json-key-color: #9199A7;
+    --json-punc-color: #9199A7;
+    --json-string-color: #1EA672;
+    --json-number-color: #D46949;
+    --json-boolean-color: #6b88d6;
+    --json-date-color: #29a9ad;
+    --json-null-color: #d64f4f;
+}
+
+.docs-container {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 300px;
+    border-color: #2A2F4566;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    @apply flex flex-col pt-6 border border-solid border-y-0 border-l-0 lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row;
+}
+.sidebar .links {
+    @apply flex flex-col ml-8 lg:hidden;
+}
+.sidebar .links.active {
+    @apply hidden;
+}
+.sidebar .section-title {
+    @apply font-bold my-2;
+}
+.sidebar .subsection-title {
+    @apply text-gray-400 my-1 hover:text-gray-100 transition-all;
+}
+.docs {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    padding-top: 4rem;
+    overflow-y: scroll;
+}
+
+.section {
+    @apply flex flex-col px-32 py-32 border border-solid border-x-0 border-t-0 lg:px-16 md:py-8 2xs:px-8;
+    border-color: #2A2F4566;
+}
+.paragraph {
+    color: var(--text-color);
+    @apply mb-4;
+}
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #2A2F4566;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+}
+.divider.short {
+    margin-top: 0.2rem;
+    margin-bottom: 0.4rem;
+}
+.subsection {
+    @apply flex flex-row justify-between my-4 md:flex-col;
+}
+.section-text {
+    @apply flex flex-col w-1/2 pr-12 md:w-full;
+}
+.section-example {
+    @apply flex flex-col w-1/2 md:w-full md:mt-8;
+}
+.section-title {
+    @apply font-bold text-xl mb-2;
+}
+.link {
+    @apply font-bold;
+    color: var(--accent-color);
+}
+.header {
+    @apply font-bold my-3;
+}
+.attribute {
+    @apply flex flex-col;
+}
