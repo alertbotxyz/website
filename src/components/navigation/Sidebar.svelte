@@ -74,7 +74,7 @@
         </a>
         <a
             class="nav-link"
-            href="/"
+            href="/redirect?link=bot-invite"
         >
             <img
                 src="/icons/invite.svg" 

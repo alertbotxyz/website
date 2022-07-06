@@ -1,27 +1,28 @@
 * {
-    --primary-color: #171E27;
-    --primary-color-light: #1C232C;
-    --secondary-color: #2D3748;
-    --secondary-color-light: #343C4D;
-    --text-color: #b4bdc7; 
-    --title-color: #ffffff;
-    --accent-color: #618EEF;
-
-    --json-key-color: #9199A7;
+    /* --json-key-color: #9199A7;
     --json-punc-color: #9199A7;
     --json-string-color: #1EA672;
     --json-number-color: #D46949;
     --json-boolean-color: #6b88d6;
     --json-date-color: #29a9ad;
-    --json-null-color: #d64f4f;
+    --json-null-color: #d64f4f; */
+	scrollbar-color: #2D3748 #171E27;
+}
+
+*::-webkit-scrollbar-track {
+	background-color: #171E27;
+}
+ 
+*::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #2D3748;
+}
+*::-webkit-scrollbar-corner{
+	background-color: #171E27;
 }
 
 .docs-container {
-    background-color: var(--primary-color);
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    overflow: hidden;
+    @apply bg-docs-primary flex flex-row w-screen overflow-hidden;
 }
 
 .sidebar {
@@ -30,7 +31,8 @@
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    @apply flex flex-col pt-6 border border-solid border-y-0 border-l-0 lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row;
+    @apply flex flex-col pt-6 border border-solid border-y-0 border-l-0;
+    @apply lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row;
 }
 .sidebar .links {
     @apply flex flex-col ml-8 lg:hidden;
@@ -64,8 +66,7 @@
     border-color: #2A2F4566;
 }
 .paragraph {
-    color: var(--text-color);
-    @apply mb-4;
+    @apply mb-4 text-docs-text;
 }
 .divider {
     width: 100%;
@@ -82,7 +83,7 @@
     @apply flex flex-row justify-between my-4 md:flex-col;
 }
 .section-text {
-    @apply flex flex-col w-1/2 pr-12 md:w-full;
+    @apply flex flex-col w-1/2 pr-12 md:w-full md:pr-0;
 }
 .section-example {
     @apply flex flex-col w-1/2 md:w-full md:mt-8;
@@ -91,8 +92,7 @@
     @apply font-bold text-xl mb-2;
 }
 .link {
-    @apply font-bold;
-    color: var(--accent-color);
+    @apply font-bold text-accent;
 }
 .header {
     @apply font-bold my-3;

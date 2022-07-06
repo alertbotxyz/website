@@ -90,7 +90,7 @@
                     </a>
                     <a
                         class="text-xl my-4 text-gray-300 lg:mx-2 lg:text-lg"
-                        href="/redirect?link=docs"
+                        href="/docs"
                     >
                         Documentation
                     </a>

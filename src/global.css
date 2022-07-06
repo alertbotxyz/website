@@ -21,15 +21,12 @@ html, body {
 	scroll-behavior: smooth;
 	color: white;
 }
-
 a {
 	text-decoration: none;
 }
-
 *::-webkit-scrollbar {
     width: 6px;
 }
- 
 *::-webkit-scrollbar-track {
 	background-color: #2C3142;
 }

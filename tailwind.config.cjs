@@ -23,6 +23,10 @@ module.exports = {
         "blurple": "#454FBF",
         "docs-primary": "#171E27",
         "docs-primary-light": "#1C232C",
+        "docs-secondary": "#2D3748",
+        "docs-secondary-light": "#343C4D",
+        "docs-text": "#b4bdc7",
+        "docs-title": "#ffffff",
       },
       spacing: {
         "84": "22rem",

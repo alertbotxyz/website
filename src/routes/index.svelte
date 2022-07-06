@@ -10,7 +10,7 @@
             <div class="flex flex-row lg:flex-col items-center w-full mt-48 lg:mt-24 justify-evenly px-96">
                 <div class="mx-20 flex flex-col sm:mx-0 lg:items-center lg:text-center">
                     <h1 class="text-8xl sm:text-6xl text-gray-600 dark:text-white">Alertbot</h1>
-                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300">{data.core.about}</p>
+                    <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300 xs:px-8">{data.core.about}</p>
                     <div class="flex flex-row sm:flex sm:flex-col">
                         <a
                             href="/"
@@ -37,7 +37,7 @@
         <div class="home w-screen flex flex-col items-center bg-light-primary">
             <div class="features flex flex-col items-center">
                 <span class="text-accent lg:text-xl">ALERTBOT</span>
-                <span class="text-5xl text-center lg:text-6xl md:text-5xl sm:text-4xl font-bold my-4">A better way to alert</span>
+                <span class="text-5xl text-center lg:text-6xl md:text-5xl sm:text-4xl font-bold my-4 xs:text-3xl">A better way to alert</span>
                 <div class="grid grid-cols-2 grid-rows-2 my-4 lg:px-16 sm:px-2 sm:grid-cols-1">
                     {#each data.features as feature}
                         <div class="feature">
@@ -59,9 +59,9 @@
         <div class="showcase mt-32 flex flex-col items-center px-64 xl:px-16">
             {#each data.features as feature, i}
                 <div class="example {i % 2 !== 1 ? "flex-row" : "flex-row-reverse"} md:flex-col">
-                    <div class="sm:max-w-xs">
+                    <div class="sm:max-w-xs xs:px-6">
                         <span class="font-bold text-5xl sm:text-3xl">{feature.title}</span>
-                        <p class="mt-4 mb-8 text-gray-400">{feature.description}</p>
+                        <p class="mt-4 mb-8 text-gray-400 xs:text-sm">{feature.description}</p>
                         <a
                             href="{feature.action.url}"
                             class="bg-accent py-2 px-4 rounded-md"
