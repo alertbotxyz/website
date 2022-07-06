@@ -1,4 +1,5 @@
 <script>
+    import data from "../../utils/data";
     import "./footer.css";
 </script>
 
@@ -55,15 +56,15 @@
         <span class="link-title">Support</span>
         <a
             class="link"
-            href="/"
+            href="mailto:{data.core.contact.email}"
         >
-            Feedback
+            Contact
         </a>
         <a
             class="link"
-            href="/"
+            href="mailto:{data.core.contact.feedback}"
         >
-            Contact
+            Feedback
         </a>
         <a
             class="link"
@@ -73,7 +74,7 @@
         </a>
         <a
             class="link"
-            href="/"
+            href="/info/reviews"
         >
             Reviews
         </a>

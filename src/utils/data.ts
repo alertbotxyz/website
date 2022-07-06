@@ -64,9 +64,12 @@ const data: {
         websiteUrl: string;
         contact: {
             email: string;
+            feedback: string;
+            development: string;
             privacy: string;
             terms: string;
             cookies: string;
+            refunds: string;
         };
         socials: {
             patreon: string;
@@ -237,12 +240,15 @@ const data: {
         "name": "Alertbot",
         "version": "Alpha v0.1.0",
         "about": "Create presets and templates for seamless alerting.",
-        "websiteUrl": "https://alertbot.net",
+        "websiteUrl": "https://alert-bot.xyz",
         "contact": {
-            "email": "contact@alertbot.net",
-            "privacy": "privacy@alertbot.net",
-            "terms": "terms@alertbot.net",
-            "cookies": "cookies@alertbot.net",
+            "email": "contact@alert-bot.xyz",
+            "feedback": "feedback@alert-bot.xyz",
+            "development": "development@alert-bot.xyz",
+            "privacy": "privacy@alert-bot.xyz",
+            "terms": "terms@alert-bot.xyz",
+            "cookies": "cookies@alert-bot.xyz",
+            "refunds": "refunds@alert-bot.xyz",
         },
         "socials": {
             "patreon": "https://www.patreon.com/alertbot",
