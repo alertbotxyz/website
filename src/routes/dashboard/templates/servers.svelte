@@ -287,6 +287,7 @@
                                         data-tooltip="Channel id: {server.channel.id}"
                                         href="https://discord.com/channels/{server.guild.id}/{server.channel.id}"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         <span class="hover:cursor-pointer primary-link">#{server.channel.name}</span>
                                     </a>

@@ -32,7 +32,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
     @apply flex flex-col pt-6 border border-solid border-y-0 border-l-0;
-    @apply lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row;
+    @apply lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row lg:border-b;
 }
 .sidebar .links {
     @apply flex flex-col ml-8 lg:hidden;
@@ -48,7 +48,7 @@
 }
 .sidebar .logo-container {
     border-color: #2A2F4566;
-    @apply w-full pl-8 pb-4 border border-solid border-x-0 border-t-0;
+    @apply w-full pl-8 pb-4 border border-solid border-x-0 border-t-0 lg:border-0;
 }
 
 .docs {

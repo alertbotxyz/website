@@ -138,6 +138,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
     <Section title="Alertbot Documentation">
         <SubSection last>
             <SectionText>
+                <SectionTitle id="overview">Overview</SectionTitle>
                 <Paragraph>Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.</Paragraph>
                 <Paragraph>Once you have created all the templates you need you can add servers to alert to. When you see a market opportunity enter values for your preset parameters and send the alert to all servers in one click.</Paragraph>
                 <Paragraph>Alertbot saves your alerts so you can view them a reflect back upon past alerts.</Paragraph>
@@ -148,14 +149,14 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Header>USEFUL LINKS</Header>
                 <Paragraph>Join the <Link href="{link}/redirect?link=support-server">support server</Link> to get help with Alertbot and chat with the community</Paragraph>
                 <Paragraph>View the <Link href="{link}/legal/terms">terms of service</Link> and <Link href="{link}/legal/privacy">privacy policy</Link></Paragraph>
-                <Paragraph>Read the <Link href="{link}/info/blog">blog</Link> or submit a <Link href="{link}/info/review">review</Link></Paragraph>
+                <Paragraph>Read the <Link href="{link}/info/blog">blog</Link> or submit a <Link href="{link}/info/reviews">review</Link></Paragraph>
             </SectionExample>
         </SubSection>
     </Section>
     <Section title="Templates">
         <SubSection>
             <SectionText>
-                <Paragraph>Templates allow you to have a preset format to send your alerts with. You are limited to 3 templates with the free plan but you can have unlimited with <Link href="{link}/info/premiuim">premium</Link>.</Paragraph>
+                <Paragraph>Templates allow you to have a preset format to send your alerts with. You are limited to 3 templates with the free plan but you can have unlimited with <Link href="{link}/premium">premium</Link>.</Paragraph>
                 <Paragraph>You can create, update and delete templates; and add, re-order and remove parameters within your template.</Paragraph>
                 <Paragraph>If you are a premium user, you can share and import other peoples templates.</Paragraph>
                 <Header>Pre-made templates</Header>
@@ -166,7 +167,6 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Paragraph><Bold>Exit:</Bold> tmp_premade_exit</Paragraph>
             </SectionText>
             <SectionExample>
-                <Paragraph>Example of create template</Paragraph>
                 <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-create-template.png"/>
             </SectionExample>
         </SubSection>
@@ -221,8 +221,8 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 </Attribute>
             </SectionText>
             <SectionExample>
+                <Paragraph>Example of create template</Paragraph>
                 <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-create-template.png"/>
-                <Divider />
                 <Paragraph>Example of filled in template form</Paragraph>
                 <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-create-template-filled.png"/>
             </SectionExample>
@@ -234,7 +234,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of update template</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-update-template.png"/>
             </SectionExample>
         </SubSection>
         <SubSection>
@@ -266,7 +266,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of parameters</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-template-parameters.png"/>
             </SectionExample>
         </SubSection>
         <SubSection>
@@ -280,7 +280,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of share template</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-share-template.png"/>
             </SectionExample>
         </SubSection>
         <SubSection last>
@@ -290,7 +290,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of delete template</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-delete-template.png"/>
             </SectionExample>
         </SubSection>
     </Section>
@@ -309,7 +309,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of add server</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-add-server.png"/>
             </SectionExample>
         </SubSection>
         <SubSection last>
@@ -319,7 +319,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of delete server</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-delete-server.png"/>
             </SectionExample>
         </SubSection>
     </Section>
@@ -332,8 +332,9 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of send alert</Paragraph>
-                <Paragraph>Example of send filled</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-send-alert.png"/>
+                <Paragraph>Example of filled alert form</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-send-alert-filled.png"/>
             </SectionExample>
         </SubSection>
         <SubSection>
@@ -344,8 +345,9 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of error message</Paragraph>
+                <!-- TODO: <Image src=""/> -->
                 <Paragraph>Example of retry alert</Paragraph>
-                <!-- <Image src=""/> -->
+                <!-- TODO: <Image src=""/> -->
             </SectionExample>
         </SubSection>
         <SubSection last>
@@ -356,25 +358,16 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of alert history</Paragraph>
-                <Paragraph>Example of in-depth alert</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-alert-history.png"/>
+                <Paragraph>Example of alert details</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-alert-details.png"/>
             </SectionExample>
         </SubSection>
     </Section>
-    <!-- <Section title="Bot">
-        <SubSection>
-            <SectionText>
-                <Paragraph>Bot coming soon...</Paragraph>
-            </SectionText>
-            <SectionExample>
-                <Paragraph>Bot examples coming soon...</Paragraph>
-            </SectionExample>
-        </SubSection>
-    </Section> -->
     <Section title="Premium">
         <SubSection>
             <SectionText>
-                <Paragraph>Alertbot is free to use but it offers paid subscriptions of premium at $9.99/month for alerters who send alerts to many servers and extra (coming soon) at $19.99/month. Get started with <Link href="{link}/info/premium">premium</Link> now!</Paragraph>
+                <Paragraph>Alertbot is free to use but it offers paid subscriptions of premium at $9.99/month for alerters who send alerts to many servers and extra (coming soon) at $19.99/month. Get started with <Link href="{link}/premium">premium</Link> now!</Paragraph>
             </SectionText>
         </SubSection>
         <SubSection>
@@ -393,8 +386,8 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Paragraph>Coming soon...</Paragraph>
             </SectionText>
             <SectionExample>
-                <Paragraph>Pricing table image</Paragraph>
-                <!-- <Image src=""/> -->
+                <Paragraph>Pricing table</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-pricing-table.png"/>
             </SectionExample>
         </SubSection>
         <SubSection last>
@@ -404,7 +397,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Account subscription manage</Paragraph>
-                <!-- <Image src=""/> -->
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-manage-subscription.png"/>
             </SectionExample>
         </SubSection>
     </Section>

@@ -13,13 +13,13 @@
                     <p class="text-2xl my-8 w-96 md:w-84 md:items-center text-gray-600 dark:text-gray-300 xs:px-8">{data.core.about}</p>
                     <div class="flex flex-row sm:flex sm:flex-col">
                         <a
-                            href="/"
+                            href="/redirect?link=bot-invite"
                             class="button-links bg-gray-500 mr-4"
                         >
                             Invite
                         </a>
                         <a
-                            href="/"
+                            href="#features"
                             class="button-links bg-indigo-500 ml-4"
                         >
                             Features
@@ -56,7 +56,10 @@
             </div>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#363C4E" fill-opacity="1" d="M0,256L60,245.3C120,235,240,213,360,192C480,171,600,149,720,160C840,171,960,213,1080,213.3C1200,213,1320,171,1380,149.3L1440,128L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
-        <div class="showcase mt-32 flex flex-col items-center px-64 xl:px-16">
+        <div
+            class="showcase mt-32 flex flex-col items-center px-64 xl:px-16"
+            id="features"
+        >
             {#each data.features as feature, i}
                 <div class="example {i % 2 !== 1 ? "flex-row" : "flex-row-reverse"} md:flex-col">
                     <div class="sm:max-w-xs xs:px-6">
@@ -77,8 +80,42 @@
                 </div>
             {/each}
         </div>
-        <!-- 
-            CTA
-        -->
+        <!-- <h1 class="text-6xl mt-32">Testimonials</h1>
+        <div class="grid grid-cols-2 gap-8 gap-x-16 mb-48 mt-16 lg:gap-x-8 lg:gap-y-4 md:grid-cols-1 md:gap-y-8 2xs:px-4">
+            <div class="flex flex-col">
+                <div class="bg-light-primary px-6 pt-2 pb-4 rounded-md w-6xx flex flex-col lg:w-4xx md:w-5xx 2xs:w-full">
+                    <span class="flex flex-row justify-end items-center w-full text-gray-400 font-bold text-4xl opacity-20 h-6 pt-4">"</span>
+                    <span class="font-bold lg:text-sm">I've been using alertbot for 18 months. The quaility and speed at which I can get alerts out is unmatched to any alertbot I've ever used. This is how it makes me even more money</span>
+                </div>
+                <div class="flex flex-row items-center mt-4">
+                    <img
+                        src="/images/logo.png"
+                        alt="avatar"
+                        class="w-10 rounded-full"
+                    />
+                    <span class="text-accent font-bold ml-2">atom#6969</span>
+                </div>
+            </div>
+        </div> -->
+        <div class="flex flex-col items-center my-16 w-full bg-light-primary py-16">
+            <div class="flex flex-col items-center w-9xx text-center lg:w-7xx md:w-5xx 2xs:w-full md:px-4">
+                <span class="text-5xl font-bold md:text-4xl 2xs:w-full xs:text-2xl">Get alerts to your users <span class="text-accent">faster than ever</span></span>
+                <span class="text-gray-400 text-xl mt-4 text-center w-7xx md:w-5xx md:text-base 2xs:w-full xs:text-sm">Alerting, made easy. Alertbot allows you to get alerts out to your users with maximum simplicity and minimum latency. Get started now.</span>
+                <div class="flex flex-row mt-8 xs:flex-col">
+                    <a
+                        href="/premium"
+                        class="bg-accent px-6 py-4 md:py-2 rounded-md text-xl font-bold mr-4 xs:mr-0 xs:mb-4"
+                    >
+                        Get Started
+                    </a>
+                    <a
+                        href="/docs"
+                        class="bg-dark-primary px-6 py-4 md:py-2 rounded-md text-xl font-bold ml-4 xs:ml-0"
+                    >
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
     </Navbar>
 </div>

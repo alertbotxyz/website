@@ -2,7 +2,7 @@
 	import Info from "../components/Info.svelte";
 	import Navbar from "../components/navigation/Navbar.svelte";
 	import "../styles/premium.css";
-import constants from "../utils/constants";
+	import constants from "../utils/constants";
 	
 	import data from "../utils/data";
 	const plans = data.premium.plans;
@@ -106,53 +106,53 @@ import constants from "../utils/constants";
 					// },
 				],
 			},
-			{
-				name: "Bot",
-				features: [
-					{
-						name: "Send alerts",
-						free: "yes",
-						premium: "yes",
-						extra: "yes",
-						description: "Whether or not you can send alerts with the bot",
-					},
-					{
-						name: "Prices",
-						free: "yes",
-						premium: "yes",
-						extra: "yes",
-						description: "View prices of different tickers",
-					},
-					{
-						name: "Charts",
-						free: "no",
-						premium: "yes",
-						extra: "yes",
-						description: "View charts for different tickers",
-					},
-					{
-						name: "News",
-						free: "no",
-						premium: "yes",
-						extra: "yes",
-						description: "Get live news to a channel in your server",
-					},
-					{
-						name: "Whales",
-						free: "no",
-						premium: "yes",
-						extra: "yes",
-						description: "Get live whale alerts to a channel in your server",
-					},
-					// {
-					// 	name: "Flow algo",
-					// 	free: "no",
-					// 	premium: "no",
-					// 	extra: "yes",
-					// 	description: "No description yet",
-					// },
-				],
-			},
+			// {
+			// 	name: "Bot",
+			// 	features: [
+			// 		{
+			// 			name: "Send alerts",
+			// 			free: "yes",
+			// 			premium: "yes",
+			// 			extra: "yes",
+			// 			description: "Whether or not you can send alerts with the bot",
+			// 		},
+			// 		{
+			// 			name: "Prices",
+			// 			free: "yes",
+			// 			premium: "yes",
+			// 			extra: "yes",
+			// 			description: "View prices of different tickers",
+			// 		},
+			// 		{
+			// 			name: "Charts",
+			// 			free: "no",
+			// 			premium: "yes",
+			// 			extra: "yes",
+			// 			description: "View charts for different tickers",
+			// 		},
+			// 		{
+			// 			name: "News",
+			// 			free: "no",
+			// 			premium: "yes",
+			// 			extra: "yes",
+			// 			description: "Get live news to a channel in your server",
+			// 		},
+			// 		{
+			// 			name: "Whales",
+			// 			free: "no",
+			// 			premium: "yes",
+			// 			extra: "yes",
+			// 			description: "Get live whale alerts to a channel in your server",
+			// 		},
+			// 		// {
+			// 		// 	name: "Flow algo",
+			// 		// 	free: "no",
+			// 		// 	premium: "no",
+			// 		// 	extra: "yes",
+			// 		// 	description: "No description yet",
+			// 		// },
+			// 	],
+			// },
 			{
 				name: "Other",
 				features: [

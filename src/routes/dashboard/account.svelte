@@ -251,6 +251,7 @@
                                         href=" https://discord.com/oauth2/authorize?client_id={bot.id}&scope=bot%20applications.commands&permissions=8"
                                         class=" py-2 w-32 ml-8 2xs:ml-0 text-center bg-accent rounded-md"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Invite
                                     </a>
@@ -288,6 +289,7 @@
                                 href="https://discord.com/developers/applications/{bot.id ? `${bot.id}/information` : ""}"
                                 class="primary-link"
                                 target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 developer dashboard
                             </a>
@@ -334,6 +336,7 @@
                                         href={user.portalUrl}
                                         class="primary-link"
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Stripe Customer Portal
                                     </a>

@@ -7,6 +7,7 @@ const images = {
     "user_avatar": "/images/alertbot_user_avatar.png",
     "send_alert_example": "/images/alertbot_create_template.png",
     "alert_history_example": "/images/alertbot_create_template.png",
+    "add_server_example": "/images/alertbot_add_server.png",
     "default_avatar": "/images/alertbot_default_avatar.png",
 };
 const data: {
@@ -251,10 +252,10 @@ const data: {
             "refunds": "refunds@alert-bot.xyz",
         },
         "socials": {
-            "patreon": "https://www.patreon.com/alertbot",
-            "twitter": "https://twitter.com/alertbot",
-            "github": "https://github.com/alertbot",
-            "discord": "https://discord.gg/YzjQZjX",
+            "patreon": "https://www.patreon.com/alertbotxyz",
+            "twitter": "https://twitter.com/alertbotxyz",
+            "github": "https://github.com/alertbotxyz",
+            "discord": "https://discord.com/invite/WpQT3jzfum",
         },
     },
     "features": [
@@ -278,14 +279,24 @@ const data: {
                 "url": "/dashboard/templates/send-alert",
             },
         },
+        // {
+        //     "title": "Discord Bot",
+        //     "description": "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
+        //     "icon": "bot",
+        //     "imageUrl": images.discord_bot_example,
+        //     "action": {
+        //         "text": "Invite Alertbot",
+        //         "url": "/redirect?link=bot-invite",
+        //     },
+        // },
         {
-            "title": "Discord Bot",
-            "description": "You can invite alertbot to your server to handle financial data for your users: stock charts, top news, whale alerts and more.",
-            "icon": "bot",
-            "imageUrl": images.discord_bot_example,
+            "title": "Add Servers",
+            "description": "You can add your bot to any server so you can send alerts to multiple servers at once.",
+            "icon": "server",
+            "imageUrl": images.add_server_example,
             "action": {
-                "text": "Invite Alertbot",
-                "url": "/redirect?link=bot-invite",
+                "text": "Add a Server",
+                "url": "/dashboard/templates/servers",
             },
         },
         {

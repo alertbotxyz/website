@@ -68,7 +68,7 @@
             } else {
                 addToast({
                     type: "error",
-                    message: res.data ? `${res.data.message}\n${res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n")}` : "An unknown error occured.",
+                    message: res.data ? `${res.data.message}\n${res.data.errors ? res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n") : ""}` : "An unknown error occured.",
                     title: "There was an error sending the alert",
                 });
             };
