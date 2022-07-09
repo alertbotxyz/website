@@ -15,7 +15,7 @@
             templates = res.data.map((template, i) => {
                 return {
                     ...template,
-                    disabled: i >= 3 && ($userStore.subscription?.level || "free") === "free",
+                    disabled: i >= 3 && $userStore.subscription?.level === "free" || !user.subscription,
                 };
             });
         } else {
