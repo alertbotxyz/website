@@ -71,7 +71,7 @@
                 servers = res.data.map((server, i) => {
                     return {
                         ...server,
-                        disabled: i >= 5 && userStore.subscription?.level === "free" || !user.subscription,
+                        disabled: i >= 5 && userStore.subscription?.level === "free" || !$userStore.subscription,
                     };
                 });
                 data.guildId = "";
