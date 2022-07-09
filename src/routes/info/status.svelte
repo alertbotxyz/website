@@ -1,4 +1,19 @@
-<div class="w-full flex flex-col items-center justify-center py-16">
+<script>
+    import { makeRequest } from "../../api/utils";
+
+    $: api = true;
+
+    const checkApiStatus = () => {
+        makeRequest("/health").then(res => {
+            if (res.status === 200) api = true;
+            else api = false;
+        });
+    };
+
+    setInterval(checkApiStatus, 5000);
+</script>
+
+<div class="w-full flex flex-col items-center justify-center pt-40 pb-64">
     <div class="flex flex-col">
         <button class="bg-light-primary rounded-md py-2 w-48 text-center text-xl font-bold mb-4">Past Incidents</button>
         <div class="flex flex-col bg-light-primary p-8 rounded-md">
@@ -21,7 +36,7 @@
                 </div>
                 <div class="p-4 flex flex-row justify-between">
                     <span class="font-bold">API</span>
-                    <span class="text-green-400">Operational</span>
+                    <span class={api ? "text-green-400" : "text-error"}>{api ? "Operational" : "Outage"}</span>
                 </div>
             </div>
         </div>

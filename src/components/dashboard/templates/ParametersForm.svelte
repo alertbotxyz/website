@@ -170,7 +170,7 @@
                         <img
                             src="/icons/grid-vertical.svg"
                             alt="vertical-grid"
-                            class="hover:cursor-pointer text-lg"
+                            class="hover:cursor-move text-lg"
                         />
                         <span
                             data-tooltip={parameter.name}

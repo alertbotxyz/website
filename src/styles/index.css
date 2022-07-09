@@ -29,3 +29,11 @@
 .modal .button {
     @apply font-bold w-64 text-center mx-4 py-2 rounded-md text-base;
 }
+.beta {
+    @apply flex flex-row items-center justify-between bg-dark-primary fixed bottom-10 rounded-md w-11/12 h-24 px-16 lg:px-8 md:flex-col md:h-auto md:py-4;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.beta .link {
+    @apply flex items-center justify-center mx-2 font-bold w-32 h-10 rounded-md md:text-sm md:w-32 md:h-8 xs:my-2;
+}

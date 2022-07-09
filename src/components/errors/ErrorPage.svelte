@@ -14,11 +14,25 @@
         {#if message}
             <span class="text-2xl sm:text-xl text-gray-400 text-center px-2 my-2 sm:my-8">{message}</span>
         {/if}
-        <a
-            class="text-xl text-accent"
-            href="/"
-        >
-            Go back home
-        </a>
+        <div class="flex flex-row mt-4">
+            <a
+                class="bg-accent link"
+                href="/"
+            >
+                Go back home
+            </a>
+            <a 
+                href="https://status.alert-bot.xyz"
+                class="bg-light-primary link"
+            >
+                Check Status
+            </a>
+        </div>
     </div>
 </Navbar>
+
+<style lang="postcss">
+    .link {
+        @apply w-32 h-12 rounded-md mx-2 font-bold flex flex-col items-center justify-center;
+    }
+</style>

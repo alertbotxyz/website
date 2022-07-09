@@ -1,8 +1,43 @@
 <script>
-    import Navbar from "../components/navigation/Navbar.svelte";
+    import { fade } from 'svelte/transition';
+    import { getWithExpiry, setWithExpiry } from "../utils/localstorage";
     import data from "../utils/data";
+    import Navbar from "../components/navigation/Navbar.svelte";
     import "../styles/index.css";
+
+    $: betaAcknowledged = getWithExpiry("betaAcknowledged") == "true";
+
+    const acknowledgeBeta = () => {
+        setWithExpiry("betaAcknowledged", "true", 60000 * 60 * 24 * 7);
+        betaAcknowledged = true;
+    };
 </script>
+
+{#if !betaAcknowledged}
+    <div
+        class="beta"
+        transition:fade
+    >
+        <div class="flex flex-col">
+            <span class="text-xl font-bold md:text-base">Alerbot is in beta</span>
+            <span class="text-gray-400 pr-4 md:text-sm">Alertbot is still in beta and as such issues are expected. If you find any bugs report them in the support server.</span>
+        </div>
+        <div class="flex flex-row md:mt-4 xs:flex-col">
+            <a
+                href="/redirect?link=support-server"
+                class="bg-light-primary link"
+            >
+                Support Server
+            </a>
+            <span
+                class="hover:cursor-pointer bg-accent link"
+                on:click={acknowledgeBeta}
+            >
+                Accept
+            </span>
+        </div>
+    </div>
+{/if}
 
 <div class="flex flex-col items-center">
     <Navbar>

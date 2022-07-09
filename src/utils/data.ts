@@ -312,7 +312,7 @@ const data: {
     ],
     "legal": {
         "privacy": {
-            "lastUpdated": "28/05/2022",
+            "lastUpdated": "09/07/2022",
         },
         "terms": {
             "lastUpdated": "28/05/2022",

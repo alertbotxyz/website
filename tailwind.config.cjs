@@ -44,6 +44,7 @@ module.exports = {
         "10xx": "1000px",
         "11xx": "1100px",
         "12xx": "1200px",
+        "1/12": "8.33333333%",
       },
       fontSize: {
         "mini": "0.5rem",
