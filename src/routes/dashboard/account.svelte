@@ -318,10 +318,10 @@
                             <div class="flex flex-row lg:flex-col">
                                 <div class="flex flex-row justify-between pt-4 pb-12 w-6xx md:w-auto 2xs:flex-col">
                                     <div class="flex flex-col justify-between">
-                                        <span class="text-2xl font-bold">Alertbot {user.subscription.level}</span>
+                                        <span class="text-2xl font-bold">Alertbot {user.subscription?.level}</span>
                                         <span class="flex flex-row my-1">
-                                            <span class="text-xl">${user.subscription.price / 100}</span>
-                                            <span class="text-sm text-gray-400 m-0.5">/{user.subscription.interval}</span>
+                                            <span class="text-xl">${user.subscription?.price / 100}</span>
+                                            <span class="text-sm text-gray-400 m-0.5">/{user.subscription?.interval}</span>
                                         </span>
                                         <span>Your plan renews on <span class="text-gray-400">{formatDate(new Date($userStore.subscription?.expires || 0), "dd/MM/yyyy")}</span></span>
                                     </div>
