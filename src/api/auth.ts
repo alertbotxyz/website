@@ -8,7 +8,7 @@ export const login = () => {
 
 export const logout = () => {
     if (document.cookie.includes("DISCORD_SESSION_ID")) {
-        document.cookie = "DISCORD_SESSION_ID=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        document.cookie = "DISCORD_SESSION_ID=;expires=Thu, 01 Jan 1970 00:00:01 GMT;SameSite=none;Secure=true;HttpOnly=true;path=/";
     };
     window.location.pathname = "/";
 
