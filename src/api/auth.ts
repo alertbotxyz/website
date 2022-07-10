@@ -7,24 +7,6 @@ export const login = () => {
 };
 
 export const logout = () => {
-    const getCookie = (name) => {
-        return document.cookie.split(";").some(c => {
-            return c.trim().startsWith(name + "=");
-        });
-    };
-
-    const env = constants.env;
-
-    const deleteCookie = (name, path, domain) => {
-        if (getCookie(name)) {
-            document.cookie = name + "=" +
-                (path ? ";path=" + path : "") +
-                (domain ? ";domain=" + domain : "") +
-                `;expires=Thu, 01 Jan 1970 00:00:01 GMT;SameSite=None;secure=${env === "production"}`;
-        };
-    };
-
-    deleteCookie("DISCORD_SESSION_ID", "/", window.location.hostname);
     window.location.pathname = "/";
 
     return makeRequest("/discord/logout");
