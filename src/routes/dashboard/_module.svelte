@@ -3,7 +3,7 @@
     import constants from "../../utils/constants";
     import { fade, fly } from "svelte/transition";
     import { addToast } from "../../stores/toasts";
-    import { getUser } from "../../api/auth";
+    import { getUser, logout } from "../../api/auth";
     import { makeRequest } from "../../api/utils";
     import Sidebar from "../../components/navigation/Sidebar.svelte";
     import Loading from "../../components/Loading.svelte";
@@ -19,8 +19,8 @@
     $: menu = false;
     $: loggedIn = user && !error;
 
-    const handleMenu = () => {
-        menu = !menu;
+    const handleMenu = (close = false) => {
+        menu = close === true ? false : !menu;
         document.querySelector("body").classList.toggle("overflow-hidden");
         document.querySelector("html").classList.toggle("overflow-hidden");
     };
@@ -110,7 +110,7 @@
                                     active={menu}
                                     linksOnly={true}
                                     on:closeSidebar={() => {
-                                        handleMenu();
+                                        handleMenu(true);
                                     }}
                                 />
                             </div>
@@ -131,6 +131,17 @@
                         href="/"
                     >
                         Go back home
+                    </a>
+                    <a
+                        class="w-64 h-12 flex items-center justify-center text-xl font-bold mt-4 rounded-md bg-accent text-center tiny:w-48 tiny:h-8 tiny:text-sm"
+                        href="/"
+                        on:click={() => {
+                            logout().then(() => {
+                                return;
+                            });
+                        }}
+                    >
+                        Logout
                     </a>
                 </div>
             {/if}

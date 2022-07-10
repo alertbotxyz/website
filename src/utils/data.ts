@@ -160,7 +160,15 @@ const data: {
                     },
                     {
                         "type": "paragraph",
-                        "data": "Alertbot is this:",
+                        "data": "Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "Once you have created all the templates you need you can add servers to alert to. When you see a market opportunity enter values for your preset parameters and send the alert to all servers in one click.",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
                     },
                     {
                         "type": "title",

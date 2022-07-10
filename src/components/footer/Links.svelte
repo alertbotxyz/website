@@ -3,8 +3,8 @@
     import "./footer.css";
 </script>
 
-<div class="flex flex-row w-full justify-around items-start 2xs:grid grid-cols-2 tiny:grid-cols-1 grid-rows-2 place-items-center">
-    <div class="footer-container link-container tiny:items-center">
+<div class="flex flex-row w-full justify-around items-start grid-cols-2 tiny:grid-cols-1 grid-rows-2 place-items-center 2xs:grid">
+    <div class="footer-container link-container">
         <span class="link-title">Alertbot</span>
         <a
             class="link"
@@ -31,7 +31,7 @@
             Premium
         </a>
     </div>
-    <div class="footer-container link-container tiny:items-center">
+    <div class="footer-container link-container">
         <span class="link-title">Company</span>
         <a
             class="link"
@@ -52,7 +52,7 @@
             Changelog
         </a>
     </div>
-    <div class="footer-container link-container tiny:items-center">
+    <div class="footer-container link-container">
         <span class="link-title">Support</span>
         <a
             class="link"
@@ -79,7 +79,7 @@
             Reviews
         </a>
     </div>
-    <div class="footer-container link-container tiny:items-center">
+    <div class="footer-container link-container">
         <span class="link-title">Legal</span>
         <a
             class="link"

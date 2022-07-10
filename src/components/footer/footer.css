@@ -2,7 +2,7 @@
     @apply flex flex-col;
 }
 .footer .footer-container.link-container {
-    @apply xs:w-32;
+    @apply xs:w-32 tiny:items-center;
 }
 .footer .footer-container .link-title {
     @apply text-xl font-bold mb-4;

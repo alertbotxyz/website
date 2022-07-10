@@ -13,11 +13,7 @@
         dispatch("closeSidebar", {});
     };
 
-    $: i = 0;
-
     window.addEventListener("click", e => {
-        i += 1;
-        if (i % 2 === 0) return;
         if (active && e.target.classList.contains("bg-opacity-70") && e.target.classList.contains("bg-black")) {
             close();
         };
