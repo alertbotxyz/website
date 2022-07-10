@@ -50,7 +50,7 @@
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">
-                <div class="border-2 border-gray-400 border-dashed rounded-md py-32 px-64 mb-24 flex flex-col items-center justify-center">
+                <div class="border-2 border-gray-400 border-dashed rounded-md py-32 px-64 mb-24 flex flex-col items-center justify-center text-center lg:px-4 lg:w-3/4">
                     <span class="font-bold">No Templates found</span>
                     <span class="text-gray-400 mt-2">Get started with alerting by creating a template</span>
                     <a
