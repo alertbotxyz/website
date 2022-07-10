@@ -9,7 +9,7 @@
         "bot-invite": "https://discord.com/oauth2/authorize?client_id=965663863313936415&scope=bot%20applications.commands&permissions=8",
         "login": `${constants.api.url}/discord/login`,
         "social-twitter": "",
-        "social-github": "https://github.com/atom-alertbot",
+        "social-github": "https://github.com/alertbotxyz",
         "social-patreon": "",
         "social-discord": "https://discord.gg/WpQT3jzfum",
         "feedback": "",
