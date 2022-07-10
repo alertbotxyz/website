@@ -86,35 +86,35 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "alerts-history",
             "type": "subsection",
         },
-        {
-            "title": "Bot",
-            "type": "section",
-        },
-        {
-            "title": "Send alerts",
-            "link": "bot-send-alerts",
-            "type": "subsection",
-        },
-        {
-            "title": "Prices",
-            "link": "bot-prices",
-            "type": "subsection",
-        },
-        {
-            "title": "Charts",
-            "link": "bot-charts",
-            "type": "subsection",
-        },
-        {
-            "title": "News",
-            "link": "bot-news",
-            "type": "subsection",
-        },
-        {
-            "title": "Whales",
-            "link": "bot-whales",
-            "type": "subsection",
-        },
+        // {
+        //     "title": "Bot",
+        //     "type": "section",
+        // },
+        // {
+        //     "title": "Send alerts",
+        //     "link": "bot-send-alerts",
+        //     "type": "subsection",
+        // },
+        // {
+        //     "title": "Prices",
+        //     "link": "bot-prices",
+        //     "type": "subsection",
+        // },
+        // {
+        //     "title": "Charts",
+        //     "link": "bot-charts",
+        //     "type": "subsection",
+        // },
+        // {
+        //     "title": "News",
+        //     "link": "bot-news",
+        //     "type": "subsection",
+        // },
+        // {
+        //     "title": "Whales",
+        //     "link": "bot-whales",
+        //     "type": "subsection",
+        // },
         {
             "title": "Premium",
             "type": "section",
@@ -162,8 +162,8 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Header>Pre-made templates</Header>
                 <Paragraph>Here is a list of pre-made templates you can use. Copy the id and paste it in the import section on the create template page.</Paragraph>
                 <Paragraph><Bold>Entry:</Bold> tmp_premade_entry</Paragraph>
-                <Paragraph><Bold>Update:</Bold> tmp_premade_comment</Paragraph>
-                <Paragraph><Bold>Comment:</Bold> temp_premade_update</Paragraph>
+                <Paragraph><Bold>Update:</Bold> tmp_premade_update</Paragraph>
+                <Paragraph><Bold>Comment:</Bold> tmp_premade_comment</Paragraph>
                 <Paragraph><Bold>Exit:</Bold> tmp_premade_exit</Paragraph>
             </SectionText>
             <SectionExample>
