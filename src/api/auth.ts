@@ -6,6 +6,10 @@ export const login = () => {
     window.location.href = `${constants.api.url}/discord/login`;
 };
 
+export const logout = () => {
+    return makeRequest("/discord/logout");
+};
+
 export const getUser = () => {
     return makeRequest("/discord/user");
 };

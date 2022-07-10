@@ -1,5 +1,6 @@
 <script context="module">
     import { setUser, userStore } from "../../stores/user";
+    import constants from "../../utils/constants";
 
     export const load = () => {
         getUser().then(res => {
@@ -9,6 +10,8 @@
                     props: { user: res.data },
                 };
             } else {
+                if (res.status === 401) window.location.href = `${constants.api.url}/discord/login`;
+
                 return {
                     props: {
                         error: res.error.message,
@@ -128,18 +131,20 @@
                 </Loading>
             </div>
         {:else}
-            <div class="w-full h-screen items-center justify-center flex flex-col px-64 text-center">
-                <span class="text-4xl font-bold">Alertbot is in closed beta!</span>
-                <span class="para">Alertbot is in closed beta and as such only a select few users can access the dashboard.</span>
-                <span class="para">As a beta tester you get access to an <span class="text-accent">exclusive role</span> on the support server as well as a <span class="text-accent">50% discount</span> on your first month of alertbot and unlimited free use in the closed beta period.</span>
-                <span class="para">If you are interested in becoming a beta user email us at <a class="primary-link" href="mailto:{data.core.contact.email}">{data.core.contact.email}</a> or message me on discord at: oscarッ#0671.</span>
-                <a
-                    class="w-64 h-12 flex items-center justify-center text-xl font-bold mt-4 rounded-md bg-light-primary text-center"
-                    href="/"
-                >
-                    Go back home
-                </a>
-            </div>
+            <Loading {loading}>
+                <div class="w-full h-screen items-center justify-center flex flex-col px-64 text-center">
+                    <span class="text-4xl font-bold">Alertbot is in closed beta!</span>
+                    <span class="para">Alertbot is in closed beta and as such only a select few users can access the dashboard.</span>
+                    <span class="para">As a beta tester you get access to an <span class="text-accent">exclusive role</span> on the support server as well as a <span class="text-accent">50% discount</span> on your first month of alertbot and unlimited free use in the closed beta period.</span>
+                    <span class="para">If you are interested in becoming a beta user email us at <a class="primary-link" href="mailto:{data.core.contact.email}">{data.core.contact.email}</a> or message me on discord at: oscarッ#0671.</span>
+                    <a
+                        class="w-64 h-12 flex items-center justify-center text-xl font-bold mt-4 rounded-md bg-light-primary text-center"
+                        href="/"
+                    >
+                        Go back home
+                    </a>
+                </div>
+            </Loading>
         {/if}
     </div>
 {/if}

@@ -1,6 +1,6 @@
 <!-- <script context="module" lang="ts"> -->
 <script context="module">
-    import { getBotUser, getUserAccountData, updateBotToken } from "../../api/auth";
+    import { getBotUser, getUserAccountData, updateBotToken, logout } from "../../api/auth";
     import { userStore } from "../../stores/user";
 
     // : {
@@ -125,6 +125,10 @@
                 },
             };
             alertHistoryPageData = res.data.alertHistory;
+            bot = {
+                ...bot,
+                token: $userStore.botToken,
+            };
         } else {
             addToast({
                 type: "error",
@@ -218,12 +222,42 @@
             botIsLoading = false;
         });
     };
+
+    const handleLogout = () => {
+        const getCookie = (name) => {
+            return document.cookie.split(';').some(c => {
+                return c.trim().startsWith(name + '=');
+            });
+        };
+
+        const deleteCookie = (name, path, domain) => {
+            if (getCookie(name)) {
+                document.cookie = name + "=" +
+                    ((path) ? ";path=" + path : "") +
+                    ((domain) ? ";domain=" + domain : "") +
+                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            };
+        };
+
+        logout().then(() => {
+            deleteCookie("DISCORD_SESSION_ID", "/", window.location.hostname);
+            window.location.pathname = "/";
+        });
+    };
 </script>
 <Loading {loading}>
     <div class="flex flex-col w-full items-center pb-8 overflow-x-hidden">
         {#if user}
             <div class="flex flex-col w-11/12">
-                <h1 class="my-16 lg:my-12">Account</h1>
+                <div class="flex flex-row justify-between w-full my-16 lg:my-12">
+                    <h1>Account</h1>
+                    <span
+                        class="bg-error rounded-md flex flex-col items-center justify-center font-bold px-8 hover:cursor-pointer"
+                        on:click={handleLogout}
+                    >
+                        Logout
+                    </span>
+                </div>
                 <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full my-8 mb-16">
                     <div class="flex flex-row 2xs:w-full">
                         {#if bot && bot.token && !error}
