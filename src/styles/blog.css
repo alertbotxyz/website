@@ -1,5 +1,5 @@
 .paragraph {
-    @apply text-gray-400 text-xl lg:text-base 2xs:text-sm xs:text-xs;
+    @apply text-gray-400 text-xl lg:text-base 2xs:text-sm xs:text-xs py-4;
 }
 .title {
     @apply text-3xl font-bold mb-4 mt-8 lg:text-xl;

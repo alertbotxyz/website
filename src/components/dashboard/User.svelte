@@ -13,7 +13,7 @@
             href="/dashboard/account"
         >
             <img
-                src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : data.images.logo} 
+                src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : data.images.default_avatar} 
                 alt="avatar"
                 class="w-10 rounded-md ml-6 tiny:ml-0"
             />

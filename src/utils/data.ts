@@ -172,11 +172,19 @@ const data: {
                             I started working on alert bot back in ~August 2021 and was very close to releasing it before summer ended.
                             However I never released it as I was having issues with compatibility on IOS browsers.
                             This along with the fact that I was getting bored of the project meant that I never ended up releasing it.
-                            However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all.
-                            Eventually I came back to the project, almost a year later, with my improved skills and ability to produce a viable product.
-                            This time it was built way better, with more and better features and with a completely different framework (Svelte).
-                            I implemented various good practices into my code (unlike before) ensuring a better user experience and a reliable product.
                         `,
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all.",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "Eventually I came back to the project, almost a year later, with my improved skills and ability to produce a viable product.",
+                    },
+                    {
+                        "type": "paragraph",
+                        "data": "This time it was built way better, with more and better features and with a completely different framework (Svelte). I implemented various good practices into my code (unlike before) ensuring a better user experience and a reliable product.",
                     },
                 ],
             },

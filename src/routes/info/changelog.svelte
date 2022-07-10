@@ -2,7 +2,7 @@
     import data from "../../utils/data";
 </script>
 
-<div class="w-screen flex flex-col items-center pt-16">
+<div class="w-screen flex flex-col items-center pt-16 min-h-screen">
     {#if data.changelog.data.length > 0}
         {#each data.changelog.data as changelog}
             <div class="w-7xx md:w-11/12 bg-dark-primary flex flex-col rounded-md mb-8">

@@ -22,7 +22,7 @@
             <span class="text-xl font-bold md:text-base">Alerbot is in beta</span>
             <span class="text-gray-400 pr-4 md:text-sm">Alertbot is still in beta and as such issues are expected. If you find any bugs report them in the support server.</span>
         </div>
-        <div class="flex flex-row md:mt-4 xs:flex-col">
+        <div class="flex flex-row md:mt-4 xs:w-full xs:justify-between tiny:flex-col">
             <a
                 href="/redirect?link=support-server"
                 class="bg-light-primary link"
@@ -96,7 +96,7 @@
             id="features"
         >
             {#each data.features as feature, i}
-                <div class="example {i % 2 !== 1 ? "flex-row" : "flex-row-reverse"} md:flex-col">
+                <div class="example {i % 2 !== 1 ? "flex-row image-right" : "flex-row-reverse image-left"} md:flex-col">
                     <div class="sm:max-w-xs xs:px-6">
                         <span class="font-bold text-5xl sm:text-3xl">{feature.title}</span>
                         <p class="mt-4 mb-8 text-gray-400 xs:text-sm">{feature.description}</p>

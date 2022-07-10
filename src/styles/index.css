@@ -20,7 +20,13 @@
     @apply flex items-center justify-evenly mb-24;
 }
 .showcase .example-image {
-    @apply mx-24 w-5xx;
+    @apply w-5xx xs:w-3xx;
+}
+.showcase .example.image-right .example-image {
+    @apply ml-12 md:ml-0;
+}
+.showcase .example.image-left .example-image {
+    @apply mr-12 md:mr-0;
 }
 .modal {
     min-width: 600px;
@@ -30,10 +36,10 @@
     @apply font-bold w-64 text-center mx-4 py-2 rounded-md text-base;
 }
 .beta {
-    @apply flex flex-row items-center justify-between bg-dark-primary fixed bottom-10 rounded-md w-11/12 h-24 px-16 lg:px-8 md:flex-col md:h-auto md:py-4;
+    @apply flex flex-row items-center justify-between bg-dark-primary fixed bottom-10 rounded-md w-11/12 h-24 px-16 xs:px-6 lg:px-8 md:flex-col md:h-auto md:py-4;
     left: 50%;
     transform: translateX(-50%);
 }
 .beta .link {
-    @apply flex items-center justify-center mx-2 font-bold w-32 h-10 rounded-md md:text-sm md:w-32 md:h-8 xs:my-2;
+    @apply flex items-center justify-center mx-2 font-bold w-32 h-10 rounded-md md:text-sm md:w-32 md:h-8 xs:my-2 xs:w-24 xs:text-xs tiny:w-full tiny:mx-0;
 }

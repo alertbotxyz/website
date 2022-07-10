@@ -125,6 +125,7 @@
                 },
             };
             alertHistoryPageData = res.data.alertHistory;
+            
             bot = {
                 ...bot,
                 token: $userStore.botToken,
@@ -260,7 +261,7 @@
                 </div>
                 <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full my-8 mb-16">
                     <div class="flex flex-row 2xs:w-full">
-                        {#if bot && bot.token && !error}
+                        {#if bot && (bot.token || $userStore.botToken) && !error}
                             <Loading loading={botIsLoading}>
                                 <div class="rounded-md border border-solid border-gray-600 py-3 px-4 flex flex-row items-center lg:mt-8 2xs:flex-col 2xs:w-full mr-8 lg:mr-0">
                                     <div class="flex flex-row items-center tiny:flex-col">
@@ -304,7 +305,7 @@
                                 style="w-full rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 font-bold"
                                 name="token"
                                 placeholder="Enter your bots token"
-                                defaultValue={bot.token}
+                                defaultValue={bot.token || $userStore.botToken}
                                 on:change={handleBotChange}
                                 reactive
                                 type="text"
@@ -334,186 +335,153 @@
                     class="text-2xl font-bold min-w-fit my-2 flex flex-row items-center"
                     id="current-plan"
                 >
-                    <img
-                        src="/icons/{dropdowns.current_plan ? "down" : "right"}-arrow.svg"
-                        alt="arrow"
-                        class="h-4 mr-2"
-                        on:click={() => dropdowns.current_plan = !dropdowns.current_plan}
-                    />
                     Current Plan
                 </span>
-                {#if dropdowns.current_plan}
-                    <div
-                        class="mb-12"
-                        transition:slide={{ duration: 300 }}
-                    >
-                        <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 my-4 w-full"/>
-                        {#if user.subscription?.level === "premium" || user.subscription?.level === "extra"}
-                            <div class="flex flex-row lg:flex-col">
-                                <div class="flex flex-row justify-between pt-4 pb-12 w-6xx md:w-auto 2xs:flex-col">
-                                    <div class="flex flex-col justify-between">
-                                        <span class="text-2xl font-bold">Alertbot {user.subscription?.level}</span>
-                                        <span class="flex flex-row my-1">
-                                            <span class="text-xl">${user.subscription?.price / 100}</span>
-                                            <span class="text-sm text-gray-400 m-0.5">/{user.subscription?.interval}</span>
-                                        </span>
-                                        <span>Your plan renews on <span class="text-gray-400">{formatDate(new Date($userStore.subscription?.expires || 0), "dd/MM/yyyy")}</span></span>
-                                    </div>
-                                    <div class="flex flex-col 2xs:mt-8 justify-between">
-                                        <a href={user.portalUrl} class="bg-accent px-12 py-2 rounded-md text-center text-sm mb-1">Update Plan</a>
-                                        <a href={user.portalUrl} class="bg-light-primary px-12 py-2 rounded-md text-center text-sm mt-1">Cancel Plan</a>
-                                    </div>
+                <div class="mb-12">
+                    <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 my-4 w-full"/>
+                    {#if user.subscription?.level === "premium" || user.subscription?.level === "extra"}
+                        <div class="flex flex-row lg:flex-col">
+                            <div class="flex flex-row justify-between pt-4 pb-12 w-6xx md:w-auto 2xs:flex-col">
+                                <div class="flex flex-col justify-between">
+                                    <span class="text-2xl font-bold">Alertbot {user.subscription?.level}</span>
+                                    <span class="flex flex-row my-1">
+                                        <span class="text-xl">${user.subscription?.price / 100}</span>
+                                        <span class="text-sm text-gray-400 m-0.5">/{user.subscription?.interval}</span>
+                                    </span>
+                                    <span>Your plan renews on <span class="text-gray-400">{formatDate(new Date($userStore.subscription?.expires || 0), "dd/MM/yyyy")}</span></span>
                                 </div>
-                                <span class="ml-32 lg:ml-0">
-                                    You can view and edit your subscription in the
-                                    <a
-                                        href={user.portalUrl}
-                                        class="primary-link"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Stripe Customer Portal
-                                    </a>
-                                </span>
+                                <div class="flex flex-col 2xs:mt-8 justify-between">
+                                    <a href={user.portalUrl} class="bg-accent px-12 py-2 rounded-md text-center text-sm mb-1">Update Plan</a>
+                                    <a href={user.portalUrl} class="bg-light-primary px-12 py-2 rounded-md text-center text-sm mt-1">Cancel Plan</a>
+                                </div>
                             </div>
-                        {:else}
-                            <span>Subscribe to <a href="/premium" class="primary-link" >alertbot premium</a></span>
-                        {/if}
-                    </div>
-                {/if}
+                            <span class="ml-32 lg:ml-0">
+                                You can view and edit your subscription in the
+                                <a
+                                    href={user.portalUrl}
+                                    class="primary-link"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Stripe Customer Portal
+                                </a>
+                            </span>
+                        </div>
+                    {:else}
+                        <span>Subscribe to <a href="/premium" class="primary-link" >alertbot premium</a></span>
+                    {/if}
+                </div>
                 <span
                     class="text-2xl font-bold min-w-fit my-2 flex flex-row items-center"
                     id="billing-history"
                 >
-                    <img
-                        src="/icons/{dropdowns.billing_history ? "down" : "right"}-arrow.svg"
-                        alt="arrow"
-                        class="h-4 mr-2"
-                        on:click={() => dropdowns.billing_history = !dropdowns.billing_history}
-                    />
                     Billing History
                 </span>
-                {#if dropdowns.billing_history}
-                    <div 
-                        class="mb-24"
-                        transition:slide={{ duration: 300 }}
-                    >
-                        <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 my-8 w-full"/>
-                        {#if user.billing && user.billing.length > 0}
-                            <div class="flex flex-col w-full">
-                                <div class="border-b-0 payment rounded-t-md">
-                                    <span class="w-1/4 flex xs:text-sm">Date</span>
-                                    <span class="w-1/4 flex xs:text-sm ">Description</span>
-                                    <span class="w-1/4 flex xs:text-sm justify-center">Price</span>
-                                    <span class="w-1/4 flex justify-end xs:text-sm">Invoice</span>
-                                </div>
-                                {#each user.billing as invoice, i}
-                                    <div class="payment {(i + 1 === user.billing.length) && "last"}">
-                                        <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(new Date(invoice.date), "dd/MM/yy")}</span>
-                                        <span class="w-1/4 flex text-gray-400 2xs:text-xs xs:text-tiny xs:justify-center xs:text-center">Alertbot premium - {invoice.interval}ly billing</span>
-                                        <span class="w-1/4 flex justify-center 2xs:text-xs">{invoice.amount / 100}({invoice.currency.toUpperCase() || "USD"})</span>
-                                        <a
-                                            href={invoice.invoiceUrl}
-                                            class="primary-link w-1/4 flex justify-end 2xs:text-xs"
-                                        >
-                                            View invoice
-                                        </a>
-                                    </div>
-                                {/each}
+                <div class="mb-24">
+                    <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 my-8 w-full"/>
+                    {#if user.billing && user.billing.length > 0}
+                        <div class="flex flex-col w-full">
+                            <div class="border-b-0 payment rounded-t-md">
+                                <span class="w-1/4 flex xs:text-sm">Date</span>
+                                <span class="w-1/4 flex xs:text-sm ">Description</span>
+                                <span class="w-1/4 flex xs:text-sm justify-center">Price</span>
+                                <span class="w-1/4 flex justify-end xs:text-sm">Invoice</span>
                             </div>
-                        {:else}
-                            <span class="text-gray-400">No billing history found</span>
-                        {/if}
-                    </div>
-                {/if}
+                            {#each user.billing as invoice, i}
+                                <div class="payment {(i + 1 === user.billing.length) && "last"}">
+                                    <span class="w-1/4 flex font-bold 2xs:text-xs xs:text-tiny">{formatDate(new Date(invoice.date), "dd/MM/yy")}</span>
+                                    <span class="w-1/4 flex text-gray-400 2xs:text-xs xs:text-tiny xs:justify-center xs:text-center">Alertbot premium - {invoice.interval}ly billing</span>
+                                    <span class="w-1/4 flex justify-center 2xs:text-xs">{invoice.amount / 100}({invoice.currency.toUpperCase() || "USD"})</span>
+                                    <a
+                                        href={invoice.invoiceUrl}
+                                        class="primary-link w-1/4 flex justify-end 2xs:text-xs"
+                                    >
+                                        View invoice
+                                    </a>
+                                </div>
+                            {/each}
+                        </div>
+                    {:else}
+                        <span class="text-gray-400">No billing history found</span>
+                    {/if}
+                </div>
                 <span
                     class="text-2xl font-bold min-w-fit my-2 flex flex-row items-center"
                     id="alert-history"
                 >
-                    <img
-                        src="/icons/{dropdowns.alert_history ? "down" : "right"}-arrow.svg"
-                        alt="arrow"
-                        class="h-4 mr-2"
-                        on:click={() => dropdowns.alert_history = !dropdowns.alert_history}
-                    />
                     Alert History
                 </span>
-                {#if dropdowns.alert_history}
-                    <!-- svelte-ignore missing-declaration -->
-                    <div
-                        class="mb-24 {!dropdowns.alert_history && "hidden"}"
-                        transition:slide={{ duration: 300 }}
-                    >
-                        <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 mt-4 w-full"/>
-                        <div class="stats flex flex-row w-full justify-between 2xs:flex-col 2xs:items-center mt-8">
-                            <div class="stat">
-                                <span class="text">Sent</span>
-                                <span class="number">{user.stats.alerts}</span>
-                                <span class="text">Alerts</span>
-                            </div>
-                            <div class="stat center">
-                                <span class="text">Created</span>
-                                <span class="number">{user.stats.templates}</span>
-                                <span class="text">Templates</span>
-                            </div>
-                            <div class="stat">
-                                <span class="text">Alerting to</span>
-                                <span class="number">{user.stats.servers}</span>
-                                <span class="text">Servers</span>
-                            </div>
+                <!-- svelte-ignore missing-declaration -->
+                <div class="mb-24">
+                    <hr class="border-gray-400 border border-solid border-opacity-40 rounded-xl h-0 mt-4 w-full"/>
+                    <div class="stats flex flex-row w-full justify-between 2xs:flex-col 2xs:items-center mt-8">
+                        <div class="stat">
+                            <span class="text">Sent</span>
+                            <span class="number">{user.stats.alerts}</span>
+                            <span class="text">Alerts</span>
                         </div>
-                        <span class="font-bold text-xl">Alerts</span>
-                        <div class="pb-8 pt-4 grid">
-                            {#if alertHistoryPageData.length > 0}
-                                <!-- svelte-ignore missing-declaration -->
-                                <DiscordChat
-                                    messages={
-                                    alertHistoryPageData
-                                        .map(alert => {
-                                            return {
-                                                type: "embed",
-                                                data: alert.embed,
-                                                date: alert.date,
-                                                author: {
-                                                    name: bot.name,
-                                                    iconUrl: bot.avatarUrl,
-                                                    id: bot.id,
-                                                },
-                                                link: `/dashboard/alerts/${alert.alertId}`
-                                            };
-                                        })
-                                    }
-                                />
-                                {#if user.stats.alerts >= 20}
-                                    <div class="flex flex-row mt-4">
-                                        <span
-                                            class="px-2 py-1 font-bold bg-light-primary rounded-l-md hover:cursor-pointer"
-                                            on:click={() => changePage(alertHistoryPage - 1)}
-                                        >
-                                            {"<"}
-                                        </span>
-                                        {#each {length: Math.ceil(user.stats.alerts / 20)} as _, pageNumber}
-                                            <span 
-                                                class="px-2 py-1 ml-1 font-bold bg-light-primary hover:cursor-pointer {pageNumber + 1 === alertHistoryPage && "bg-dark-primary"}"
-                                                on:click={() => changePage(pageNumber + 1)}
-                                            >
-                                                {pageNumber + 1}
-                                            </span>
-                                        {/each}
-                                        <span
-                                            class="px-2 py-1 font-bold bg-light-primary rounded-r-md hover:cursor-pointer ml-1"
-                                            on:click={() => changePage(alertHistoryPage + 1)}
-                                        >
-                                            {">"}
-                                        </span>
-                                    </div>
-                                {/if}
-                            {:else}
-                                <span>No alerts found</span>
-                            {/if}
+                        <div class="stat center">
+                            <span class="text">Created</span>
+                            <span class="number">{user.stats.templates}</span>
+                            <span class="text">Templates</span>
+                        </div>
+                        <div class="stat">
+                            <span class="text">Alerting to</span>
+                            <span class="number">{user.stats.servers}</span>
+                            <span class="text">Servers</span>
                         </div>
                     </div>
-                {/if}
+                    <span class="font-bold text-xl">Alerts</span>
+                    <div class="pb-8 pt-4 grid">
+                        {#if alertHistoryPageData.length > 0}
+                            <!-- svelte-ignore missing-declaration -->
+                            <DiscordChat
+                                messages={
+                                alertHistoryPageData
+                                    .map(alert => {
+                                        return {
+                                            type: "embed",
+                                            data: alert.embed,
+                                            date: alert.date,
+                                            author: {
+                                                name: bot.name,
+                                                iconUrl: bot.avatarUrl,
+                                                id: bot.id,
+                                            },
+                                            link: `/dashboard/alerts/${alert.alertId}`
+                                        };
+                                    })
+                                }
+                            />
+                            {#if user.stats.alerts >= 20}
+                                <div class="flex flex-row mt-4">
+                                    <span
+                                        class="px-2 py-1 font-bold bg-light-primary rounded-l-md hover:cursor-pointer"
+                                        on:click={() => changePage(alertHistoryPage - 1)}
+                                    >
+                                        {"<"}
+                                    </span>
+                                    {#each {length: Math.ceil(user.stats.alerts / 20)} as _, pageNumber}
+                                        <span 
+                                            class="px-2 py-1 ml-1 font-bold bg-light-primary hover:cursor-pointer {pageNumber + 1 === alertHistoryPage && "bg-dark-primary"}"
+                                            on:click={() => changePage(pageNumber + 1)}
+                                        >
+                                            {pageNumber + 1}
+                                        </span>
+                                    {/each}
+                                    <span
+                                        class="px-2 py-1 font-bold bg-light-primary rounded-r-md hover:cursor-pointer ml-1"
+                                        on:click={() => changePage(alertHistoryPage + 1)}
+                                    >
+                                        {">"}
+                                    </span>
+                                </div>
+                            {/if}
+                        {:else}
+                            <span>No alerts found</span>
+                        {/if}
+                    </div>
+                </div>
             </div>
         {/if}
     </div>

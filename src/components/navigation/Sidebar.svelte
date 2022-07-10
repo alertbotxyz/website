@@ -1,10 +1,27 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import User from "../dashboard/User.svelte";
 
     export let user;
     export let loggedIn = false;
     export let active = false;
     export let linksOnly = false;
+
+    const dispatch = createEventDispatcher();
+
+    const close = () => {
+        dispatch("closeSidebar", {});
+    };
+
+    $: i = 0;
+
+    window.addEventListener("click", e => {
+        i += 1;
+        if (i % 2 === 0) return;
+        if (active && e.target.classList.contains("bg-opacity-70") && e.target.classList.contains("bg-black")) {
+            close();
+        };
+    });
 </script>
 
 <div class="sidebar-container z-50 bg-dark-primary h-screen flex flex-col justify-between {!active && "xl:hidden"}">
@@ -35,30 +52,33 @@
         <a
             class="nav-link"
             href="/dashboard/templates/view"
+            on:click={close}
         >
             <img
                 src="/icons/template.svg" 
-                alt="home"
+                alt="templates"
             />
             <span class="text">Templates</span>
         </a>
         <a
             class="nav-link"
             href="/dashboard/templates/send-alert"
+            on:click={close}
         >
             <img
                 src="/icons/bell.svg" 
-                alt="home"
+                alt="alert"
             />
             <span class="text">Alert</span>
         </a>
         <a
             class="nav-link"
             href="/dashboard/account"
+            on:click={close}
         >
             <img
                 src="/icons/user.svg" 
-                alt="home"
+                alt="account"
             />
             <span class="text">Account</span>
         </a>
@@ -68,7 +88,7 @@
         >  
             <img
                 src="/icons/premium.svg" 
-                alt="home"
+                alt="premium"
             />
             <span class="text">Premium</span>
         </a>
@@ -78,7 +98,7 @@
         >
             <img
                 src="/icons/invite.svg" 
-                alt="home"
+                alt="invite"
             />
             <span class="text">Invite</span>
         </a>

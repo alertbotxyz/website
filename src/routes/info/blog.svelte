@@ -6,7 +6,7 @@
     $: blogName = $params.blog;
     $: blog = data.blog.data.find(blog => blog.title === blogName?.replaceAll("_", " "));
 </script>
-<div class="w-12xx lg:w-11/12 flex flex-col pt-16 pb-32">
+<div class="w-12xx lg:w-11/12 flex flex-col pt-16 pb-32 min-h-screen">
     {#if blogName}
         {#if blog}
             <img

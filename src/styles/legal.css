@@ -1,5 +1,5 @@
 .legal-container {
-    @apply mt-16 w-12xx lg:w-11/12;
+    @apply mt-16 w-12xx lg:w-11/12 min-h-screen;
 }
 .paragraph {
     @apply text-gray-400 my-8 font-bold;
