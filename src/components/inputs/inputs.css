@@ -2,7 +2,7 @@
     @apply rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent px-4 py-3 mb-2 w-full font-bold;
 }
 .select {
-    @apply rounded-md border border-solid border-gray-600 text-gray-300 bg-transparent py-3 pl-2 w-72;
+    @apply rounded-md border border-solid border-gray-600 text-gray-300 bg-primary py-3 pl-2 w-72;
 }
 .select.full-width {
     @apply lg:w-full;

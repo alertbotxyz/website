@@ -192,7 +192,7 @@
                     on:change={handleChange}
                     bind:hasError={hasError}
                     help="You and the bot must have permissions to send messages to the alert channel"
-                    extraClass={"lg:mb-4"}
+                    extraClass={"bg-cyan-500 lg:mb-4"}
                 />
                 {#if data.guildId}
                     <Loading loading={fetchingGuild}>
