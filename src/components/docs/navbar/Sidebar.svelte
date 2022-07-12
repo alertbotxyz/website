@@ -43,7 +43,7 @@
         </div>
     {/each}
     <select
-        class="bg-transparent border-none w-48 rounded-md h-10 p-2 mr-4 hidden lg:flex"
+        class="bg-docs-primary-light border-none w-48 rounded-md h-10 p-2 mr-4 hidden lg:flex"
         name="link"
         on:input={data => {
             window.location.hash = data.target.value;

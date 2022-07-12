@@ -128,7 +128,7 @@
         <h1>Send Alert</h1>
         <select
             name="template"
-            class="w-96 sm:w-5/6 lg:w-120 rounded-md p-3 border border-solid border-gray-600 mt-4 bg-transparent"
+            class="w-96 sm:w-5/6 lg:w-120 rounded-md p-3 border border-solid border-gray-600 mt-4 bg-light-primary"
             on:change={handleTemplateSelect}
         >
             <option value="" selected disabled hidden>Choose a template to alert with</option>
