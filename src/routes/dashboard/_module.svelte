@@ -65,6 +65,7 @@
         "735154545696440330", // $ The Market Bishop#8888
         "956043403706134549", // chuckfu#6397
         "327572501011890186", // clearlystocks#6413
+        "744979462290014258", // MarketTradeAdvisor#0347
     ];
 </script>
 
