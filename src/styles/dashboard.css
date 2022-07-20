@@ -1,8 +1,11 @@
 .trade-container {
-    @apply font-bold w-4xx p-1 rounded-md my-1 flex flex-row;
+    @apply font-bold w-4xx my-1 flex flex-row 2xs:w-full 2xs:flex-col tiny:border tiny:border-solid tiny:border-x-0 tiny:border-t-0 tiny:pb-2 tiny:border-gray-400;
 }
 .trade-container .ticker {
     @apply font-bold text-accent w-16;
+}
+.trade-container .percent {
+    @apply 2xs:mt-2 tiny:mt-0;
 }
 .trade-container .percent.positive {
     @apply text-green-400;
@@ -11,20 +14,20 @@
     @apply text-red-400;
 }
 .trade-container .change {
-    @apply px-8 w-48;
+    @apply px-8 w-48 tiny:px-0 tiny:py-2;
 }
 .lifetime-stats {
-    @apply  flex flex-row w-full my-8;
+    @apply  flex flex-row w-full my-8 2xs:flex-col;
 }
 .lifetime-stats .stat-container {
-    @apply flex flex-col px-8 border border-solid border-y-0 border-r-0;
+    @apply flex flex-col px-8 border border-solid border-y-0 border-r-0 2xs:px-0 2xs:border-l-0 2xs:border-t 2xs:py-2 2xs:w-1xx;
 }
 .lifetime-stats .stat-container.first {
     @apply pl-0 border-l-0;
 }
 .lifetime-stats .stat-container .title {
-    @apply font-bold text-gray-400;
+    @apply font-bold text-gray-400 md:text-xs;
 }
 .lifetime-stats .stat-container .value {
-    @apply font-bold text-xl;
+    @apply font-bold text-xl md:text-base;
 }

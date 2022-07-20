@@ -125,33 +125,37 @@
 
 <Loading {loading}>
     <div class="flex flex-col w-full items-center fade-in">
-        <h1>Update a Trade</h1>
-        <div class="flex flex-col mt-8">
+        <h1 class="text-center">Update a Trade</h1>
+        <div class="flex flex-col mt-8 items-center w-full">
             <Loading loading={openTradesLoading}>
                 {#if openTrades?.length > 0}
                     {#each openTrades as trade, i}
-                        <div class="my-2 rounded-md p-4 bg-light-primary flex flex-col {i === active && "min-h-fit"}">
-                            <div class="flex flex-row">
-                                <span class="font-bold w-12 {trade.trackedData.longshort.startsWith("b") ? "text-green-400" : "text-red-400"}">{trade.trackedData.longshort.toUpperCase()}</span>
-                                <span class="font-bold ml-4 w-12">{trade.trackedData.ticker}</span>
-                                <span class="font-bold pl-4 w-40 flex flex-row justify-center">
-                                    {#if trade.type === "options"}
-                                        <span>{trade.trackedData.strike}{trade.trackedData.callput.charAt(0)}</span>
-                                        <span class="ml-2">{trade.trackedData.expires || "Nearest"}</span>
-                                    {/if}
-                                </span>
-                                <span class="mx-4">@</span>
-                                <span class="font-bold w-16">{trade.trackedData.price.toFixed(2)}</span>
-                                <span
-                                    class="ml-4"
-                                    on:click={() => i === active ? active = -1 : active = i}
-                                >
-                                    <img
-                                        src="/icons/down-arrow.svg"
-                                        alt="arrow"
-                                        class="w-5 hover:cursor-pointer"
-                                    />
-                                </span>
+                        <div class="my-2 rounded-md p-4 bg-light-primary flex flex-col {i === active && "min-h-fit"} w-4xx 2xs:w-5/6">
+                            <div class="flex flex-row 2xs:flex-col">
+                                <div class="flex flex-row">
+                                    <span class="font-bold w-12 {trade.trackedData.longshort.startsWith("b") ? "text-green-400" : "text-red-400"}">{trade.trackedData.longshort.toUpperCase()}</span>
+                                    <span class="font-bold ml-4 w-12">{trade.trackedData.ticker}</span>
+                                    <span class="font-bold pl-4 w-28 flex flex-row justify-center">
+                                        {#if trade.type === "options"}
+                                            <span>{trade.trackedData.strike}{trade.trackedData.callput.charAt(0)}</span>
+                                            <span class="ml-2">{trade.trackedData.expires || "Nearest"}</span>
+                                        {/if}
+                                    </span>
+                                </div>
+                                <div class="flex flex-row ml-4 2xs:ml-0 2xs:mt-4 2xs:w-full">
+                                    <span class="mr-4">@</span>
+                                    <span class="font-bold w-16">{trade.trackedData.price.toFixed(2)}</span>
+                                    <span
+                                        class="ml-4 justify-end"
+                                        on:click={() => i === active ? active = -1 : active = i}
+                                    >
+                                        <img
+                                            src="/icons/down-arrow.svg"
+                                            alt="arrow"
+                                            class="w-5 hover:cursor-pointer"
+                                        />
+                                    </span>
+                                </div>
                             </div>
                             {#if i === active}
                                 <div class="flex flex-col justify-between h-full">
@@ -163,7 +167,7 @@
                                     <div class="w-full flex flex-row h-8 mt-4">
                                         <input
                                             type="text"
-                                            class="border border-solid bg-inherit rounded-md border-dark-primary w-32 px-2 py-2 mr-2"
+                                            class="border border-solid bg-inherit rounded-md border-dark-primary w-32 px-2 py-2 mr-2 xs:w-1/3"
                                             placeholder="Price"
                                             name="price"
                                             on:input={handleTrimInput}
@@ -176,20 +180,22 @@
                                             name="percent"
                                             on:input={handleTrimInput}
                                         /> -->
-                                        <button
-                                            class="bg-blue-400 h-8 w-16 rounded-md font-bold"
-                                            on:click={() => sendTrade("trim", trade.alertId, trade.trackedData.ticker, trade.trackedData.price)}
-                                            disabled={disabled || submitting}
-                                        >
-                                            Trim
-                                        </button>
-                                        <button
-                                            class="bg-red-400 h-8 w-16 ml-2 rounded-md font-bold"
-                                            on:click={() => sendTrade("close", trade.alertId, trade.trackedData.ticker, trade.trackedData.price, trade.trackedData.longshort)}
-                                            disabled={disabled || submitting}
-                                        >
-                                            Close
-                                        </button>
+                                        <div class="flex flex-row">
+                                            <button
+                                                class="bg-blue-400 h-8 w-16 rounded-md font-bold"
+                                                on:click={() => sendTrade("trim", trade.alertId, trade.trackedData.ticker, trade.trackedData.price)}
+                                                disabled={disabled || submitting}
+                                            >
+                                                Trim
+                                            </button>
+                                            <button
+                                                class="bg-red-400 h-8 w-16 ml-2 rounded-md font-bold"
+                                                on:click={() => sendTrade("close", trade.alertId, trade.trackedData.ticker, trade.trackedData.price, trade.trackedData.longshort)}
+                                                disabled={disabled || submitting}
+                                            >
+                                                Close
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             {/if}

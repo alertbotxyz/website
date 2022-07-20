@@ -101,6 +101,7 @@
         <a
             class="nav-link"
             href="/dashboard/tracked-alerts/open-trade"
+            on:click={close}
         >
             <img
                 src="/icons/chart.svg" 

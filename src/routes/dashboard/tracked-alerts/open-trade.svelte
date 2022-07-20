@@ -220,7 +220,7 @@
                         </button>
                     </form>
                 </div>
-                <div class="dashboard-form-container">
+                <div class="dashboard-form-container lg:mt-8">
                     <DiscordChat messages={[
                         {
                             type: "embed",

@@ -108,7 +108,7 @@
 
 <div class="flex flex-col w-full items-center fade-in">
     <h1>Trade Stats</h1>
-    <div class="flex flex-col mt-8 w-10xx">
+    <div class="flex flex-col mt-8 w-10xx lg:w-5/6">
         <div class="p-6 my-2 bg-dark-primary rounded-md">
             <span class="font-bold text-xl">Lifetime Stats</span>
             <div class="lifetime-stats">
@@ -155,13 +155,15 @@
                     {#each recentAlertsDays as day}
                         {#if day}
                             <span class="date-container">
-                                <span class={day.totalGain > 0 ? "text-green-400" : "text-red-400"}>{day.dayOfTheWeek} {day.date}</span>
-                                <span>({day.totalGain > 0 ? "+" : ""}{day.totalGain.toFixed(2)}%)</span>
+                                <span class="md:text-sm {day.totalGain > 0 ? "text-green-400" : "text-red-400"}">{day.dayOfTheWeek} {day.date}</span>
+                                <span class="md:text-sm">({day.totalGain > 0 ? "+" : ""}{day.totalGain.toFixed(2)}%)</span>
                             </span>
                             {#each day.alerts as alert}
                                 <span class="trade-container">
-                                    <div class="ticker">{alert.trackedData?.ticker || "TICKER"}</div>
-                                    <div class="change">{alert.trackedData?.price.toFixed(2) || "OPEN"} -> {alert.trackedData?.closedData?.price.toFixed(2) || "CLOSE"}</div>
+                                    <div class="flex flex-row tiny:flex-col">
+                                        <div class="ticker">{alert.trackedData?.ticker || "TICKER"}</div>
+                                        <div class="change">{alert.trackedData?.price.toFixed(2) || "OPEN"} -> {alert.trackedData?.closedData?.price.toFixed(2) || "CLOSE"}</div>
+                                    </div>
                                     <span class="percent {alert.percentGain > 0 ? "positive" : "negative"}">{alert.percentGain > 0 ? "+" : ""}{alert.percentGain}%</span>
                                 </span>
                             {/each}
