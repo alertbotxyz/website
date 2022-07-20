@@ -4,12 +4,18 @@ export const sendAlert = ({
     name,
     inputs,
     imageUrl,
+    trackedData,
+    alertId,
+    type,
 }: {
     name: string;
     inputs: {
         [key: string]: string;
     };
     imageUrl: string;
+    trackedData?: any;
+    alertId: string;
+    type: "close" | "trim";
 }) => {
     return makeRequest("/alert/send", {
         method: "POST",
@@ -17,6 +23,9 @@ export const sendAlert = ({
             templateName: name,
             inputs,
             imageUrl,
+            trackedData,
+            alertId,
+            type,
         },
     });
 };
@@ -42,5 +51,12 @@ export const getAlertPage = (page: number) => {
     return makeRequest("/alert/page", {
         method: "GET",
         query: { page },
+    });
+};
+
+export const getAllTrackedAlerts = (recentOnly?: boolean) => {
+    return makeRequest("/alert/tracked/all", {
+        method: "GET",
+        query: { recentOnly },
     });
 };

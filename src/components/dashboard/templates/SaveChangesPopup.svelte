@@ -10,7 +10,7 @@
 
 {#if updated}
     <div 
-        class="absolute w-full bottom-4 flex flex-row justify-center items-center z-50"
+        class="absolute w-full bottom-4 flex flex-row justify-center items-center z-50 left-0"
         in:fly={{ y: 200, duration: 300 }}
         out:fly={{ y: 50, duration: 300 }}
     >

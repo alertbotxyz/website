@@ -1,6 +1,6 @@
 <!-- <script context="module" lang="ts"> -->
 <script context="module">
-    import { getBotUser, getUserAccountData, updateBotToken, logout } from "../../api/auth";
+    import { getBotUser, getUserAccountData, updateBotToken, logout, updateUserProfile } from "../../api/auth";
     import { userStore } from "../../stores/user";
 
     // : {
@@ -54,7 +54,10 @@
     import StandardInput from "../../components/inputs/StandardInput.svelte";
     import Loading from "../../components/Loading.svelte";
     import DiscordChat from "../../components/discord/DiscordChat.svelte";
+    import DashboardInput from "../../components/inputs/DashboardInput.svelte";
     import "../../styles/account.css";
+    import SaveChangesPopup from "../../components/dashboard/templates/SaveChangesPopup.svelte";
+    import SuccessModal from "../../components/modals/SuccessModal.svelte";
 
     export let bot;
     export let error;
@@ -90,6 +93,15 @@
         current_plan: hash === "current-plan" || !hash,
         billing_history: hash === "billing-history",
         alert_history: hash === "alert-history",
+    };
+
+    $: updated = false;
+    $: hasError = false;
+    $: submitting = false;
+    $: success = {
+        successful: false,
+        message: "",
+        title: "",
     };
 
     if (error) addToast({
@@ -229,9 +241,103 @@
             return;
         });
     };
+    
+    let originalUserProfile = JSON.parse(JSON.stringify($userStore.profile ?? {}));
+    const checkUpdate = () => updated = JSON.stringify(originalUserProfile) !== JSON.stringify($userStore.profile);
+
+    const handleUserProfileChange = e => {
+        const { value, name } = e.detail;
+        
+        if (name === "alertType" || name === "timeframe") {
+            if ($userStore.profile[name].includes(value)) return;
+            $userStore.profile[name] = [...$userStore.profile[name], value];
+        } else {
+            const nested = name.split(".");
+
+            if (nested[1]) {
+                let obj = null;
+
+                nested.forEach(key => {
+                    if (obj === null) {
+                        obj = {
+                            [key]: $userStore.profile[key],
+                        };
+                    } else {
+                        obj[Object.keys(obj)[0]][key] = value;
+                    };
+                });
+
+                $userStore.profile[nested[0]] = obj[nested[0]];
+            } else {
+                $userStore.profile[name] = value;
+            };
+        };
+        
+        checkUpdate();
+    };
+
+    const handleDeleteTag = (name, tag) => {
+        $userStore.profile[name] = $userStore.profile[name].filter(t => t !== tag);
+
+        checkUpdate();
+    };
+
+    const handleUpdateUserProfile = () => {
+        submitting = true;
+        updateUserProfile($userStore.profile).then(res => {
+            if (res.ok) {
+                success = {
+                    successful: true,
+                    message: "Your profile has been updated successfully",
+                    title: "User profile updated",
+                };
+                updated = false;
+            } else {
+                addToast({
+                    type: "error",
+                    message: res.error.message,
+                    title: "There was an error updating your profile",
+                });
+            };
+            submitting = false;
+        });
+    };
 </script>
+
+<SaveChangesPopup
+    disabled={hasError || submitting}
+    {updated}
+    on:cancelSaveChanges={() => {
+        $userStore.profile = JSON.parse(JSON.stringify(originalUserProfile));
+        checkUpdate();
+    }}
+    on:confirmSaveChanges={handleUpdateUserProfile}
+/>
+<SuccessModal
+    active={success.successful}
+    title={success.title}
+    message={success.message}
+    options={[
+        {
+            type: "button",
+            text: "Edit profile",
+            color: "bg-dark-primary",
+        },
+        {
+            type: "link",
+            text: "View profile",
+            color: "bg-accent",
+            url: `/alerter/${$userStore.uid}/profile`,
+        },
+    ]}
+    on:close={() => {
+        success.successful = false;
+        success.message = "";
+        success.title = "";
+    }}
+/>
 <Loading {loading}>
-    <div class="flex flex-col w-full items-center pb-8 overflow-x-hidden">
+    <div class="account ">
         {#if user}
             <div class="flex flex-col w-11/12">
                 <div class="flex flex-row justify-between w-full my-16 lg:my-12">
@@ -243,7 +349,7 @@
                         Logout
                     </span>
                 </div>
-                <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full my-8 mb-16">
+                <div class="flex flex-row lg:flex-col-reverse lg:items-center w-full my-8">
                     <div class="flex flex-row 2xs:w-full">
                         {#if bot && (bot.token || $userStore.botToken) && !error}
                             <Loading loading={botIsLoading}>
@@ -314,6 +420,143 @@
                             </a>
                         </span>
                     </div>
+                </div>
+                <div class="flex flex-col my-8 mb-24">
+                    <span class="my-2 font-bold text-xl">Profile</span>
+                    <DashboardInput
+                        name="bio"
+                        title="Bio"
+                        type="textarea"
+                        placeholder="Tell us about yourself"
+                        defaultValue={$userStore.profile?.bio}
+                        on:change={handleUserProfileChange}
+                    />
+                    <DashboardInput
+                        name="alertType"
+                        title="Type"
+                        help="The types of alerts you send"
+                        type="select"
+                        data={{
+                            options: [
+                                {
+                                    text: "Stocks",
+                                    value: "Stocks"
+                                },
+                                {
+                                    text: "Crypto",
+                                    value: "Crypto"
+                                },
+                                {
+                                    text: "Options",
+                                    value: "Options"
+                                },
+                                {
+                                    text: "Forex",
+                                    value: "Forex"
+                                },
+                                {
+                                    text: "Futures",
+                                    value: "Futures"
+                                },
+                                {
+                                    text: "Commodities",
+                                    value: "Commodities"
+                                },
+                                {
+                                    text: "OTC",
+                                    value: "OTC"
+                                },
+                            ]
+                        }}
+                        on:change={handleUserProfileChange}
+                    />
+                    <div class="flex flex-row my-2">
+                        {#if $userStore?.profile?.alertType?.length > 0}
+                            {#each $userStore?.profile?.alertType as type}
+                                <span class="tag">{type} <span class="x" on:click={() => handleDeleteTag("alertType", type)}>x</span></span>
+                            {/each}
+                        {/if}
+                    </div>
+                    <DashboardInput
+                        name="timeframe"
+                        title="Timeframe"
+                        help="The timeframes in which you trade"
+                        type="select"
+                        data={{
+                            options: [
+                                {
+                                    text: "Scalps",
+                                    value: "Scalps"
+                                },
+                                {
+                                    text: "Day Trades",
+                                    value: "Day Trades"
+                                },
+                                {
+                                    text: "Swing Trades",
+                                    value: "Swing Trades"
+                                },
+                                {
+                                    text: "Investing",
+                                    value: "Investing"
+                                },
+                            ]
+                        }}
+                        on:change={handleUserProfileChange}
+                    />
+                    <div class="flex flex-row my-2">
+                        {#if $userStore?.profile?.timeframe?.length > 0}
+                            {#each $userStore?.profile?.timeframe as timeframe}
+                                <span class="tag">{timeframe} <span class="x" on:click={() => handleDeleteTag("timeframe", timeframe)}>x</span></span>
+                            {/each}
+                        {/if}
+                    </div>
+                    <span class="my-2 font-bold text-xl">Socials</span>
+                    <DashboardInput
+                        name="socials.twitter"
+                        title="Twitter"
+                        type="prefix"
+                        placeholder="alertbotxyz"
+                        data={{ prefix: "https://twitter.com/" }}
+                        on:change={handleUserProfileChange}
+                        defaultValue={$userStore.profile?.socials?.twitter}
+                    />
+                    <DashboardInput
+                        name="socials.instagram"
+                        title="Instagram"
+                        type="prefix"
+                        placeholder="alertbotxyz"
+                        data={{ prefix: "https://instagram.com/" }}
+                        on:change={handleUserProfileChange}
+                        defaultValue={$userStore.profile?.socials?.instagram}
+                    />
+                    <DashboardInput
+                        name="socials.discord"
+                        title="Discord Server"
+                        type="prefix"
+                        placeholder="WpQT3jzfum"
+                        data={{ prefix: "https://discord.com/invite/" }}
+                        on:change={handleUserProfileChange}
+                        defaultValue={$userStore.profile?.socials?.discord}
+                    />
+                    <DashboardInput
+                        name="socials.patreon"
+                        title="Patreon"
+                        type="prefix"
+                        placeholder="alertbotxyz"
+                        data={{ prefix: "https://patreon.com/" }}
+                        on:change={handleUserProfileChange}
+                        defaultValue={$userStore.profile?.socials?.patreon}
+                    />
+                    <DashboardInput
+                        name="socials.website"
+                        title="Website"
+                        placeholder="https://alert-bot.xyz"
+                        validation={{ url: true }}
+                        on:change={handleUserProfileChange}
+                        bind:hasError={hasError}
+                        defaultValue={$userStore.profile?.socials?.website}
+                    />
                 </div>
                 <span
                     class="text-2xl font-bold min-w-fit my-2 flex flex-row items-center"

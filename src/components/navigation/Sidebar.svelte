@@ -20,7 +20,7 @@
     });
 </script>
 
-<div class="sidebar-container z-50 bg-dark-primary h-screen flex flex-col justify-between {!active && "xl:hidden"}">
+<div class="sidebar-container z-40 bg-dark-primary h-screen flex flex-col justify-between {!active && "xl:hidden"}">
     {#if !linksOnly}
         <a
             class="logo-container flex flex-row items-center pl-6 h-20"
@@ -97,6 +97,16 @@
                 alt="invite"
             />
             <span class="text">Invite</span>
+        </a>
+        <a
+            class="nav-link"
+            href="/dashboard/tracked-alerts/open-trade"
+        >
+            <img
+                src="/icons/chart.svg" 
+                alt="tracked-alerts"
+            />
+            <span class="text">Tracked</span>
         </a>
     </div>
     {#if !linksOnly}

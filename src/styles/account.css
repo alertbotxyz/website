@@ -34,3 +34,12 @@
 .stats .stat.center {
     @apply border border-y-0 border-solid border-gray-400 2xs:border-x-0 2xs:border-y 2xs:w-full;
 }
+.account {
+    @apply flex flex-col w-full items-center pb-8 overflow-x-hidden;
+}
+.account .tag {
+    @apply bg-dark-primary py-1 px-2 rounded-full mr-2 text-xs font-bold;
+}
+.account .tag .x {
+    @apply bg-light-primary rounded-full px-1 ml-1 hover:cursor-pointer;
+}

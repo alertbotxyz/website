@@ -86,6 +86,35 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "alerts-history",
             "type": "subsection",
         },
+        {
+            "title": "Tracked Alerts",
+            "type": "section",
+        },
+        {
+            "title": "Open",
+            "link": "tracked-alerts-open",
+            "type": "subsection",
+        },
+        {
+            "title": "Trim",
+            "link": "tracked-alerts-trim",
+            "type": "subsection",
+        },
+        {
+            "title": "Close",
+            "link": "tracked-alerts-close",
+            "type": "subsection",
+        },
+        {
+            "title": "Stats",
+            "link": "tracked-alerts-stats",
+            "type": "subsection",
+        },
+        {
+            "title": "Settings",
+            "link": "tracked-alerts-settings",
+            "type": "subsection",
+        },
         // {
         //     "title": "Bot",
         //     "type": "section",
@@ -361,6 +390,134 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-alert-history.png"/>
                 <Paragraph>Example of alert details</Paragraph>
                 <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-alert-details.png"/>
+            </SectionExample>
+        </SubSection>
+    </Section>
+    <Section title="Tracked Alerts">
+        <SubSection>
+            <SectionText>
+                <Paragraph>Alerts with a preset structure which get tracked to give you trade stats. You can send stocks, crypto and options alerts (more coming soon).</Paragraph>
+            </SectionText>
+        </SubSection>
+        <SubSection>
+            <SectionText>
+                <SectionTitle id="tracked-alerts-open">Open</SectionTitle>
+                <Paragraph>To open a tracked alert go to the "tracked" section found in the sidebar.</Paragraph>
+                <Paragraph>From here select the type of trade you want to alert with (stocks, options or crypto) which will give you inputs to fill in.</Paragraph>
+                <Paragraph>You can also fill in an image you want to send with the alert.</Paragraph>
+                <AttributesHeader title="Open Trade Inputs" />
+                <Attribute
+                    name="Long or Short"
+                    type="string"
+                    required
+                >
+                    <Paragraph>Whether you are buying (long) or selling (short) to open.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Ticker"
+                    type="string"
+                    required
+                >
+                    <Paragraph>The ticker of the asset you are trading.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Strike"
+                    type="number"
+                    required
+                >
+                    <Paragraph>(options only) Strike price of the contract.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Call or Put"
+                    type="string"
+                    required
+                >
+                    <Paragraph>(options only) Whether you are buying a call or a put option.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Expiration"
+                    type="string"
+                    required
+                >
+                    <Paragraph>(options only) Expiration date of the contract</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Price"
+                    type="number"
+                    required
+                    last
+                >
+                    <Paragraph>What price you bought at</Paragraph>
+                </Attribute>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of open trade</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-open-trade.png"/>
+                <Paragraph>Example of open trade filled</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-open-trade-filled.png"/>
+            </SectionExample>
+        </SubSection>
+        <SubSection>
+            <SectionText>
+                <SectionTitle id="tracked-alerts-trim">Trim</SectionTitle>
+                <Paragraph>To send a trim alert go to the "update trade" tab in the "tracked" section.</Paragraph>
+                <Paragraph>Here you will see a list of opened trades.</Paragraph>
+                <Paragraph>To trim click the dropdown arrow and fill in the price you are trimming at then press trim.</Paragraph>
+                <AttributesHeader title="Trim Alert Inputs" />
+                <Attribute
+                    name="Price"
+                    type="string"
+                    required
+                    last
+                >
+                    <Paragraph>The price at which you are trimming the alert.</Paragraph>
+                </Attribute>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of trim alert</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-trimclose.png"/>
+            </SectionExample>
+        </SubSection>
+        <SubSection>
+            <SectionText>
+                <SectionTitle id="tracked-alerts-close">Close</SectionTitle>
+                <Paragraph>To send a close alert go to the "update trade" tab in the "tracked" section.</Paragraph>
+                <Paragraph>Here you will see a list of opened trades.</Paragraph>
+                <Paragraph>To close click the dropdown arrow and fill in the price you are closing at then press close.</Paragraph>
+                <AttributesHeader title="Close Alert Inputs" />
+                <Attribute
+                    name="Price"
+                    type="string"
+                    required
+                    last
+                >
+                    <Paragraph>The price at which you are closing the alert.</Paragraph>
+                </Attribute>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of close alert</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-trimclose.png"/>
+            </SectionExample>
+        </SubSection>
+        <SubSection>
+            <SectionText>
+                <SectionTitle id="tracked-alerts-stats">Stats</SectionTitle>
+                <Paragraph>To view your trade stats go to the "trade stats" tab in the "tracked" section.</Paragraph>
+                <Paragraph>Here you will your lifetime stats and your trade stats since the latest monday.</Paragraph>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of trade stats alert</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-trade-stats.png"/>
+            </SectionExample>
+        </SubSection>
+        <SubSection last>
+            <SectionText>
+                <SectionTitle id="tracked-alerts-settings">Settings</SectionTitle>
+                <Paragraph>Not yet implemented.</Paragraph>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of settings</Paragraph>
+                <!-- <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-add-server.png"/> -->
             </SectionExample>
         </SubSection>
     </Section>

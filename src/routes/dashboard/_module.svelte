@@ -9,8 +9,8 @@
     import Loading from "../../components/Loading.svelte";
     import ErrorPage from "../../components/errors/ErrorPage.svelte";
     import User from "../../components/dashboard/User.svelte";
-    import "../../styles/errors.css";
     import data from "../../utils/data";
+    import "../../styles/errors.css";
 
     $: error = "";
     $: status = null;

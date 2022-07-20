@@ -61,6 +61,7 @@
 
     const handleUpdateTemplate = () => {
         submitting = true;
+        
         updateTemplate(originalTemplate, template).then(res => {
             if (res.ok) {
                 success = {

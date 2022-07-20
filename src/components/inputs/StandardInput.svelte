@@ -44,7 +44,7 @@
         } else if (validation?.url && !isValidUrl(value, required)) {
             error = "Invalid URL";
             hasError = true;
-        } else if (passesOwnValidation !== undefined || passesOwnValidation) {
+        } else if (passesOwnValidation === undefined || passesOwnValidation) {
             error = undefined;
             hasError = false;
         };
@@ -81,14 +81,22 @@
                 <option value={option.value}>{option.text}</option>
             {/each}
         </select>
+    {:else if type === "textarea"}
+        <textarea
+            class="{style} {error && "error"} {extraClass} textarea {fullWidth && "full-width"} focus:border-accent"
+            {name}
+            on:input={reactive && change}
+            {placeholder}
+            bind:value={defaultValue}
+        />
     {:else}
         <input 
             class="{style} {error && "error"}"
             type={type ?? "text"}
-            name={name}
+            {name}
             value={defaultValue ?? ""}
             on:input={reactive && change}
-            placeholder={placeholder}
+            {placeholder}
         />
     {/if}
 </div>

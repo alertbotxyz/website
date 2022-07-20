@@ -10,7 +10,7 @@ const months = [
     "September",
     "October",
     "November",
-    "December"
+    "December",
 ];
 export const redirect = (path: string): void => {
     window.location.pathname = path;

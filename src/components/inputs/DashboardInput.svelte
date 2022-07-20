@@ -18,6 +18,7 @@
 
     export let fullWidth = false;
     export let extraClass = "";
+    export let inputStyle = "";
     
     export let hasError = false;
 
@@ -35,7 +36,7 @@
     };
 </script>
 
-<div class="flex flex-col {fullWidth && "lg:w-full"} {data.options ? "mx-4" : ""}">
+<div class="flex flex-col {fullWidth && "lg:w-full"}">
     <InputLabel
         labelFor={name}
         labelText={title}
@@ -44,23 +45,30 @@
     />
     <div class="flex flex-row">
         {#if !data?.double}
-            <StandardInput
-                style="input focus:border-accent"
-                reactive
-                {name}
-                {type}
-                {required}
-                {defaultValue}
-                {placeholder}
-                {passesOwnValidation}
-                {error}
-                {validation}
-                {data}
-                bind:hasError={hasError}
-                on:change={change}
-                {fullWidth}
-                {extraClass}
-            />
+            <div class="flex flex-row w-full">
+                {#if type === "prefix"}
+                    <div class="flex flex-col justify-center px-2 h-11 rounded-l-md bg-dark-primary bg-opacity-60 text-gray-400 font-bold border border-solid border-gray-600 border-r-0 w-64 text-sm truncate md:text-xs">
+                        {data.prefix}
+                    </div>
+                {/if}
+                <StandardInput
+                    style="{inputStyle} input focus:border-accent {type === "prefix" && "prefix-input"}"
+                    reactive
+                    {name}
+                    {type}
+                    {required}
+                    {defaultValue}
+                    {placeholder}
+                    {passesOwnValidation}
+                    {error}
+                    {validation}
+                    {data}
+                    bind:hasError={hasError}
+                    on:change={change}
+                    {fullWidth}
+                    {extraClass}
+                />
+            </div>
         {/if}
         {#if data.double}
             <div class="flex flex-row w-full xs:flex-col">

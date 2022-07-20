@@ -4,7 +4,7 @@
     export let left = false;
     export let right = false;
 </script>
-<span data-tooltip={text} class="{left && "left"} {right && "right"} pt-0.5 px-1 {style}">
+<span data-tooltip={text} class="{left && "left"} {right && "right"} pt-0.5 px-1 {style} z-10">
     <img
         src="/icons/info-circle.svg" 
         alt="info-circle"

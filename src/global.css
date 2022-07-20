@@ -75,6 +75,7 @@ input {
 	position: relative;
 	z-index: 2;
 	display: block;
+	z-index: 999;
 }
 
 [data-tooltip]:before,
@@ -83,7 +84,8 @@ input {
 	opacity: 0;
 	pointer-events: none;
 	transition: .2s ease-out;
-	transform: translate(-50%, 5px)
+	transform: translate(-50%, 5px);
+	z-index: 999;
 }
 
 [data-tooltip]:before {
@@ -92,6 +94,7 @@ input {
 	-moz-border-radius: 3px;
 	content: attr(data-tooltip);
 	transition: .2s ease-out;
+	z-index: 999;
 }
 
 [data-tooltip]:after {
@@ -102,18 +105,21 @@ input {
 	content: " ";
 	font-size: 0;
 	line-height: 0;
+	z-index: 999;
 }
 
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after {
 	visibility: visible;
 	opacity: 1;
-	transform: translate(-50%, 0)
+	transform: translate(-50%, 0);
+	z-index: 999;
 }
 [data-tooltip=false]:hover:before,
 [data-tooltip=false]:hover:after {
 	visibility: hidden;
 	opacity: 0;
+	z-index: 999;
 }
 
 @media screen and (max-width: 1280px) {

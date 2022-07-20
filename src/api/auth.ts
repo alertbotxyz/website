@@ -30,3 +30,20 @@ export const updateBotToken = (botToken: string) => {
         body: { botToken },
     });
 };
+
+export const updateUserProfile = (profile: any) => {
+    return makeRequest("/discord/user/profile", {
+        method: "PUT",
+        body: { profile },
+    });
+};
+
+export const updateUserStats = (trade: {
+    openPrice: number;
+    closePrice: number;
+}) => {
+    return makeRequest("/discord/user/stats", {
+        method: "PUT",
+        body: { ...trade },
+    });
+};

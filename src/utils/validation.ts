@@ -2,7 +2,7 @@ export const isValidUrl = (url: string, required: boolean) => {
     if (required && !url) {
         return false;
     } else if (url) {
-        return /https/.test(url);
+        return /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?\/?$/gm.test(url);
     } else {
         return true;
     };

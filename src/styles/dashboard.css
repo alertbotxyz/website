@@ -1,0 +1,30 @@
+.trade-container {
+    @apply font-bold w-4xx p-1 rounded-md my-1 flex flex-row;
+}
+.trade-container .ticker {
+    @apply font-bold text-accent w-16;
+}
+.trade-container .percent.positive {
+    @apply text-green-400;
+}
+.trade-container .percent.negative {
+    @apply text-red-400;
+}
+.trade-container .change {
+    @apply px-8 w-48;
+}
+.lifetime-stats {
+    @apply  flex flex-row w-full my-8;
+}
+.lifetime-stats .stat-container {
+    @apply flex flex-col px-8 border border-solid border-y-0 border-r-0;
+}
+.lifetime-stats .stat-container.first {
+    @apply pl-0 border-l-0;
+}
+.lifetime-stats .stat-container .title {
+    @apply font-bold text-gray-400;
+}
+.lifetime-stats .stat-container .value {
+    @apply font-bold text-xl;
+}
