@@ -11,7 +11,7 @@
     $: user = undefined;
     $: loading = true;
 
-    getUser(userId).then(res => {
+    $: if (userId) getUser(userId).then(res => {
         if (res.ok) {
             user = res.data;
         } else {

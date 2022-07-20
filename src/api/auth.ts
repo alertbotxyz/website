@@ -12,8 +12,8 @@ export const logout = () => {
     return makeRequest("/discord/logout");
 };
 
-export const getUser = () => {
-    return makeRequest("/discord/user");
+export const getUser = (userId: string) => {
+    return makeRequest(`/discord/user?userId=${userId}`);
 };
 
 export const getBotUser = () => {
