@@ -54,9 +54,25 @@ export const getAlertPage = (page: number) => {
     });
 };
 
-export const getAllTrackedAlerts = (recentOnly?: boolean) => {
+export const getAllTrackedAlerts = (recentOnly?: boolean, dates?: {
+    start: number;
+    end: number;
+}) => {
     return makeRequest("/alert/tracked/all", {
         method: "GET",
-        query: { recentOnly },
+        query: {
+            recentOnly,
+            ...dates,
+        },
+    });
+};
+
+export const sendRecap = (trades: any[], stats: any) => {
+    return makeRequest("/alert/recap", {
+        method: "POST",
+        body: {
+            trades,
+            stats,
+        },
     });
 };

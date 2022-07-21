@@ -1,10 +1,11 @@
 <script>
     import { userStore } from "../../../stores/user";
-    import { getAllTrackedAlerts } from "../../../api/alert";
+    import { getAllTrackedAlerts, sendRecap } from "../../../api/alert";
     import { updateUserStats } from "../../../api/auth";
     import { formatDate } from "../../../utils/core";
     import constants from "../../../utils/constants";
     import Loading from "../../../components/Loading.svelte";
+    import TradeList from "../../../components/dashboard/TradeList.svelte";
     import "../../../styles/dashboard.css";
 
     $: recentAlertsLoading = true;
@@ -32,78 +33,6 @@
         winRate: $userStore?.stats?.winRate.toFixed(2) || 0.00,
         gainPerTrade: $userStore?.stats?.gainPerTrade.toFixed(2) || 0.00,
     };
-
-    $: recentStats = {};
-    $: recentAlertsDays = [];
-
-    $: if (recentAlerts?.length > 0) {
-        const trades = recentAlerts.length;
-        const wins = recentAlerts.filter(alert => {
-            const btoWin = alert.trackedData?.closedData?.price > alert.trackedData.price;
-            const stoWin = alert.trackedData?.closedData?.price < alert.trackedData.price;
-            
-            const longshort = alert.trackedData?.longshort;
-
-            return longshort === "bto" && btoWin || longshort === "sto" && stoWin;
-        }).length;
-
-        let totalPercentGain = 0;
-        let days = [];
-
-        recentAlerts.forEach(alert => {
-            const openPrice = alert.trackedData?.price;
-            const closePrice = alert.trackedData?.closedData?.price;
-
-            let percent = (closePrice - openPrice) / openPrice * 100;
-            if (alert.trackedData.longshort === "sto") percent = (openPrice - closePrice) / closePrice * 100;
-
-            totalPercentGain += percent;
-
-            const day = new Date(alert.date).getDay();
-            const dayAlerts = days[day];
-
-            if (dayAlerts) {
-                days[day] = {
-                    alerts: [
-                        ...dayAlerts.alerts,
-                        {
-                            ...alert,
-                            percentGain: percent.toFixed(2),
-                        },
-                    ],
-                    totalGain: dayAlerts.totalGain + percent,
-                    trades: dayAlerts.trades + 1,
-                    wonAlerts: dayAlerts.wonAlerts + (percent > 0 ? 1 : 0),
-                    dayOfTheWeek: dayAlerts.dayOfTheWeek,
-                    date: dayAlerts.date,
-                };
-            } else {
-                days[day] = {
-                    alerts: [
-                        {
-                            ...alert,
-                            percentGain: percent.toFixed(2),
-                        }
-                    ],
-                    totalGain: percent,
-                    trades: 1,
-                    wonAlerts: percent > 0 ? 1 : 0,
-                    dayOfTheWeek: constants.daysOfTheWeek[new Date(alert.date).getDay()],
-                    date: formatDate(new Date(alert.date), "dd/MM/yy"),
-                };
-            };
-
-        });
-
-        recentAlertsDays = days;
-
-        recentStats = {
-            trades,
-            wins,
-            winRate: (wins / trades * 100).toFixed(2),
-            gainPerTrade: (totalPercentGain / trades).toFixed(2),
-        };
-    };
 </script>
 
 <div class="flex flex-col w-full items-center fade-in pb-16">
@@ -130,59 +59,8 @@
                 </div>
             </div>
         </div>
-        <div class="p-6 my-2 bg-dark-primary rounded-md flex flex-col">
-            <span class="font-bold text-xl">Weekly Recap</span>
-            <Loading loading={recentAlertsLoading}>
-                <div class="lifetime-stats">
-                    <div class="stat-container first">
-                        <span class="title">Alerts</span>
-                        <span class="value">{recentStats.trades || 0}</span>
-                    </div>
-                    <div class="stat-container">
-                        <span class="title">Wins</span>
-                        <span class="value">{recentStats.wins || 0}</span>
-                    </div>
-                    <div class="stat-container">
-                        <span class="title">Win Rate</span>
-                        <span class="value">{recentStats.winRate || 0}%</span>
-                    </div>
-                    <div class="stat-container">
-                        <span class="title">Avg Gain Per Trade</span>
-                        <span class="value">{recentStats.gainPerTrade || 0}%</span>
-                    </div>
-                </div>
-                {#if recentAlertsDays?.length > 0}
-                    {#each recentAlertsDays as day}
-                        {#if day}
-                            <span class="date-container">
-                                <span class="md:text-sm {day.totalGain > 0 ? "text-green-400" : "text-red-400"}">{day.dayOfTheWeek} {day.date}</span>
-                                <span class="md:text-sm">({day.totalGain > 0 ? "+" : ""}{day.totalGain.toFixed(2)}%)</span>
-                            </span>
-                            {#each day.alerts as alert}
-                                <span class="trade-container">
-                                    <div class="flex flex-row tiny:flex-col">
-                                        <div class="ticker">{alert.trackedData?.ticker || "TICKER"}</div>
-                                        <div class="change">{alert.trackedData?.price.toFixed(2) || "OPEN"} -> {alert.trackedData?.closedData?.price.toFixed(2) || "CLOSE"}</div>
-                                    </div>
-                                    <span class="percent {alert.percentGain > 0 ? "positive" : "negative"}">{alert.percentGain > 0 ? "+" : ""}{alert.percentGain}%</span>
-                                </span>
-                            {/each}
-                            <span class="win-rate">Win Rate: {(day.wonAlerts / day.trades * 100).toFixed(2)}%</span>
-                        {/if}
-                    {/each}
-                {:else}
-                    <span>No trades found</span>
-                {/if}
-            </Loading>
-        </div>
+        <Loading loading={recentAlertsLoading}>
+            <TradeList alerts={recentAlerts}/>
+        </Loading>
     </div>
 </div>
-
-<style lang="postcss">
-    .date-container {
-        @apply font-bold text-xl mb-2;
-    }
-    .win-rate {
-        @apply font-bold my-2;
-    }
-</style>

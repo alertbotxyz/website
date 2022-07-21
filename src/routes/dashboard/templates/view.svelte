@@ -41,12 +41,8 @@
             <CreateTemplate
                 defaultTemplate={template}
                 type="edit"
-                on:templateDeleted={evt => {
-                    updateTemplatesArray(evt.detail.name);
-                }}
-                disabled={
-                    templates.find(t => t.name === template.name).disabled
-                }
+                on:templateDeleted={evt => {updateTemplatesArray(evt.detail.name)}}
+                disabled={templates.find(t => t.name === template.name).disabled}
             />
         {:else if !template && !templates[0]}
             <div class="w-full h-full flex items-center justify-center">
