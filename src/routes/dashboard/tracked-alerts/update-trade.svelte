@@ -2,6 +2,7 @@
     import { getAllTrackedAlerts, sendAlert } from "../../../api/alert";
     import Loading from "../../../components/Loading.svelte";
     import { addToast } from "../../../stores/toasts";
+    import { sendTrackedAlert } from "../../../utils/dashboard";
     import data from "../../../utils/data";
 
     $: loading = false;
@@ -59,22 +60,16 @@
 
         const tradeData = {
             date: Date.now(),
-            price: parseInt(trimData.price),
+            price: parseFloat(trimData.price),
         };
 
-        sendAlert({
-            name: `${type}_czxy`,
-            inputs: { "Trade": trade },
-            trackedData: tradeData,
+        sendTrackedAlert({
             type,
+            trade,
+            inputData: tradeData,
             alertId
         }).then(res => {
             if (res.ok && !res.data.errors) {
-                addToast({
-                    type: "success",
-                    message: res.data.message,
-                    title: "Success",
-                });
 
                 trimData.price = undefined;
 
@@ -96,21 +91,8 @@
                     openTrades = openTrades.filter(trade => trade.alertId !== alertId);
                     window.location.reload(); 
                 };
-            } else {
-                addToast({
-                    type: "error",
-                    message: res.data ? `${res.data.message}\n${res.data.errors ? res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n") : ""}` : "An unknown error occured.",
-                    title: "There was an error sending the alert",
-                });
             };
 
-            if (res.data.warning) {
-                addToast({
-                    type: "warning",
-                    message: res.data.warning,
-                    title: "Warning",
-                });
-            };
             submitting = false;
         });
     };
@@ -144,7 +126,7 @@
                                 </div>
                                 <div class="flex flex-row ml-4 2xs:ml-0 2xs:mt-4 2xs:w-full">
                                     <span class="mr-4">@</span>
-                                    <span class="font-bold w-16">{trade.trackedData.price.toFixed(2)}</span>
+                                    <span class="font-bold w-16">{trade.trackedData.price}</span>
                                     <span
                                         class="ml-4 justify-end"
                                         on:click={() => i === active ? active = -1 : active = i}

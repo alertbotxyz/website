@@ -15,7 +15,7 @@ export const sendAlert = ({
     imageUrl: string;
     trackedData?: any;
     alertId: string;
-    type: "close" | "trim";
+    type: "open" | "close" | "trim";
 }) => {
     return makeRequest("/alert/send", {
         method: "POST",

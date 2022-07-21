@@ -5,13 +5,16 @@
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
     import Loading from "../../../components/Loading.svelte";
+import { sendTrackedAlert } from "../../../utils/dashboard";
+
+    const defaultTrade = "BTO - () @";
 
     $: loading = false;
     $: submitting = false;
     $: template = undefined;
     $: alertType = undefined;
     $: hasError = false;
-    $: trade = "BTO - () @";
+    $: trade = defaultTrade;
     $: inputData = {};
     $: discordImageUrl = "";
 
@@ -26,15 +29,15 @@
         template = templates.find(t => t.name === templateName);
 
         alertType = template.name.toLowerCase();
+        trade = defaultTrade;
 
         switch (alertType) {
             case "stocks":
                 inputData = {
-                    "longshort": "",
+                    "longshort": "bto",
                     "ticker": "",
                     "price": "",
                 };
-
                 break;
             case "options":
                 inputData = {
@@ -46,55 +49,35 @@
                     "expiry": "",
                 };
         };
-
-        inputData = {};
     };
 
     const handeInputChange = e => {
         inputData[e.detail.name] = e.detail.value;
+
         switch (alertType) {
             case "stocks":
-                trade = `${inputData.longshort.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} @ ${parseFloat(inputData.price || 0).toFixed(2)}`;
+                trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} @ ${parseFloat(inputData.price || 0).toFixed(2)}${inputData.comment ? "\n" + inputData.comment : ""}`;
                 break;
             case "options":
-                trade = `${inputData.longshort.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} ${inputData.strike}${inputData.callput.toUpperCase().charAt(0) || "C"} @ ${parseFloat(inputData.price || 0).toFixed(2)} ${inputData.expiry}`;
+                trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} ${inputData.strike || ""}${inputData.strike ? inputData.callput?.toUpperCase().charAt(0) || "C" : inputData.callput || "Call"} @ ${parseFloat(inputData.price || 0).toFixed(2)} ${inputData.expiry || "Nearest Expiration"}${inputData.comment ? "\n" + inputData.comment : ""}`;
         };
     };
 
     const sendTrade = () => {
         submitting = true;
-        
-        sendAlert({
-            name: `${template.name}_czxy`,
-            inputs: { "Trade": trade },
-            imageUrl: discordImageUrl,
-            trackedData: {
-                ...inputData,
-                alertType: template.name.toLowerCase(), 
-            },
+
+        sendTrackedAlert({
+            type: "open",
+            trade,
+            inputData,
+            discordImageUrl,
+            alertType,
         }).then(res => {
             if (res.ok && !res.data.errors) {
-                addToast({
-                    type: "success",
-                    message: res.data.message,
-                    title: "Success",
-                });
-                inputData = {};
-            } else {
-                addToast({
-                    type: "error",
-                    message: res.data ? `${res.data.message}\n${res.data.errors ? res.data.errors.map(e => `Channel of Id ${e.channelId}: ${e.message}`).join("\n") : ""}` : "An unknown error occured.",
-                    title: "There was an error sending the alert",
-                });
+                inputData = { "longshort": "bto" };
+                trade = defaultTrade;
             };
 
-            if (res.data.warning) {
-                addToast({
-                    type: "warning",
-                    message: res.data.warning,
-                    title: "Warning",
-                });
-            };
             submitting = false;
         });
     };
@@ -125,12 +108,21 @@
                         on:submit|preventDefault={sendTrade}
                     >
                         <DashboardInput
-                            name="imageUrl"
-                            title="Image"
-                            placeholder="Enter URL for image"
-                            validation={{ url: true }}
-                            defaultValue={discordImageUrl}
-                            on:change={handleImageChange}
+                            required
+                            name="ticker"
+                            title="Ticker"
+                            placeholder="What ticker you are trading"
+                            defaultValue={inputData.ticker || ""}
+                            on:change={handeInputChange}
+                            bind:hasError={hasError}
+                        />
+                        <DashboardInput
+                            name="price"
+                            title="Price"
+                            placeholder="What price you bought at"
+                            required
+                            on:change={handeInputChange}
+                            defaultValue={inputData.price}
                             bind:hasError={hasError}
                         />
                         <DashboardInput
@@ -143,34 +135,27 @@
                             data={{
                                 options: [
                                     {
-                                        value: "bto",
-                                        text: "Buy to Open",
-                                    },
-                                    {
                                         value: "sto",
                                         text: "Sell to Open",
                                     },
                                 ],
                             }}
                             on:change={handeInputChange}
-                            defaultValue={inputData.longshort}
-                        />
-                        <DashboardInput
-                            name="ticker"
-                            title="Ticker"
-                            placeholder="What ticker you are trading"
-                            required
-                            on:change={handeInputChange}
-                            defaultValue={inputData.ticker}
+                            defaultValue={{
+                                value: "bto",
+                                text: "Buy to Open",
+                            }}
+                            bind:hasError={hasError}
                         />
                         {#if alertType === "options"}
                             <DashboardInput
+                                required
                                 name="strike"
                                 title="Strike"
                                 placeholder="What is the strike price of the option"
-                                required
-                                on:change={handeInputChange}
                                 defaultValue={inputData.strike}
+                                on:change={handeInputChange}
+                                bind:hasError={hasError}
                             />
                             <DashboardInput
                                 name="callput"
@@ -182,33 +167,43 @@
                                 data={{
                                     options: [
                                         {
-                                            value: "call",
-                                            text: "Call",
-                                        },
-                                        {
                                             value: "put",
                                             text: "Put",
                                         },
                                     ],
                                 }}
                                 on:change={handeInputChange}
-                                defaultValue={inputData.callput}
+                                defaultValue={{
+                                    value: "call",
+                                    text: "Call",
+                                }}
+                                bind:hasError={hasError}
                             />
                             <DashboardInput
                                 name="expiry"
-                                title="Expiry"
+                                title="Expiration"
                                 placeholder="When does the contract expire"
                                 on:change={handeInputChange}
                                 defaultValue={inputData.expiry}
+                                bind:hasError={hasError}
                             />
                         {/if}
                         <DashboardInput
-                            name="price"
-                            title="Price"
-                            placeholder="What price you bought at"
-                            required
+                            name="comment"
+                            title="Comment"
+                            placeholder="Any comments you want to make"
                             on:change={handeInputChange}
-                            defaultValue={inputData.price}
+                            defaultValue={inputData.comment}
+                            bind:hasError={hasError}
+                        />
+                        <DashboardInput
+                            name="imageUrl"
+                            title="Image"
+                            placeholder="Enter URL for image"
+                            validation={{ url: true }}
+                            defaultValue={discordImageUrl}
+                            on:change={handleImageChange}
+                            bind:hasError={hasError}
                         />
                         <button
                             type="submit"
@@ -226,7 +221,7 @@
                             type: "embed",
                             data: {
                                 description: trade,
-                                color: inputData.longshort?.endsWith("c") ? "#f54250" : inputData.longshort?.startsWith("t") ? "#34c9eb" : "#42f587",
+                                color: inputData.longshort?.endsWith("c") ? "#ff4d4d" : inputData.longshort?.startsWith("t") ? "#3369ff" : "#4dff6a",
                                 title: inputData.longshort?.endsWith("c") ? "Close" : inputData.longshort?.startsWith("t") ? "Trim" : "Open",
                             },
                             author: {

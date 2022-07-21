@@ -106,7 +106,7 @@
     };
 </script>
 
-<div class="flex flex-col w-full items-center fade-in">
+<div class="flex flex-col w-full items-center fade-in pb-16">
     <h1>Trade Stats</h1>
     <div class="flex flex-col mt-8 w-10xx lg:w-5/6">
         <div class="p-6 my-2 bg-dark-primary rounded-md">

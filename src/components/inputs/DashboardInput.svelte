@@ -34,6 +34,7 @@
             value,
         });
     };
+
 </script>
 
 <div class="flex flex-col {fullWidth && "lg:w-full"}">
