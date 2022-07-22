@@ -166,7 +166,6 @@
                             on:change={handeInputChange}
                             defaultValue={inputData.price}
                             on:checkError={handleError}
-                            type="number"
                         />
                         {#if alertType === "options"}
                             <DashboardInput

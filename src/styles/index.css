@@ -17,7 +17,7 @@
     @apply text-gray-400 text-lg xs:text-xs;
 }
 .showcase .example {
-    @apply flex items-center justify-evenly mb-24;
+    @apply flex items-center justify-evenly mb-24 w-12xx lg:w-full;
 }
 .showcase .example-image {
     @apply w-5xx xs:w-3xx;

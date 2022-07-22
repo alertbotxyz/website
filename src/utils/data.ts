@@ -9,6 +9,8 @@ const images = {
     "alert_history_example": "/images/alertbot_create_template.png",
     "add_server_example": "/images/alertbot_add_server.png",
     "default_avatar": "/images/alertbot_default_avatar.png",
+    "open_tracked_trade_example": "/images/tracked-trade.png",
+    "alerter_profile_example": "/images/alerter-profile.png",
 };
 const data: {
     blog: {
@@ -323,6 +325,26 @@ const data: {
             "action": {
                 "text": "View Alert History",
                 "url": "/dashboard/account#alert-history",
+            },
+        },
+        {
+            "title": "Tracked Alerts",
+            "description": "Structure alerts for which stats are tracked allowing you to evaluate your alerts and see how they are performing. At the end of the week you can send a recap of your alerts to your servers.",
+            "icon": "chart-white",
+            "imageUrl": images.open_tracked_trade_example,
+            "action": {
+                "text": "Track Your Alerts",
+                "url": "/dashboard/tracked/open-trade",
+            },
+        },
+        {
+            "title": "Alerter Profiles",
+            "description": "You can setup an alerter profile which people can view to get a brief understanding on  your alerts and find your social media links.",
+            "icon": "profile",
+            "imageUrl": images.alerter_profile_example,
+            "action": {
+                "text": "Setup Your Profile",
+                "url": "/dashboard/account",
             },
         },
     ],
