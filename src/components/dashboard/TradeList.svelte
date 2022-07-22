@@ -1,4 +1,5 @@
 <script>
+    import TradeStats from "../../components/dashboard/TradeStats.svelte";
     import constants from "../../utils/constants";
     import { formatDate } from "../../utils/core";
     import Loading from "../Loading.svelte";
@@ -124,24 +125,12 @@
         <span class="ml-4 font-bold text-gray-400">{startDay} - {endDay}</span>
     </div>
     <Loading loading={alertsLoading}>
-        <div class="lifetime-stats">
-            <div class="stat-container first">
-                <span class="title">Alerts</span>
-                <span class="value">{alertStats.trades || 0}</span>
-            </div>
-            <div class="stat-container">
-                <span class="title">Wins</span>
-                <span class="value">{alertStats.wins || 0}</span>
-            </div>
-            <div class="stat-container">
-                <span class="title">Win Rate</span>
-                <span class="value">{alertStats.winRate || 0}%</span>
-            </div>
-            <div class="stat-container">
-                <span class="title">Avg Gain Per Trade</span>
-                <span class="value">{alertStats.gainPerTrade || 0}%</span>
-            </div>
-        </div>
+        <TradeStats
+            trades={alertStats.trades}
+            wins={alertStats.wins}
+            winRate={alertStats.winRate}
+            gainPerTrade={alertStats.gainPerTrade}
+        />
         {#if alertDays?.length > 0}
             {#each alertDays as day}
                 {#if day}

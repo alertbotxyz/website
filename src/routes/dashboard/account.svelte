@@ -557,6 +557,12 @@
                         bind:hasError={hasError}
                         defaultValue={$userStore.profile?.socials?.website}
                     />
+                    <a
+                        href="/alerter/{$userStore.uid}/profile"
+                        class="mt-4 rounded-md bg-accent font-bold h-8 w-28 flex items-center justify-center"
+                    >
+                        View Profile
+                    </a>
                 </div>
                 <span
                     class="text-2xl font-bold min-w-fit my-2 flex flex-row items-center"

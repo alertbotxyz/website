@@ -17,7 +17,10 @@
     @apply px-8 w-48 tiny:px-0 tiny:py-2;
 }
 .lifetime-stats {
-    @apply  flex flex-row w-full my-8 2xs:flex-col;
+    @apply flex flex-row w-fit my-8 2xs:flex-col;
+}
+.lifetime-stats.shrink {
+    @apply md:flex-col;
 }
 .lifetime-stats .stat-container {
     @apply flex flex-col px-8 border border-solid border-y-0 border-r-0 2xs:px-0 2xs:border-l-0 2xs:border-t 2xs:py-2 2xs:w-1xx;

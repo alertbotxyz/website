@@ -7,6 +7,7 @@
     import Loading from "../../../components/Loading.svelte";
     import TradeList from "../../../components/dashboard/TradeList.svelte";
     import "../../../styles/dashboard.css";
+import TradeStats from "../../../components/dashboard/TradeStats.svelte";
 
     $: recentAlertsLoading = true;
     $: recentAlerts = [];
@@ -40,24 +41,12 @@
     <div class="flex flex-col mt-8 w-10xx lg:w-5/6">
         <div class="p-6 my-2 bg-dark-primary rounded-md">
             <span class="font-bold text-xl">Lifetime Stats</span>
-            <div class="lifetime-stats">
-                <div class="stat-container first">
-                    <span class="title">Alerts</span>
-                    <span class="value">{userStats.trades}</span>
-                </div>
-                <div class="stat-container">
-                    <span class="title">Wins</span>
-                    <span class="value">{userStats.wins}</span>
-                </div>
-                <div class="stat-container">
-                    <span class="title">Win Rate</span>
-                    <span class="value">{userStats.winRate}%</span>
-                </div>
-                <div class="stat-container">
-                    <span class="title">Avg Gain Per Trade</span>
-                    <span class="value">{userStats.gainPerTrade}%</span>
-                </div>
-            </div>
+            <TradeStats
+                trades={userStats.trades}
+                wins={userStats.wins}
+                winRate={userStats.winRate}
+                gainPerTrade={userStats.gainPerTrade}
+            />
         </div>
         <Loading loading={recentAlertsLoading}>
             <TradeList alerts={recentAlerts}/>
