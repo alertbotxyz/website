@@ -24,6 +24,11 @@
 
     const dispatch = createEventDispatcher();
 
+    $: dispatch("checkError", {
+        name,
+        hasError,
+    });
+
     const change = e => {
         const { name, value } = e.detail || e.target;
 
@@ -33,8 +38,12 @@
             name,
             value,
         });
-    };
 
+        dispatch("checkError", {
+            name,
+            hasError,
+        });
+    };
 </script>
 
 <div class="flex flex-col {fullWidth && "lg:w-full"}">

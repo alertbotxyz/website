@@ -5,7 +5,7 @@
     import DiscordChat from "../../../components/discord/DiscordChat.svelte";
     import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
     import Loading from "../../../components/Loading.svelte";
-import { sendTrackedAlert } from "../../../utils/dashboard";
+    import { sendTrackedAlert } from "../../../utils/dashboard";
 
     const defaultTrade = "BTO - () @";
 
@@ -13,7 +13,7 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
     $: submitting = false;
     $: template = undefined;
     $: alertType = undefined;
-    $: hasError = false;
+    $: hasError = { has: false };
     $: trade = defaultTrade;
     $: inputData = {};
     $: discordImageUrl = "";
@@ -26,10 +26,12 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
 
     const handleTemplateSelect = e => {
         const templateName = e.target.value;
+        template = undefined;
         template = templates.find(t => t.name === templateName);
 
         alertType = template.name.toLowerCase();
         trade = defaultTrade;
+        hasError = { has: true };
 
         switch (alertType) {
             case "stocks":
@@ -85,6 +87,15 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
         const { value } = e.detail;
         discordImageUrl = value;
     };
+
+    const handleError = e => {
+        hasError = {
+            ...hasError,
+            [e.detail.name]: e.detail.hasError,
+        };
+
+        hasError.has = Object.values(hasError).find((value, index) => index > 0 && value);
+    };
 </script>
 
 <Loading {loading}>
@@ -108,22 +119,13 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                         on:submit|preventDefault={sendTrade}
                     >
                         <DashboardInput
-                            required
-                            name="ticker"
-                            title="Ticker"
-                            placeholder="What ticker you are trading"
-                            defaultValue={inputData.ticker || ""}
-                            on:change={handeInputChange}
-                            bind:hasError={hasError}
-                        />
-                        <DashboardInput
-                            name="price"
-                            title="Price"
-                            placeholder="What price you bought at"
-                            required
-                            on:change={handeInputChange}
-                            defaultValue={inputData.price}
-                            bind:hasError={hasError}
+                            name="imageUrl"
+                            title="Image"
+                            placeholder="Enter URL for image"
+                            validation={{ url: true }}
+                            defaultValue={discordImageUrl}
+                            on:change={handleImageChange}
+                            on:checkError={handleError}
                         />
                         <DashboardInput
                             name="longshort"
@@ -145,7 +147,26 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                                 value: "bto",
                                 text: "Buy to Open",
                             }}
-                            bind:hasError={hasError}
+                            on:checkError={handleError}
+                        />
+                        <DashboardInput
+                            required
+                            name="ticker"
+                            title="Ticker"
+                            placeholder="What ticker you are trading"
+                            defaultValue={inputData.ticker || ""}
+                            on:change={handeInputChange}
+                            on:checkError={handleError}
+                        />
+                        <DashboardInput
+                            name="price"
+                            title="Price"
+                            placeholder="What price you bought at"
+                            required
+                            on:change={handeInputChange}
+                            defaultValue={inputData.price}
+                            on:checkError={handleError}
+                            type="number"
                         />
                         {#if alertType === "options"}
                             <DashboardInput
@@ -155,7 +176,8 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                                 placeholder="What is the strike price of the option"
                                 defaultValue={inputData.strike}
                                 on:change={handeInputChange}
-                                bind:hasError={hasError}
+                                on:checkError={handleError}
+                                type="number"
                             />
                             <DashboardInput
                                 name="callput"
@@ -177,7 +199,7 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                                     value: "call",
                                     text: "Call",
                                 }}
-                                bind:hasError={hasError}
+                                on:checkError={handleError}
                             />
                             <DashboardInput
                                 name="expiry"
@@ -185,7 +207,7 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                                 placeholder="When does the contract expire"
                                 on:change={handeInputChange}
                                 defaultValue={inputData.expiry}
-                                bind:hasError={hasError}
+                                on:checkError={handleError}
                             />
                         {/if}
                         <DashboardInput
@@ -194,21 +216,12 @@ import { sendTrackedAlert } from "../../../utils/dashboard";
                             placeholder="Any comments you want to make"
                             on:change={handeInputChange}
                             defaultValue={inputData.comment}
-                            bind:hasError={hasError}
-                        />
-                        <DashboardInput
-                            name="imageUrl"
-                            title="Image"
-                            placeholder="Enter URL for image"
-                            validation={{ url: true }}
-                            defaultValue={discordImageUrl}
-                            on:change={handleImageChange}
-                            bind:hasError={hasError}
+                            on:checkError={handleError}
                         />
                         <button
                             type="submit"
                             class="primary-button bg-accent mt-4"
-                            disabled={hasError || submitting}
+                            disabled={hasError.has || submitting}
                             aria-label="Send Trade"
                         >
                             Send Trade
