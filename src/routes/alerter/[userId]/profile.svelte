@@ -15,7 +15,7 @@
 
 <div class="min-h-screen pt-32 w-full flex justify-center">
     <div class="bg-light-primary p-8 rounded-md w-5/6 h-fit mt-16">
-        {#if user._id !== ""}
+        {#if user?._id}
             <div class="flex flex-row md:flex-col  xs:items-center">
                 <img
                     src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : data.images.default_avatar} 
@@ -30,33 +30,35 @@
                         {/each}
                     </span>
                     <TradeStats
-                        trades={user.stats?.trades}
-                        wins={user.stats?.wins}
+                        tradeCount={user.stats?.tradeCount}
+                        winCount={user.stats?.winCount}
                         winRate={user.stats?.winRate}
                         gainPerTrade={user.stats?.gainPerTrade}
                     />
-                    <div class="flex flex-row mt-8 w-full xs:flex-col xs:items-center">
-                        <div class="section">
+                    <div class="flex flex-row mt-8 w-full md:flex-col xs:flex-col">
+                        <div class="section full-width md:mb-4">
                             <span class="title">Bio</span>
                             <span class="description">{user.profile?.bio || "No user profile"}</span>
                         </div>
-                        <div class="section xs:my-8">
-                            <span class="title">Socials</span>
-                            <span class="description">
-                                {#each Object.entries(user.profile?.socials) as [key, value]}
-                                    {#if key !== "_id"}
-                                        <a class="social" href={value}><img src="/icons/{key}.svg" alt={key}></a>
-                                    {/if}
-                                {/each}
-                            </span>
-                        </div>
-                        <div class="section">
-                            <span class="title">Timeframe</span>
-                            <span class="description">
-                                {#each user.profile?.timeframe as timeframe, i}
-                                    {timeframe} {i !== user.profile?.timeframe.length - 1 ? ", " : ""}
-                                {/each}
-                            </span>
+                        <div class="flex flex-row xs:flex-col">
+                            <div class="section">
+                                <span class="title">Socials</span>
+                                <span class="description">
+                                    {#each Object.entries(user.profile?.socials) as [key, value]}
+                                        {#if key !== "_id"}
+                                            <a class="social" href={value}><img src="/icons/{key}.svg" alt={key}></a>
+                                        {/if}
+                                    {/each}
+                                </span>
+                            </div>
+                            <div class="section xs:mt-8">
+                                <span class="title">Timeframe</span>
+                                <span class="description">
+                                    {#each user.profile?.timeframe as timeframe, i}
+                                        {timeframe} {i !== user.profile?.timeframe.length - 1 ? ", " : ""}
+                                    {/each}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,6 +78,9 @@
     }
     .section {
         @apply flex flex-col mr-8 w-1/3;
+    }
+    .section.full-width {
+        @apply md:w-full;
     }
     .section .title {
         @apply font-bold text-xl;

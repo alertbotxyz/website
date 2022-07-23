@@ -6,31 +6,35 @@
     import constants from "../../../utils/constants";
     import Loading from "../../../components/Loading.svelte";
     import TradeList from "../../../components/dashboard/TradeList.svelte";
+    import TradeStats from "../../../components/dashboard/TradeStats.svelte";
     import "../../../styles/dashboard.css";
-import TradeStats from "../../../components/dashboard/TradeStats.svelte";
 
-    $: recentAlertsLoading = true;
-    $: recentAlerts = [];
+    $: recentAlertsAreLoading = true;
+    $: recentAlertsArray = [];
 
-    getAllTrackedAlerts(true).then(res => {
+    const today = new Date();
+    const recentMonday = today.getTime() - (today.getDay() - 1) * 1000 * 60 * 60 * 24;
+    const recentSunday = new Date(recentMonday).getTime() + 6 * 1000 * 60 * 60 * 24;
+
+    getAllTrackedAlerts(true, {
+        start: recentMonday,
+        end: recentSunday,
+    }).then(res => {
         if (res.ok) {
-            recentAlerts = res.data.filter(alert => {
-                const alertDay = new Date(alert.date).getDay();
-                const alertDate = new Date(alert.date).getDate();
-                const today = new Date().getDay();
-                const todayDate = new Date().getDate();
-
-                const lastSundayDate = todayDate - today - alertDay;
-
-                return alertDate > lastSundayDate && alert.trackedData?.closedData?.price;
+            recentAlertsArray = res.data;
+        } else {
+            addToast({
+                type: "error",
+                message: "There was an error fetching alerts\n" + res.error.message,
+                title: "There was an error",
             });
         };
-        recentAlertsLoading = false;
+        recentAlertsAreLoading = false;
     });
 
     $: userStats = {
-        trades: $userStore?.stats?.trades || 0,
-        wins: $userStore?.stats?.wins || 0,
+        tradeCount: $userStore?.stats?.tradeCount || 0,
+        winCount: $userStore?.stats?.winCount || 0,
         winRate: $userStore?.stats?.winRate.toFixed(2) || 0.00,
         gainPerTrade: $userStore?.stats?.gainPerTrade.toFixed(2) || 0.00,
     };
@@ -42,14 +46,14 @@ import TradeStats from "../../../components/dashboard/TradeStats.svelte";
         <div class="p-6 my-2 bg-dark-primary rounded-md">
             <span class="font-bold text-xl">Lifetime Stats</span>
             <TradeStats
-                trades={userStats.trades}
-                wins={userStats.wins}
+                tradeCount={userStats.tradeCount}
+                winCount={userStats.winCount}
                 winRate={userStats.winRate}
                 gainPerTrade={userStats.gainPerTrade}
             />
         </div>
-        <Loading loading={recentAlertsLoading}>
-            <TradeList alerts={recentAlerts}/>
+        <Loading loading={recentAlertsAreLoading}>
+            <TradeList alertsArray={recentAlertsArray}/>
         </Loading>
     </div>
 </div>

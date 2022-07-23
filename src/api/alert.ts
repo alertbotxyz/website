@@ -54,7 +54,7 @@ export const getAlertPage = (page: number) => {
     });
 };
 
-export const getAllTrackedAlerts = (recentOnly?: boolean, dates?: {
+export const getAllTrackedAlerts = (recentOnly?: boolean, userId?: string, dates?: {
     start: number;
     end: number;
 }) => {
@@ -63,6 +63,10 @@ export const getAllTrackedAlerts = (recentOnly?: boolean, dates?: {
         query: {
             recentOnly,
             ...dates,
+            userId,
+        },
+        headers: {
+            "x-public-request": userId ? true : false,
         },
     });
 };

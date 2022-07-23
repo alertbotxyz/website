@@ -449,6 +449,14 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 >
                     <Paragraph>What price you bought at</Paragraph>
                 </Attribute>
+                <Attribute
+                    name="Comment"
+                    type="string"
+                    required
+                    last
+                >
+                    <Paragraph>Any extra comments about the trade</Paragraph>
+                </Attribute>
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of open trade</Paragraph>

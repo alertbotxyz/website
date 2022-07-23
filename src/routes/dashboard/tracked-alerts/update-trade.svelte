@@ -6,7 +6,7 @@
     import data from "../../../utils/data";
 
     $: loading = false;
-    $: openTradesLoading = true;
+    $: openTradesAreLoading = true;
     $: active = -1;
 
     $: submitting = false;
@@ -28,8 +28,14 @@
                         type: alert.trackedData?.alertType,
                     };
                 });
+        } else {
+            addToast({
+                type: "error",
+                message: "There was an error fetching alerts\n" + res.error.message,
+                title: "There was an error",
+            });
         };
-        openTradesLoading = false;
+        openTradesAreLoading = false;
     });
 
     const sendTrade = (type, alertId, ticker, startingPrice, longshort) => {
@@ -91,6 +97,12 @@
                     openTrades = openTrades.filter(trade => trade.alertId !== alertId);
                     window.location.reload(); 
                 };
+            } else {
+                addToast({
+                    type: "error",
+                    message: "Failed to send alert\n" + res.error.message,
+                    title: "There was an error",
+                });
             };
 
             submitting = false;
@@ -109,7 +121,7 @@
     <div class="flex flex-col w-full items-center fade-in">
         <h1 class="text-center">Update a Trade</h1>
         <div class="flex flex-col mt-8 items-center w-full">
-            <Loading loading={openTradesLoading}>
+            <Loading loading={openTradesAreLoading}>
                 {#if openTrades?.length > 0}
                     {#each openTrades as trade, i}
                         <div class="my-2 rounded-md p-4 bg-light-primary flex flex-col {i === active && "min-h-fit"} w-4xx 2xs:w-5/6">

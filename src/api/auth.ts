@@ -13,7 +13,12 @@ export const logout = () => {
 };
 
 export const getUser = (userId: string) => {
-    return makeRequest(`/discord/user?userId=${userId}`);
+    return makeRequest(`/discord/user?userId=${userId}`, {
+        method: "GET",
+        headers: {
+            "x-public-request": true,
+        },
+    });
 };
 
 export const getBotUser = () => {

@@ -1,19 +1,22 @@
 <script>
-    import TradeStats from "../../components/dashboard/TradeStats.svelte";
+    import { addToast } from "../../stores/toasts";
+    import { sendRecap } from "../../api/alert";
     import constants from "../../utils/constants";
     import { formatDate } from "../../utils/core";
+    import TradeStats from "../../components/dashboard/TradeStats.svelte";
     import Loading from "../Loading.svelte";
 
-    export let alerts;
+    export let alertsArray;
     export let isPublic;
 
-    $: alertsLoading = false;
+    $: alertsAreLoading = false;
     $: alertStats = {};
     $: alertDays = [];
+    $: submitting = false;
 
-    $: if (alerts?.length > 0) {
-        const trades = alerts.length;
-        const wins = alerts.filter(alert => {
+    $: if (alertsArray?.length > 0) {
+        const tradeCount = alertsArray.length;
+        const winCount = alertsArray.filter(alert => {
             const btoWin = alert.trackedData?.closedData?.price > alert.trackedData.price;
             const stoWin = alert.trackedData?.closedData?.price < alert.trackedData.price;
             
@@ -25,7 +28,7 @@
         let totalPercentGain = 0;
         let days = [];
 
-        alerts.forEach(alert => {
+        alertsArray.forEach(alert => {
             const openPrice = alert.trackedData?.price;
             const closePrice = alert.trackedData?.closedData?.price;
 
@@ -39,31 +42,31 @@
 
             if (dayAlerts) {
                 days[day] = {
-                    alerts: [
-                        ...dayAlerts.alerts,
+                    alertsArray: [
+                        ...dayAlerts.alertsArray,
                         {
                             ...alert,
                             percentGain: percent.toFixed(2),
                         },
                     ],
                     totalGain: dayAlerts.totalGain + percent,
-                    trades: dayAlerts.trades + 1,
-                    wonAlerts: dayAlerts.wonAlerts + (percent > 0 ? 1 : 0),
+                    tradeCount: dayAlerts.tradeCount + 1,
+                    wonTradeCount: dayAlerts.wonTradeCount + (percent > 0 ? 1 : 0),
                     dayOfTheWeek: dayAlerts.dayOfTheWeek,
                     date: dayAlerts.date,
                     unix: dayAlerts.unix,
                 };
             } else {
                 days[day] = {
-                    alerts: [
+                    alertsArray: [
                         {
                             ...alert,
                             percentGain: percent.toFixed(2),
                         }
                     ],
                     totalGain: percent,
-                    trades: 1,
-                    wonAlerts: percent > 0 ? 1 : 0,
+                    tradeCount: 1,
+                    wonTradeCount: percent > 0 ? 1 : 0,
                     dayOfTheWeek: constants.daysOfTheWeek[new Date(alert.date).getDay()],
                     date: formatDate(new Date(alert.date), "dd/MM/yy"),
                     unix: alert.date,
@@ -72,13 +75,13 @@
 
         });
 
-        alertDays = days;
+        alertDays = days.sort((a, b) => a.unix - b.unix);
 
         alertStats = {
-            trades,
-            wins,
-            winRate: (wins / trades * 100).toFixed(2),
-            gainPerTrade: (totalPercentGain / trades).toFixed(2),
+            tradeCount,
+            winCount,
+            winRate: (winCount / tradeCount * 100).toFixed(2),
+            gainPerTrade: (totalPercentGain / tradeCount).toFixed(2),
         };
     };
 
@@ -94,19 +97,33 @@
         firstAlertDay = alertDays.find(day => day);
         daysSinceMondayOfWeek = alertDays.findIndex(day => day === firstAlertDay);
 
-        firstAlertDayUnix = firstAlertDay.unix - 1000 * 60 * 60 * 24 * daysSinceMondayOfWeek
+        firstAlertDayUnix = firstAlertDay.unix - 1000 * 60 * 60 * 24 * daysSinceMondayOfWeek;
 
         startDay = formatDate(new Date(firstAlertDayUnix), "dd/MM");
-        endDay = formatDate(new Date(firstAlertDayUnix + 1000 * 60 * 60 * 24 * 7), "dd/MM");
+        endDay = formatDate(new Date(firstAlertDayUnix + 1000 * 60 * 60 * 24 * 6), "dd/MM");
     };
 
     const handleSendRecap = () => {
+        submitting = true;
         sendRecap(alertDays, {
-            ...recentStats,
+            ...alertStats,
             startDay,
             endDay,
         }).then(res => {
-            console.log(res);
+            if (res.ok) {
+                addToast({
+                    type: "success",
+                    message: "Recap sent successfully",
+                    title: "Success",
+                });
+            } else {
+                addToast({
+                    type: "error",
+                    message: "Failed to send recap\n" + res.error.message,
+                    title: "There was an error",
+                });
+            };
+            submitting = false;
         });
     };
 </script>
@@ -118,16 +135,17 @@
             <button
                 class="ml-4 bg-accent w-24 rounded-md h-6 font-bold"
                 on:click={handleSendRecap}
+                disabled={submitting}
             >
                 Send Recap
             </button>
         {/if}
         <span class="ml-4 font-bold text-gray-400">{startDay} - {endDay}</span>
     </div>
-    <Loading loading={alertsLoading}>
+    <Loading loading={alertsAreLoading}>
         <TradeStats
-            trades={alertStats.trades}
-            wins={alertStats.wins}
+            tradeCount={alertStats.tradeCount}
+            winCount={alertStats.winCount}
             winRate={alertStats.winRate}
             gainPerTrade={alertStats.gainPerTrade}
         />
@@ -138,7 +156,7 @@
                         <span class="md:text-sm {day.totalGain > 0 ? "text-green-400" : "text-red-400"}">{day.dayOfTheWeek} {day.date}</span>
                         <span class="md:text-sm">({day.totalGain > 0 ? "+" : ""}{day.totalGain.toFixed(2)}%)</span>
                     </span>
-                    {#each day.alerts as alert}
+                    {#each day.alertsArray as alert}
                         <span class="trade-container">
                             <div class="flex flex-row tiny:flex-col">
                                 <div class="ticker">{alert.trackedData?.ticker || "TICKER"}</div>
@@ -147,7 +165,7 @@
                             <span class="percent {alert.percentGain > 0 ? "positive" : "negative"}">{alert.percentGain > 0 ? "+" : ""}{alert.percentGain}%</span>
                         </span>
                     {/each}
-                    <span class="win-rate">Win Rate: {(day.wonAlerts / day.trades * 100).toFixed(2)}%</span>
+                    <span class="win-rate">Win Rate: {(day.wonTradeCount / day.tradeCount * 100).toFixed(2)}%</span>
                 {/if}
             {/each}
         {:else}
