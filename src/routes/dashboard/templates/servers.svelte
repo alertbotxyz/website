@@ -1,11 +1,11 @@
 <script>
-    import { addServer, deleteServer, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
+    import { addServer, deleteServer, getAllGroups, getAllGuilds, getAllServers, getGuildInfo } from "../../../api/servers";
     import { addToast } from "../../../stores/toasts";
     import { userStore } from "../../../stores/user";
     import Loading from "../../../components/Loading.svelte";
     import SuccessModal from "../../../components/modals/SuccessModal.svelte";
-    import "../../../styles/templates.css";
     import DashboardInput from "../../../components/inputs/DashboardInput.svelte";
+    import "../../../styles/templates.css";
 
     export let servers = [];
 
@@ -19,6 +19,9 @@
     $: successMessage = "";
 
     $: userGuilds = [];
+    $: serverGroups = [
+        { name: "General" },
+    ];
     $: guildInfo = undefined;
     $: guildInfoCache = [];
     $: data = {
@@ -61,6 +64,21 @@
             });
         } else {
             userGuilds = res.data;
+        };
+    });
+
+    getAllGroups().then(res => {
+        if (res.ok) {
+            serverGroups = [
+                ...serverGroups,
+                ...res.data,
+            ];
+        } else {
+            addToast({
+                type: "error",
+                message: res.error.message,
+                title: "There was an error fetching groups",
+            });
         };
     });
 
@@ -176,7 +194,7 @@
         <h1 class="text-center xs:text-2xl">Alerting to {servers.length} servers</h1>
         {#if $userStore.botToken}
             <div class="flex flex-row lg:flex-col my-8 items-end pl-8 justify-center lg:w-5/6">
-                <div class="mx-4">
+                <div class="mx-4 w-full">
                     <DashboardInput
                         name="guildId"
                         title="Guild"
@@ -198,7 +216,7 @@
                 </div>
                 {#if data.guildId}
                     <Loading loading={fetchingGuild}>
-                        <div class="mx-4">
+                        <div class="mx-4 w-full">
                             <DashboardInput
                                 name="channelId"
                                 title="Channel"
@@ -218,7 +236,7 @@
                                 extraClass={"lg:mb-4"}
                             />
                         </div>
-                        <div class="mx-4">
+                        <div class="mx-4 w-full">
                             <DashboardInput
                                 name="mentionId"
                                 title="Mention Role"
@@ -244,8 +262,32 @@
                                 extraClass={"lg:mb-4"}
                             />
                         </div>
+                        <div class="mx-4 w-full">
+                            <DashboardInput
+                                name="groupName"
+                                title="Group"
+                                placeholder="Choose a server group"
+                                fullWidth
+                                type="select"
+                                data={{
+                                    options: serverGroups.filter(group => group.name !== "General").map(group => ({
+                                            value: group.name,
+                                            text: group.name,
+                                        })
+                                    )
+                                }}
+                                on:change={handleChange}
+                                bind:hasError={hasError}
+                                help="You can choose a server group to group servers together"
+                                extraClass={"lg:mb-4"}
+                                defaultValue={{
+                                    value: "General",
+                                    text: "General",
+                                }}
+                            />
+                        </div>
                         <button
-                            class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4"
+                            class="bg-accent py-3 px-8 rounded-md mb-2.5 lg:mt-8 lg:w-full lg:mr-4 font-bold"
                             on:click={handleSubmit}
                             disabled={hasError || submitting}
                             aria-label="Add server"
@@ -267,64 +309,67 @@
                 to add servers.
             </span>
         {/if}
-        {#if servers && servers.length > 0}
+        {#if servers && servers.length > 0 && serverGroups}
             <div class="grid grid-cols-1 w-full place-items-center sm:grid-cols-2 xs:grid-cols-1">
-                {#each servers as server}
-                    <div class="w-1/2 lg:w-5/6 h-20 md:h-auto md:py-4 rounded-md bg-light-primary my-2 flex md:flex-col items-center justify-between px-3 sm:px-0 {server.disabled && "bg-dark-primary"}">
-                        <div class="flex flex-row items-center md:justify-between md:w-full md:px-8 sm:px-2 sm:flex-col">
-                            <div class="flex flex-row sm:flex-col items-center sm:mb-4 xs:flex-row">
-                                <img 
-                                    class="w-12 rounded-full"
-                                    src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
-                                    alt="guildicon"
-                                />
-                                <span
-                                    class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default z-30"
-                                    data-tooltip="Guild id: {server.guild.id}" 
-                                >
-                                    {server.guild.name || "Guild name"}
-                                </span>
-                            </div>
-                            <div class="flex flex-col ml-4 2xs:ml-0 2xs:w-full 2xs:items-center">
-                                <span class="server-guild-info mb-1">
-                                    In channel 
-                                    <a
-                                        class="text z-30"
-                                        data-tooltip="Channel id: {server.channel.id}"
-                                        href="https://discord.com/channels/{server.guild.id}/{server.channel.id}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                {#each serverGroups as group}
+                    <span class="font-bold text-xl">{group.name}</span>
+                    {#each servers.filter(server => server.groupName === group.name || !server.groupName) as server}
+                        <div class="w-1/2 lg:w-5/6 h-20 md:h-auto md:py-4 rounded-md bg-light-primary my-2 flex md:flex-col items-center justify-between px-3 sm:px-0 {server.disabled && "bg-dark-primary"}">
+                            <div class="flex flex-row items-center md:justify-between md:w-full md:px-8 sm:px-2 sm:flex-col">
+                                <div class="flex flex-row sm:flex-col items-center sm:mb-4 xs:flex-row">
+                                    <img 
+                                        class="w-12 rounded-full"
+                                        src={server.guild.icon ? `https://cdn.discordapp.com/icons/${server.guild.id}/${server.guild.icon}.webp?size=96` : "https://cdn.discordapp.com/embed/avatars/0.png"} 
+                                        alt="guildicon"
+                                    />
+                                    <span
+                                        class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default z-30"
+                                        data-tooltip="Guild id: {server.guild.id}" 
                                     >
-                                        <span class="hover:cursor-pointer primary-link">#{server.channel.name}</span>
-                                    </a>
-                                </span>
-                                {#if server.role?.name}
-                                    <span class="server-guild-info">
-                                        With role 
-                                        <span 
-                                            class="text"
-                                            data-tooltip="Role id: {server.role?.id}"
+                                        {server.guild.name || "Guild name"}
+                                    </span>
+                                </div>
+                                <div class="flex flex-col ml-4 2xs:ml-0 2xs:w-full 2xs:items-center">
+                                    <span class="server-guild-info mb-1">
+                                        In channel 
+                                        <a
+                                            class="text z-30"
+                                            data-tooltip="Channel id: {server.channel.id}"
+                                            href="https://discord.com/channels/{server.guild.id}/{server.channel.id}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                         >
-                                            @{server.role?.name.replace("@everyone", "everyone")}
+                                            <span class="hover:cursor-pointer primary-link">#{server.channel.name}</span>
+                                        </a>
+                                    </span>
+                                    {#if server.role?.name}
+                                        <span class="server-guild-info">
+                                            With role 
+                                            <span 
+                                                class="text"
+                                                data-tooltip="Role id: {server.role?.id}"
+                                            >
+                                                @{server.role?.name.replace("@everyone", "everyone")}
+                                            </span>
                                         </span>
-                                    </span>
-                                {:else}
-                                    <span class="server-guild-info">
-                                        With no 
-                                        <span class="text-inherit font-bold ml-1 2xs:ml-0 hover:cursor-default xs:ml-1">mention role</span>
-                                    </span>
-                                {/if}
+                                    {:else}
+                                        <span class="server-guild-info">
+                                            With no 
+                                            <span class="text-inherit font-bold ml-1 2xs:ml-0 hover:cursor-default xs:ml-1">mention role</span>
+                                        </span>
+                                    {/if}
+                                </div>
                             </div>
+                            <button
+                                class="bg-gray-500 px-8 py-2 md:mt-4 rounded-md flex items-center justify-center font-bold" 
+                                on:click={handleDeleteServer(server.channel.id)}
+                                disabled={submitting}
+                                aria-label="Delete server"
+                            >
+                                Delete
+                            </button>
                         </div>
-                        <button
-                            class="bg-gray-500 px-8 py-2 md:mt-4 rounded-md flex items-center justify-center" 
-                            on:click={handleDeleteServer(server.channel.id)}
-                            disabled={submitting}
-                            aria-label="Delete server"
-                        >
-                            Delete
-                        </button>
-                    </div>
+                    {/each}
                 {/each}
             </div>
         {/if}
