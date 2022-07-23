@@ -9,8 +9,6 @@
 
     $: endpoint = getEndpoint(context.route);
     $afterUrlChange(({ route }) => endpoint = getEndpoint(route));
-
-    $: console.log(endpoint);
 </script>
 
 <div class="flex flex-col pt-16 h-full">

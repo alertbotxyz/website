@@ -279,7 +279,7 @@
                                     alt="guildicon"
                                 />
                                 <span
-                                    class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default"
+                                    class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default z-30"
                                     data-tooltip="Guild id: {server.guild.id}" 
                                 >
                                     {server.guild.name || "Guild name"}
@@ -289,7 +289,7 @@
                                 <span class="server-guild-info mb-1">
                                     In channel 
                                     <a
-                                        class="text"
+                                        class="text z-30"
                                         data-tooltip="Channel id: {server.channel.id}"
                                         href="https://discord.com/channels/{server.guild.id}/{server.channel.id}"
                                         target="_blank"

@@ -204,6 +204,7 @@
             });
         };
         botIsLoading = true;
+        submitting = true;
 
         // update the bot token on the user
         updateBotToken(newBotToken).then(res => {
@@ -233,6 +234,7 @@
             };
 
             botIsLoading = false;
+            submitting = false;
         });
     };
 
@@ -404,6 +406,7 @@
                                 class="primary-button bg-accent ml-4 w-64 2xs:ml-0 2xs:mt-4 2xs:w-full"
                                 aria-label="Save bot token"
                                 on:click={handleSubmitToken}
+                                disabled={hasError || submitting}
                             >
                                 Save
                             </button>

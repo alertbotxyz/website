@@ -33,6 +33,8 @@
     };
 
     $: template = templates?.find(t => t.name === $params.template);
+
+    $: console.log(templates);
 </script>
 
 <Loading {loading}>
