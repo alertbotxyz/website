@@ -92,18 +92,71 @@
 						description: "Whether or not you can alert to multiple servers at once",
 					},
 					{
+						name: "Server Groups",
+						free: "0",
+						premium: "Unlimited",
+						extra: "Unlimited",
+						description: "Whether or not you can add servers to groups",
+					},
+					{
 						name: "Server limit",
 						free: "5",
 						premium: "100",
 						extra: "unlimited",
 						description: "How many servers you can alert to at once",
 					},
-					// {
-					// 	name: "Server groups",
-					// 	free: "no",
-					// 	premium: "yes",
-					// 	extra: "yes",
-					// },
+				],
+			},
+			{
+				name: "Tracked Alerts",
+				features: [
+					{
+						name: "Open alerts",
+						free: "no",
+						premium: "yes",
+						extra: "yes",
+						description: "Open tracked alerts",
+					},
+					{
+						name: "Trim alerts",
+						free: "no",
+						premium: "yes",
+						extra: "yes",
+						description: "Trim tracked alerts",
+					},
+					{
+						name: "Close alerts",
+						free: "no",
+						premium: "yes",
+						extra: "yes",
+						description: "Close tracked alerts",
+					},
+					{
+						name: "Trade stats",
+						free: "no",
+						premium: "yes",
+						extra: "yes",
+						description: "View your trade stats like trade count, wins and more",
+					},
+					{
+						name: "Send recap",
+						free: "no",
+						premium: "yes",
+						extra: "yes",
+						description: "Send a recap of the weeks alerts",
+					},
+				],
+			},
+			{
+				name: "Alerter Profiles",
+				features: [
+					{
+						name: "Edit",
+						free: "yes",
+						premium: "yes",
+						extra: "yes",
+						description: "Edit your alerter profile",
+					},
 				],
 			},
 			// {

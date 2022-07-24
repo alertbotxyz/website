@@ -1,0 +1,1 @@
+<span class="text-gray-400 text-xl lg:text-base 2xs:text-sm xs:text-xs py-3 md:py-2 xs:py-1"><slot /></span>

@@ -217,6 +217,7 @@
                             token: newBotToken,
                             ...res.data
                         });
+                        window.location.reload();
                     } else {
                         addToast({
                             type: "error",

@@ -298,7 +298,7 @@
                 {/if}
             </div>
         {:else}
-            <span class="mt-4 text-lg text-center px-2">
+            <span class="my-8 text-lg text-center px-2">
                 You need to
                 <a
                     href="/dashboard/account"

@@ -18,10 +18,10 @@
     $: disabled = !trimData.price;
     $: openTrades = [];
 
-    getAllTrackedAlerts(true).then(res => {
+    getAllTrackedAlerts().then(res => {
         if (res.ok) {
             openTrades = res.data
-                .filter(alert => alert.trackedData && !alert.trackedData?.closedData?.price)
+                .filter(alert => !alert.trackedData?.closedData?.price)
                 .map(alert => {
                     return {
                         ...alert,
@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="flex flex-row ml-4 2xs:ml-0 2xs:mt-4 2xs:w-full">
                                     <span class="mr-4">@</span>
-                                    <span class="font-bold w-16">{trade.trackedData.price}</span>
+                                    <span class="font-bold w-16">{parseFloat(trade.trackedData.price).toFixed(2)}</span>
                                     <span
                                         class="ml-4 justify-end"
                                         on:click={() => i === active ? active = -1 : active = i}

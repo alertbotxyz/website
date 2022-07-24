@@ -16,13 +16,13 @@
 <div class="min-h-screen pt-32 w-full flex justify-center">
     <div class="bg-light-primary p-8 rounded-md w-5/6 h-fit mt-16">
         {#if user?._id}
-            <div class="flex flex-row md:flex-col  xs:items-center">
+            <div class="flex flex-row md:flex-col">
                 <img
                     src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.uid}/${user.avatar}.png?size=96` : data.images.default_avatar} 
                     alt="avatar"
                     class="w-24 h-24 mr-8 md:mr-0 rounded-md"
                 />
-                <div class="flex flex-col w-full md:mt-4  xs:items-center">
+                <div class="flex flex-col w-full md:mt-4">
                     <span class="username">{user.name}#{user.discriminator}</span>
                     <span class="alert-type">
                         {#each user.profile?.alertType as type, i}
@@ -40,10 +40,10 @@
                             <span class="title">Bio</span>
                             <span class="description">{user.profile?.bio || "No user profile"}</span>
                         </div>
-                        <div class="flex flex-row xs:flex-col">
+                        <div class="flex flex-row xs:flex-col xs:w-full">
                             <div class="section">
                                 <span class="title">Socials</span>
-                                <span class="description">
+                                <span class="description xs:w-full">
                                     {#each Object.entries(user.profile?.socials) as [key, value]}
                                         {#if key !== "_id"}
                                             <a class="social" href={value}><img src="/icons/{key}.svg" alt={key}></a>
@@ -77,7 +77,7 @@
         @apply text-gray-400 mt-1;
     }
     .section {
-        @apply flex flex-col mr-8 w-1/3;
+        @apply flex flex-col mr-8 w-1/3 xs:w-full;
     }
     .section.full-width {
         @apply md:w-full;

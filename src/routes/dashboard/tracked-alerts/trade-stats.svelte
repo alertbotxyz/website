@@ -13,10 +13,10 @@
     $: recentAlertsArray = [];
 
     const today = new Date();
-    const recentMonday = today.getTime() - (today.getDay() - 1) * 1000 * 60 * 60 * 24;
+    const recentMonday = today.getTime() - (today.getDay() - 1 < 0 ? 6 : today.getDay() - 1) * 1000 * 60 * 60 * 24;
     const recentSunday = new Date(recentMonday).getTime() + 6 * 1000 * 60 * 60 * 24;
 
-    getAllTrackedAlerts(true, {
+    getAllTrackedAlerts(true, undefined, {
         start: recentMonday,
         end: recentSunday,
     }).then(res => {

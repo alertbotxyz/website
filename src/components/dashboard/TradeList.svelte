@@ -89,8 +89,8 @@
     $: firstAlertDay = "";
     $: daysSinceMondayOfWeek = 0;
     $: firstAlertDayUnix = 0;
-    $: startDay = "";
-    $: endDay = "";
+    $: startDay = formatDate(Date.now() + 1000 * 60 * 60 * 24, "dd/MM");
+    $: endDay = formatDate(Date.now() + 1000 * 60 * 60 * 24 * 7, "dd/MM");
 
     $: if (alertDays?.length > 0) {
         // the first day of alerts

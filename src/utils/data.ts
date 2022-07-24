@@ -29,16 +29,6 @@ const data: {
                     url: string;
                 };
             };
-            content: {
-                type: "title" | "paragraph";
-                data: string;
-            }[] | {
-                type: "image";
-                data: {
-                    url: string;
-                    alt: string;
-                };
-            }[];
         }[]
     };
     changelog: {
@@ -151,52 +141,52 @@ const data: {
                         "url": "/images/logo.png",
                     },
                 },
-                "content": [
-                    {
-                        "type": "paragraph",
-                        "data": "This blog is still being written.",
-                    },
-                    {
-                        "type": "title",
-                        "data": "What is alertbot?",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "Once you have created all the templates you need you can add servers to alert to. When you see a market opportunity enter values for your preset parameters and send the alert to all servers in one click.",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
-                    },
-                    {
-                        "type": "title",
-                        "data": "A history of alertbot",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": `
-                            I started working on alert bot back in ~August 2021 and was very close to releasing it before summer ended.
-                            However I never released it as I was having issues with compatibility on IOS browsers.
-                            This along with the fact that I was getting bored of the project meant that I never ended up releasing it.
-                        `,
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all.",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "Eventually I came back to the project, almost a year later, with my improved skills and ability to produce a viable product.",
-                    },
-                    {
-                        "type": "paragraph",
-                        "data": "This time it was built way better, with more and better features and with a completely different framework (Svelte). I implemented various good practices into my code (unlike before) ensuring a better user experience and a reliable product.",
-                    },
-                ],
+                // "content": [
+                //     {
+                //         "type": "paragraph",
+                //         "data": "This blog is still being written.",
+                //     },
+                //     {
+                //         "type": "title",
+                //         "data": "What is alertbot?",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "Once you have created all the templates you need you can add servers to alert to. When you see a market opportunity enter values for your preset parameters and send the alert to all servers in one click.",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "Alertbot saves your alerts so you can view them a reflect back upon past alerts.",
+                //     },
+                //     {
+                //         "type": "title",
+                //         "data": "A history of alertbot",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": `
+                //             I started working on alert bot back in ~August 2021 and was very close to releasing it before summer ended.
+                //             However I never released it as I was having issues with compatibility on IOS browsers.
+                //             This along with the fact that I was getting bored of the project meant that I never ended up releasing it.
+                //         `,
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "However I am thankful I didn't as at the time I was not a great programmer and the product would be barely useable and people would likely not use it at all.",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "Eventually I came back to the project, almost a year later, with my improved skills and ability to produce a viable product.",
+                //     },
+                //     {
+                //         "type": "paragraph",
+                //         "data": "This time it was built way better, with more and better features and with a completely different framework (Svelte). I implemented various good practices into my code (unlike before) ensuring a better user experience and a reliable product.",
+                //     },
+                // ],
             },
         ],
     },
@@ -329,7 +319,7 @@ const data: {
         },
         {
             "title": "Tracked Alerts",
-            "description": "Structure alerts for which stats are tracked allowing you to evaluate your alerts and see how they are performing. At the end of the week you can send a recap of your alerts to your servers.",
+            "description": "Structured alerts for which stats are tracked allowing you to evaluate your alerts and see how they are performing. At the end of the week you can send a recap of your alerts to your servers.",
             "icon": "chart-white",
             "imageUrl": images.open_tracked_trade_example,
             "action": {
