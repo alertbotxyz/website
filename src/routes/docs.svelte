@@ -24,6 +24,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "overview",
             "type": "subsection",
         },
+        // ============================================================================================================================================
         {
             "title": "Templates",
             "type": "section",
@@ -53,6 +54,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "templates-delete",
             "type": "subsection",
         },
+        // ============================================================================================================================================
         {
             "title": "Servers",
             "type": "section",
@@ -67,6 +69,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "servers-remove",
             "type": "subsection",
         },
+        // ============================================================================================================================================
         {
             "title": "Alerts",
             "type": "section",
@@ -86,6 +89,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "alerts-history",
             "type": "subsection",
         },
+        // ============================================================================================================================================
         {
             "title": "Tracked Alerts",
             "type": "section",
@@ -144,6 +148,21 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
         //     "link": "bot-whales",
         //     "type": "subsection",
         // },
+        {
+            "title": "Alerter Profiles",
+            "type": "section",
+        },
+        {
+            "title": "Edit",
+            "link": "profiles-edit",
+            "type": "subsection",
+        },
+        {
+            "title": "View",
+            "link": "profiles-view",
+            "type": "subsection",
+        },
+        // ============================================================================================================================================
         {
             "title": "Premium",
             "type": "section",
@@ -504,7 +523,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             </SectionText>
             <SectionExample>
                 <Paragraph>Example of close alert</Paragraph>
-                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-trimclose.png"/>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-tracked-close.png"/>
             </SectionExample>
         </SubSection>
         <SubSection>
@@ -526,6 +545,64 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             <SectionExample>
                 <Paragraph>Example of settings</Paragraph>
                 <!-- <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-add-server.png"/> -->
+            </SectionExample>
+        </SubSection>
+    </Section>
+    <Section title="Alerter Profiles">
+        <SubSection>
+            <SectionText>
+                <Paragraph>You can setup an alerter profile which people can view to get a brief understanding on  your alerts and find your socials.</Paragraph>
+            </SectionText>
+        </SubSection>
+        <SubSection>
+            <SectionText>
+                <SectionTitle id="profiles-edit">Edit</SectionTitle>
+                <Paragraph>To edit your profile visit your account page and scroll to the profile section. Edit your profile and when you are finished, press save changes in the popup from the bottom.</Paragraph>
+                <AttributesHeader title="Profile Inputs" />
+                <Attribute
+                    name="Bio"
+                    type="string"
+                    last
+                >
+                    <Paragraph>A brief paragraph about your self. Up to 256 characters.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Type"
+                    type="string"
+                    last
+                >
+                    <Paragraph>The type of alerts that you send. Pick from: stocks, crypto, options, forex, futures, commodities and OTC.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Timeframe"
+                    type="string"
+                    last
+                >
+                    <Paragraph>The timeframe that your trade in. Pick from: scalps, day trade, swing trades and investing.</Paragraph>
+                </Attribute>
+                <Attribute
+                    name="Socials"
+                    type="string"
+                    last
+                >
+                    <Paragraph>Your social media links. You can set your: twitter, instagram, discord, patreon and website.</Paragraph>
+                </Attribute>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of edit profile</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-profile-edit.jpg"/>
+            </SectionExample>
+        </SubSection>
+        <SubSection last>
+            <SectionText>
+                <SectionTitle id="profiles-view">View</SectionTitle>
+                <Paragraph>To view your profile press the "view profile" button at the bottom of the profile section on your account page.</Paragraph>
+                <Paragraph>You can copy and share the link with other people.</Paragraph>
+                <Paragraph>You can see the alerters recent trade stats, their bio, their socials and the timeframe in which they trade.</Paragraph>
+            </SectionText>
+            <SectionExample>
+                <Paragraph>Example of an alerters profile</Paragraph>
+                <Image src="https://storage.googleapis.com/alertbot-images/documentation_examples/example-profile.png"/>
             </SectionExample>
         </SubSection>
     </Section>

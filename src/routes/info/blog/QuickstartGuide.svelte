@@ -6,7 +6,7 @@
     import Image from "../../../components/blog/Image.svelte";
 </script>
 <Page
-    thumbnailUrl=""
+    thumbnailUrl="/images/quickstart_guide.png"
     category="About"
     title="A quickstart guide for alertbot"
     tags={[ "Guide" ]}

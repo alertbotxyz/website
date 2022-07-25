@@ -31,7 +31,7 @@
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    @apply flex flex-col pt-6 border border-solid border-y-0 border-l-0;
+    @apply flex flex-col py-6 border border-solid border-y-0 border-l-0;
     @apply lg:w-screen lg:absolute lg:h-20 lg:bg-docs-primary-light lg:flex-row lg:border-b;
 }
 .sidebar .links {
