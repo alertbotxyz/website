@@ -24,6 +24,11 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
             "link": "overview",
             "type": "subsection",
         },
+        {
+            "title": "Create a Discord bot",
+            "link": "create-a-discord-bot",
+            "type": "subsection",
+        },
         // ============================================================================================================================================
         {
             "title": "Templates",
@@ -184,7 +189,7 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
 
 <Docs {navbar}>
     <Section title="Alertbot Documentation">
-        <SubSection last>
+        <SubSection>
             <SectionText>
                 <SectionTitle id="overview">Overview</SectionTitle>
                 <Paragraph>Alertbot allows you to create templates to enable alerting with maximum customisability. You can fully edit what your alert embed looks like and you can add parameters to the template.</Paragraph>
@@ -198,6 +203,19 @@ import AttributesHeader from "../components/docs/main/AttributesHeader.svelte";
                 <Paragraph>Join the <Link href="{link}/redirect?link=support-server">support server</Link> to get help with Alertbot and chat with the community</Paragraph>
                 <Paragraph>View the <Link href="{link}/legal/terms">terms of service</Link> and <Link href="{link}/legal/privacy">privacy policy</Link></Paragraph>
                 <Paragraph>Read the <Link href="{link}/info/blog">blog</Link> or submit a <Link href="{link}/info/reviews">review</Link></Paragraph>
+            </SectionExample>
+        </SubSection>
+        <SubSection last>
+            <SectionText>
+                <SectionTitle id="create-a-discord-bot">Create a Discord bot</SectionTitle>
+                <Paragraph>Before you can get started with sending alerts you have to create a discord bot.</Paragraph>
+                <Paragraph>Visit the <Link href="https://discord.com/developers/applications">Discord developer dashboard</Link> and create a discord bot.</Paragraph>
+                <Paragraph>Then visit the bot tab, reset and copy your new token.</Paragraph>
+                <Paragraph>Finally visit your account page, paste in your token and press save.</Paragraph>
+            </SectionText>
+            <SectionExample>
+                <Header>Discord developer dashboard</Header>
+                <Image src="https://storage.googleapis.com/alertbot-images/blogs/discord-developer-dashboard.jpg"/>
             </SectionExample>
         </SubSection>
     </Section>
