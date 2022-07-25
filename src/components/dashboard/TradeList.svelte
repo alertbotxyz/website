@@ -129,18 +129,20 @@
 </script>
 
 <div class="p-6 my-2 bg-dark-primary rounded-md flex flex-col">
-    <div class="flex flex-row items-center">
-        <span class="font-bold text-xl">Weekly Recap</span>
-        {#if !isPublic}
-            <button
-                class="ml-4 bg-accent w-24 rounded-md h-6 font-bold"
-                on:click={handleSendRecap}
-                disabled={submitting}
-            >
-                Send Recap
-            </button>
-        {/if}
-        <span class="ml-4 font-bold text-gray-400">{startDay} - {endDay}</span>
+    <div class="flex flex-row items-center 2xs:flex-col 2xs:items-start">
+        <div class="flex flex-row tiny:flex-col">
+            <span class="font-bold text-xl 2xs:text-base">Weekly Recap</span>
+            {#if !isPublic}
+                <button
+                    class="ml-4 bg-accent w-24 rounded-md h-6 font-bold 2xs:text-sm tiny:ml-0 tiny:my-2"
+                    on:click={handleSendRecap}
+                    disabled={submitting}
+                >
+                    Send Recap
+                </button>
+            {/if}
+        </div>
+        <span class="ml-4 font-bold text-gray-400 2xs:text-sm 2xs:ml-0 2xs:mt-2 tiny:mt-0">{startDay} - {endDay}</span>
     </div>
     <Loading loading={alertsAreLoading}>
         <TradeStats

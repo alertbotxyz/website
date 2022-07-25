@@ -323,7 +323,7 @@
                                         alt="guildicon"
                                     />
                                     <span
-                                        class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default z-30"
+                                        class="pl-2 text-gray-300 font-bold text-xl w-48 sm:w-full sm:text-center sm:mt-2 hover:cursor-default guild-name"
                                         data-tooltip="Guild id: {server.guild.id}" 
                                     >
                                         {server.guild.name || "Guild name"}

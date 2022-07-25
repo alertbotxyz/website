@@ -174,7 +174,7 @@
                         />
                         <span
                             data-tooltip={parameter.name}
-                            class="ml-2 w-32 2xs:text-xs 2xs:w-16 whitespace-nowrap hover:cursor-default"
+                            class="ml-2 w-32 2xs:text-xs 2xs:w-16 whitespace-nowrap hover:cursor-default param-name"
                         >
                             {parameter.order}. {parameter.name}
                         </span>
@@ -274,3 +274,9 @@
         </form>
     </div>
 </div>
+
+<style>
+    .param-name {
+        z-index: 10;
+    }
+</style>
