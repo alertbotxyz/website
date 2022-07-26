@@ -43,10 +43,10 @@
                 break;
             case "options":
                 inputData = {
-                    "longshort": "",
+                    "longshort": "bto",
                     "ticker": "",
                     "strike": "",
-                    "callput": "",
+                    "callput": "call",
                     "price": "",
                     "expiry": "",
                 };
