@@ -35,6 +35,8 @@
             let percent = (closePrice - openPrice) / openPrice * 100;
             if (alert.trackedData.longshort === "sto") percent = (openPrice - closePrice) / closePrice * 100;
 
+            percent *= (alert.trackedData?.leverage || 1);
+
             totalPercentGain += percent;
 
             const day = new Date(alert.date).getDay();

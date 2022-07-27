@@ -38,7 +38,7 @@
         openTradesAreLoading = false;
     });
 
-    const sendTrade = (type, alertId, ticker, startingPrice, longshort) => {
+    const sendTrade = (type, alertId, ticker, startingPrice, longshort, leverage) => {
         submitting = true;
 
         if (!trimData.price) {
@@ -51,7 +51,7 @@
 
         let trade = "";
 
-        let change = (trimData.price - startingPrice) / startingPrice * 100;
+        let change = (trimData.price - startingPrice) / startingPrice * 100 * leverage;
         if (longshort === "sto") change = (startingPrice - trimData.price) / trimData.price * 100;
 
         if (type === "trim") {
@@ -155,7 +155,7 @@
                                 <div class="flex flex-col justify-between h-full">
                                     {#if trade.trackedData.trims?.length > 0}
                                         {#each trade.trackedData.trims as trim}
-                                            <span class="font-bold my-2">Trim {trade.trackedData.ticker} @ {trim.price.toFixed(2)} {trim.price > trade.trackedData.price ? "up" : "down"} {((trim.price - trade.trackedData.price) / trade.trackedData.price * 100).toFixed(2)}%</span>
+                                            <span class="font-bold my-2">Trim {trade.trackedData.ticker} @ {trim.price.toFixed(2)} {trim.price > trade.trackedData.price ? "up" : "down"} {((trim.price - trade.trackedData.price) / trade.trackedData.price * 100 * (trade.trackedData.leverage || 1)).toFixed(2)}%</span>
                                         {/each}
                                     {/if}
                                     <div class="w-full flex flex-row h-8 mt-4">
@@ -177,14 +177,14 @@
                                         <div class="flex flex-row">
                                             <button
                                                 class="bg-blue-400 h-8 w-16 rounded-md font-bold"
-                                                on:click={() => sendTrade("trim", trade.alertId, trade.trackedData.ticker, trade.trackedData.price)}
+                                                on:click={() => sendTrade("trim", trade.alertId, trade.trackedData.ticker, trade.trackedData.price, undefined, trade.trackedData.leverage || 1)}
                                                 disabled={disabled || submitting}
                                             >
                                                 Trim
                                             </button>
                                             <button
                                                 class="bg-red-400 h-8 w-16 ml-2 rounded-md font-bold"
-                                                on:click={() => sendTrade("close", trade.alertId, trade.trackedData.ticker, trade.trackedData.price, trade.trackedData.longshort)}
+                                                on:click={() => sendTrade("close", trade.alertId, trade.trackedData.ticker, trade.trackedData.price, trade.trackedData.longshort, trade.trackedData.leverage || 1)}
                                                 disabled={disabled || submitting}
                                             >
                                                 Close

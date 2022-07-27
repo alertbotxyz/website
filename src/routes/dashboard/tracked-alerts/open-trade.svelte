@@ -7,7 +7,7 @@
     import Loading from "../../../components/Loading.svelte";
     import { sendTrackedAlert } from "../../../utils/dashboard";
 
-    const defaultTrade = "BTO - () @";
+    const defaultTrade = "{{LONGSHORT}} - {{TICKER}} @ {{PRICE}}";
 
     $: loading = false;
     $: submitting = false;
@@ -16,6 +16,7 @@
     $: hasError = { has: false };
     $: trade = defaultTrade;
     $: inputData = {};
+    $: format = "";
     $: discordImageUrl = "";
 
     const templates = [
@@ -40,6 +41,8 @@
                     "ticker": "",
                     "price": "",
                 };
+                format = "{{LONGSHORT}} - {{TICKER}} @ {{PRICE}}";
+
                 break;
             case "options":
                 inputData = {
@@ -50,19 +53,51 @@
                     "price": "",
                     "expiry": "",
                 };
+                format = "{{LONGSHORT}} - {{TICKER}} {{STRIKE}}{{CALLPUT_SHORT}} @ {{PRICE}} {{EXPIRATION}}";
+
+                break;
+            case "crypto":
+                inputData = {
+                    "longshort": "bto",
+                    "ticker": "",
+                    "price": "",
+                    "leverage": 1,
+                };
+                format = "{{LONGSHORT}} - {{TICKER}} @ {{PRICE}} {{LEVERAGE}}x";
+
+                break;
         };
+        
+        trade = format.replace("{{LONGSHORT}}", "BTO");
     };
 
     const handeInputChange = e => {
         inputData[e.detail.name] = e.detail.value;
 
-        switch (alertType) {
-            case "stocks":
-                trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} @ ${parseFloat(inputData.price || 0).toFixed(2)}${inputData.comment ? "\n" + inputData.comment : ""}`;
-                break;
-            case "options":
-                trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} ${inputData.strike || ""}${inputData.strike ? inputData.callput?.toUpperCase().charAt(0) || "C" : inputData.callput || "Call"} @ ${parseFloat(inputData.price || 0).toFixed(2)} ${inputData.expiry || "Nearest Expiration"}${inputData.comment ? "\n" + inputData.comment : ""}`;
-        };
+        const price = inputData.price ? parseFloat(inputData.price * (inputData.leverage || 1)).toFixed(2) : "{{PRICE}}";
+
+        trade = format.replace("{{LONGSHORT}}", inputData.longshort?.toUpperCase() || "BTO")
+            .replace("{{TICKER}}", inputData.ticker?.toUpperCase())
+            .replace("{{PRICE}}", price)
+            .replace("{{STRIKE}}", inputData.strike)
+            .replace("{{CALLPUT_SHORT}}", inputData.callput?.toUpperCase())
+            .replace("{{CALLPUT_LONG}}", inputData.callput)
+            .replace("{{EXPIRATION}}", inputData.expiry)
+            .replace("{{LEVERAGE}}", inputData.leverage);
+
+        if (inputData.comment) trade += `\n${inputData.comment}`;
+
+        // switch (alertType) {
+        //     case "stocks":
+        //         trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} @ ${parseFloat(inputData.price || 0).toFixed(2)}${inputData.comment ? "\n" + inputData.comment : ""}`;
+        //         break;
+        //     case "options":
+        //         trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} ${inputData.strike || ""}${inputData.strike ? inputData.callput?.toUpperCase().charAt(0) || "C" : inputData.callput || "Call"} @ ${parseFloat(inputData.price || 0).toFixed(2)} ${inputData.expiry || "Nearest Expiration"}${inputData.comment ? "\n" + inputData.comment : ""}`;
+        //         break;
+        //     case "crypto":
+        //         trade = `${inputData.longshort?.toUpperCase() || "BTO"} - ${inputData.ticker?.toUpperCase() || "()"} @ ${parseFloat(inputData.price || 0).toFixed(2)} ${inputData.leverage || 1}x${inputData.comment ? "\n" + inputData.comment : ""}`;
+        //         break;
+        // };
     };
 
     const sendTrade = () => {
@@ -207,6 +242,18 @@
                                 on:change={handeInputChange}
                                 defaultValue={inputData.expiry}
                                 on:checkError={handleError}
+                            />
+                        {/if}
+                        {#if alertType === "crypto"}
+                            <DashboardInput
+                                name="leverage"
+                                title="Leverage"
+                                placeholder="What leverage you are using"
+                                on:change={handeInputChange}
+                                defaultValue={inputData.leverage || 1}
+                                on:checkError={handleError}
+                                type="number"
+                                step="1"
                             />
                         {/if}
                         <DashboardInput

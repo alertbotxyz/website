@@ -14,7 +14,7 @@
     @apply text-red-400;
 }
 .trade-container .change {
-    @apply px-8 w-48 tiny:px-0 tiny:py-2;
+    @apply flex items-center px-8 w-64 xs:text-tiny tiny:px-0 tiny:py-2 tiny:text-sm;
 }
 .lifetime-stats {
     @apply flex flex-row w-fit my-8 2xs:flex-col;
